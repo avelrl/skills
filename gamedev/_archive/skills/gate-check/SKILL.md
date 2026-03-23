@@ -3,7 +3,6 @@ name: gate-check
 description: "Validate readiness to move from one game-project stage to the next."
 argument-hint: "[systems-design|technical-setup|pre-production|production|polish|release]"
 user-invocable: true
-allowed-tools: Read, Glob, Grep, Bash, Write
 ---
 
 When this skill is invoked:

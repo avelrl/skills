@@ -3,7 +3,6 @@ name: setup-engine
 description: "Choose a game engine and create a project technical-preferences document from the canonical gamedev template."
 argument-hint: "[engine] [version]"
 user-invocable: true
-allowed-tools: Read, Glob, Grep, Write, Edit, WebSearch, WebFetch
 ---
 
 Purpose: Choose a game engine and create the canonical project technical-preferences document.

@@ -1,9 +1,10 @@
 # [Prototype Name] — Concept From Prototype
 
 ## Status
-- **Prototype Path**: `prototypes/[name]/`
+- **Prototype Report**: `prototypes/[name]/REPORT.md`
 - **Date**: [YYYY-MM-DD]
-- **Outcome**: [Validated | Mixed | Invalidated]
+- **Prototype Recommendation**: [PROCEED | PIVOT | KILL]
+- **Related System**: [System Name | Unknown]
 
 ## Prototype Summary
 
@@ -11,29 +12,42 @@
 - **Approach**: [What was built and how rough it was]
 - **Result**: [What actually happened]
 
-## What Worked
+## Evidence Worth Carrying Forward
 
-- [Mechanic or behavior that should carry forward]
-- [Technical or UX decision worth keeping]
+- **Validated**: [Mechanic or behavior worth keeping]
+- **Invalidated**: [Mechanic or assumption that did not hold]
+- **Conditions / Caveats**: [When the findings are valid and where they may break]
 
-## What Failed
+## Baseline Values Worth Adopting
 
-- [Mechanic or assumption that did not hold]
-- [Technical or UX problem that should not be carried forward]
+| Parameter | Starting Value | Why |
+|-----------|----------------|-----|
+| [Attack Windup] | [0.35s] | [Readable without feeling sluggish] |
 
-## Keep / Change / Drop
+Use `None yet` if the prototype did not produce stable defaults.
 
-- **Keep**: [Validated idea]
-- **Change**: [Promising idea that needs redesign]
-- **Drop**: [Idea that should be abandoned]
+## Scope Implications
+
+### In MVP
+
+- [What must exist in the first playable]
+
+### In Vertical Slice
+
+- [Extra depth or polish worth adding later]
+
+### Deferred / Later
+
+- [Idea that should stay out of the current scope]
 
 ## Production Implications
 
-### Design
-- [What must be clarified in the real design doc]
-- [What scope should change]
+### Design Docs Affected
 
-### Technical
+- `design/gdd/[system].md` — [What must be updated]
+
+### Technical Constraints
+
 - [What must be rewritten]
 - [What constraints or risks were discovered]
 
@@ -44,6 +58,7 @@
 
 ## Recommended Next Steps
 
-- [ ] Update the relevant game concept or system doc
-- [ ] Create an ADR if the prototype proved a technical direction
+- [ ] Update the relevant system doc, systems index, or concept doc
+- [ ] Capture adopted baseline values in the canonical design doc
+- [ ] Create an ADR only if the prototype forced a durable technical direction
 - [ ] Run another prototype only if a specific unanswered question remains

@@ -3,7 +3,6 @@ name: localize
 description: "Scan, extract, validate, or summarize localization state for a game project."
 argument-hint: "[scan|extract|validate|status]"
 user-invocable: true
-allowed-tools: Read, Glob, Grep, Write, Bash
 ---
 
 Purpose: Scan, extract, validate, or summarize a game's localization state without silent translation churn.

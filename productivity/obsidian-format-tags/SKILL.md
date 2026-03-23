@@ -3,7 +3,6 @@ name: obsidian-format-tags
 description: "Refactor one raw Obsidian note into a clean, structured note with preserved meaning, frontmatter, and useful tags."
 argument-hint: "<raw-note-markdown>"
 user-invocable: true
-allowed-tools: Read
 ---
 
 Purpose: Turn one raw Obsidian note into a cleaner, structured note without changing its meaning.

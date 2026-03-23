@@ -3,7 +3,6 @@ name: tech-debt
 description: "Track, categorize, and prioritize technical debt in a shared register."
 argument-hint: "[scan|add|prioritize|report]"
 user-invocable: true
-allowed-tools: Read, Glob, Grep, Write
 ---
 
 Purpose: Keep one visible, practical register of technical debt and its urgency.

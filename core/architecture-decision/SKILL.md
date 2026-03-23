@@ -3,7 +3,6 @@ name: architecture-decision
 description: "Create or update an ADR using the shared canonical template."
 argument-hint: "<title>"
 user-invocable: true
-allowed-tools: Read, Glob, Grep, Write
 ---
 
 Purpose: Create or update one ADR using the canonical shared template.

@@ -3,7 +3,6 @@ name: project-stage-detect
 description: "Assess a game project's current stage, gaps, and realistic next steps."
 argument-hint: "[optional role filter]"
 user-invocable: true
-allowed-tools: Read, Glob, Grep, Bash
 ---
 
 When this skill is invoked:

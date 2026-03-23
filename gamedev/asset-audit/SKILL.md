@@ -3,7 +3,6 @@ name: asset-audit
 description: "Audit game assets against naming, size, format, and reference integrity rules."
 argument-hint: "[category|all]"
 user-invocable: true
-allowed-tools: Read, Glob, Grep
 ---
 
 Purpose: Audit game assets for convention drift, reference integrity, and obvious budget problems.

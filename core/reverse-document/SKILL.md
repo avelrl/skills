@@ -3,7 +3,6 @@ name: reverse-document
 description: "Create technical documentation from existing implementation using the shared canonical templates."
 argument-hint: "<type> <path> (technical-design|architecture)"
 user-invocable: true
-allowed-tools: Read, Glob, Grep, Write, Edit, Bash
 ---
 
 Purpose: Recover shared technical documentation from existing implementation without inventing intent.
