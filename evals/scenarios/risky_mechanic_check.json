@@ -1,0 +1,17 @@
+{
+  "name": "risky_mechanic_check",
+  "fixture": "systems_mapped",
+  "mode": "step-by-step",
+  "prompt": "проверь механику рывка, не развалится ли бой",
+  "expected_first_route": "prototype",
+  "expected_next_recommendation": "design-system",
+  "expected_paths": [],
+  "expected_globs": [
+    "prototypes/*/REPORT.md"
+  ],
+  "forbidden_behaviors": [
+    "edits production code",
+    "skips the report",
+    "treats the prototype as final implementation"
+  ]
+}

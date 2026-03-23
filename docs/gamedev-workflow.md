@@ -2,6 +2,11 @@
 
 This document is the canonical usage guide for the active `gamedev/` skill set.
 
+Related docs:
+
+- manual runbook: `docs/gamedev-manual-runs.md`
+- automation design: `docs/gamedev-autoimprovement.md`
+
 Use it to answer two questions:
 
 1. When should the agent run the full gamedev flow automatically?

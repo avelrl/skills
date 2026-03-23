@@ -1,0 +1,17 @@
+{
+  "name": "systems_mapping",
+  "fixture": "stack_known",
+  "mode": "step-by-step",
+  "prompt": "разложи игру по системам",
+  "expected_first_route": "map-systems",
+  "expected_next_recommendation": "design-system",
+  "expected_paths": [
+    "design/gdd/systems-index.md"
+  ],
+  "expected_globs": [],
+  "forbidden_behaviors": [
+    "writes a full system GDD immediately",
+    "skips dependency order",
+    "does not identify high-risk systems"
+  ]
+}

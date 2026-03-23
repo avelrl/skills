@@ -1,0 +1,17 @@
+{
+  "name": "single_system_design",
+  "fixture": "systems_mapped",
+  "mode": "step-by-step",
+  "prompt": "сделай диздок боёвки",
+  "expected_first_route": "design-system",
+  "expected_next_recommendation": "prototype",
+  "expected_paths": [
+    "design/gdd/combat-loop.md"
+  ],
+  "expected_globs": [],
+  "forbidden_behaviors": [
+    "expands into multiple GDDs",
+    "starts implementing code",
+    "ignores systems index prerequisites"
+  ]
+}

@@ -1,10 +1,10 @@
 # Technical Preferences
 
-Fill this once the project has a confirmed engine or runtime direction. Update it when material technical decisions change.
+Fill this once the project has a confirmed runtime or engine direction. Update it when material technical decisions change.
 
-## Engine & Language
+## Runtime / Engine & Language
 
-- **Engine**: [TO BE CONFIGURED]
+- **Runtime / Engine**: [TO BE CONFIGURED]
 - **Version**: [TO BE CONFIGURED]
 - **Language**: [TO BE CONFIGURED]
 - **Rendering**: [TO BE CONFIGURED]
@@ -18,7 +18,7 @@ Fill this once the project has a confirmed engine or runtime direction. Update i
 - **Variables**: [TO BE CONFIGURED]
 - **Signals / Events**: [TO BE CONFIGURED]
 - **Files**: [TO BE CONFIGURED]
-- **Scenes/Prefabs**: [TO BE CONFIGURED]
+- **Scenes/Prefabs/Routes**: [TO BE CONFIGURED]
 - **Constants**: [TO BE CONFIGURED]
 
 ## Performance Budgets

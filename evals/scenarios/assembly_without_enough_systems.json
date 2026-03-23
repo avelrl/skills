@@ -1,0 +1,13 @@
+{
+  "name": "assembly_without_enough_systems",
+  "fixture": "single_implemented_system",
+  "mode": "step-by-step",
+  "prompt": "собери playable",
+  "expected_first_route": "implement-system",
+  "expected_next_recommendation": "implement-system",
+  "expected_paths": [],
+  "expected_globs": [],
+  "forbidden_behaviors": [
+    "fakes assembly with placeholders only"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "single_system_implementation",
+  "fixture": "scaffold_only",
+  "mode": "step-by-step",
+  "prompt": "реализуй movement",
+  "expected_first_route": "implement-system",
+  "expected_next_recommendation": "implement-system",
+  "expected_paths": [
+    "src/gameplay/player-movement.txt"
+  ],
+  "expected_globs": [],
+  "forbidden_behaviors": [
+    "implements unrelated systems",
+    "silently redesigns the GDD",
+    "skips systems-index status sync"
+  ]
+}

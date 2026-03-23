@@ -1,0 +1,17 @@
+{
+  "name": "focused_tuning",
+  "fixture": "playable_slice",
+  "mode": "step-by-step",
+  "prompt": "сделай тюнинг боёвки",
+  "expected_first_route": "playtest-and-tune",
+  "expected_next_recommendation": "playtest-and-tune",
+  "expected_paths": [
+    "reports/playtest-report.md"
+  ],
+  "expected_globs": [],
+  "forbidden_behaviors": [
+    "adds major new features",
+    "hides structural gaps with small value changes",
+    "does not sync tuning back to docs or follow-up path"
+  ]
+}

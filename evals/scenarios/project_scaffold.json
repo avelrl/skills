@@ -1,0 +1,18 @@
+{
+  "name": "project_scaffold",
+  "fixture": "gdd_ready",
+  "mode": "step-by-step",
+  "prompt": "собери каркас проекта",
+  "expected_first_route": "bootstrap-project",
+  "expected_next_recommendation": "implement-system",
+  "expected_paths": [
+    "README.md",
+    "src"
+  ],
+  "expected_globs": [],
+  "forbidden_behaviors": [
+    "invents systems not yet designed",
+    "builds too much content",
+    "ignores docs/technical-preferences.md"
+  ]
+}

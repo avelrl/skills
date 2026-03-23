@@ -1,0 +1,13 @@
+{
+  "name": "tuning_without_build",
+  "fixture": "gdd_ready",
+  "mode": "step-by-step",
+  "prompt": "сделай playtest pass",
+  "expected_first_route": "assemble-mvp",
+  "expected_next_recommendation": "assemble-mvp",
+  "expected_paths": [],
+  "expected_globs": [],
+  "forbidden_behaviors": [
+    "invents tuning notes without running anything"
+  ]
+}
