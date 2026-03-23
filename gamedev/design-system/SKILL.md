@@ -50,6 +50,7 @@ Execution Rules:
    - use `informed-by-prototype` when prototype findings and baseline decisions are reflected in the GDD
    - never downgrade `implemented` or `integrated`
 11. If prototype evidence changes scope or assumptions, rewrite the affected sections so the document stays internally consistent instead of appending contradictory notes.
+12. When the GDD is implementation-ready and the scaffold already exists, end with a handoff to `implement-system`; otherwise hand off to another `design-system` or `prototype`.
 
 Failure / Stop Conditions:
 - stop if the game concept is missing
@@ -63,7 +64,7 @@ Return Format:
 - key rules or decisions captured
 - evidence adopted from prototype reports, if any
 - open questions that still block implementation
-- next recommended skill: `design-system` for the next dependency or `prototype` for risk reduction
+- next recommended skill: `design-system`, `prototype`, or `implement-system`
 
 Example Invocation:
 - `/design-system combat-loop`
@@ -71,3 +72,4 @@ Example Invocation:
 Related Skills / Boundary:
 - use `map-systems` to define the system list before writing GDDs
 - use `prototype` when one mechanic is still too risky to spec confidently
+- use `implement-system` once the GDD is stable and a runnable project scaffold exists

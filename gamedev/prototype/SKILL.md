@@ -75,4 +75,5 @@ Example Invocation:
 
 Related Skills / Boundary:
 - use `design-system` before or after the prototype to keep design docs aligned with the learning
+- use `implement-system` only after prototype findings are folded back into the canonical design docs
 - use `architecture-decision` only if the prototype forces a durable technical choice

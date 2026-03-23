@@ -1,0 +1,272 @@
+# Gamedev Workflow
+
+This document is the canonical usage guide for the active `gamedev/` skill set.
+
+Use it to answer two questions:
+
+1. When should the agent run the full gamedev flow automatically?
+2. When should the agent stay inside one explicit step?
+
+## Default Modes
+
+There are only two normal usage modes.
+
+## One-Screen Cheat Sheet
+
+Use this as the short version.
+
+### Fast Rule
+
+- user asks for result like `сделай игру` -> full-run mode
+- user asks for one artifact or one skill like `сделай диздок` -> step-by-step mode
+- if the requested step is blocked, route to the nearest missing prerequisite
+
+### Short Path
+
+`concept -> setup-engine -> map-systems -> design-system -> prototype if risky -> bootstrap-project -> implement-system x N -> assemble-mvp -> playtest-and-tune`
+
+### Tiny Diagram
+
+```mermaid
+flowchart LR
+    A["Concept"] --> B["setup-engine"]
+    B --> C["map-systems"]
+    C --> D["design-system"]
+    D --> E{"Risky?"}
+    E -->|Yes| F["prototype"]
+    F --> D
+    E -->|No| G["bootstrap-project"]
+    G --> H["implement-system x N"]
+    H --> I["assemble-mvp"]
+    I --> J["playtest-and-tune"]
+    J --> K{"Gap found?"}
+    K -->|Missing feature| H
+    K -->|Design unclear| D
+    K -->|Stable MVP| L["Stop / next milestone"]
+```
+
+### Start Here
+
+| User asks for | Start with |
+|---------------|------------|
+| `подбери стек` | `setup-engine` |
+| `разложи по системам` | `map-systems` |
+| `сделай диздок` | `design-system` |
+| `проверь рискованную механику` | `prototype` |
+| `собери каркас проекта` | `bootstrap-project` |
+| `реализуй систему` | `implement-system` |
+| `собери первый playable` | `assemble-mvp` |
+| `сделай тюнинг` | `playtest-and-tune` |
+
+### 1. Full-Run Mode
+
+Use full-run mode when the user asks for an end result rather than a specific artifact or skill step.
+
+Typical prompts:
+
+- `сделай мне игру про X`
+- `собери первый playable`
+- `доведи концепт до MVP`
+
+In full-run mode, the agent should choose the next skill based on the current repository state and move forward through the active flow instead of waiting for the user to name every step.
+
+### 2. Step-by-Step Mode
+
+Use step-by-step mode when the user explicitly asks for one artifact, one decision, or one named skill.
+
+Typical prompts:
+
+- `сделай диздок боёвки`
+- `подбери стек`
+- `собери scaffold`
+- `реализуй movement`
+- `сделай playtest pass`
+
+In step-by-step mode, the agent should stay inside that step, produce the requested artifact, and return the next recommended handoff without silently running the whole chain.
+
+## Mode Selection Rules
+
+Use these rules in order:
+
+1. Explicit skill name wins.
+   If the user names `setup-engine`, `design-system`, `implement-system`, or another gamedev skill, use that skill.
+2. Explicit artifact wins.
+   If the user asks for `docs/technical-preferences.md`, `design/gdd/systems-index.md`, a system GDD, or a report, treat that as step-by-step mode even if the user does not know the skill name.
+3. End-result requests use full-run mode.
+   If the user asks for a game, MVP, vertical slice, or playable build without naming a step, route through the full flow based on what already exists in the repo.
+4. Missing prerequisites route backward.
+   If the requested step cannot be done cleanly, route to the nearest missing prerequisite skill instead of improvising around the gap.
+5. Existing files are the source of truth.
+   Prefer continuing from `docs/technical-preferences.md`, `design/gdd/systems-index.md`, system GDDs, prototype reports, and current code instead of re-asking questions already answered in files.
+
+## Active Flow
+
+The active gamedev path has two connected lanes.
+
+### Preproduction Lane
+
+1. `setup-engine`
+2. `map-systems`
+3. `design-system`
+4. `prototype` when risk is still real
+
+### Production Bridge
+
+1. `bootstrap-project`
+2. `implement-system`
+3. `assemble-mvp`
+4. `playtest-and-tune`
+
+## Full-Run Routing
+
+In full-run mode, choose the next step from repository state.
+
+### No gamedev docs yet
+
+Route:
+
+1. create `design/gdd/game-concept.md` if the concept itself is still missing
+2. run `setup-engine`
+3. run `map-systems`
+
+### Stack is known, but systems are not mapped
+
+Route:
+
+1. use `docs/technical-preferences.md`
+2. run `map-systems`
+3. run `design-system` for the highest-leverage MVP system
+
+### Systems are mapped, but GDDs are still thin
+
+Route:
+
+1. run `design-system` one system at a time in dependency order
+2. run `prototype` only for systems whose risk blocks confident implementation
+3. fold prototype findings back into the canonical GDDs before moving on
+
+### GDDs are ready and implementation can start
+
+Route:
+
+1. run `bootstrap-project` once `docs/technical-preferences.md` is stable
+2. run `implement-system` for one MVP system at a time
+3. update the systems index as systems move to `implemented`
+
+### Multiple systems exist in code
+
+Route:
+
+1. run `assemble-mvp`
+2. verify which systems are now truly `integrated`
+3. run `playtest-and-tune`
+
+### Tuning reveals a real feature gap
+
+Route:
+
+1. return to `implement-system` if the blocker is missing functionality
+2. return to `design-system` or `prototype` if the blocker is actually a design uncertainty
+
+## Step-by-Step Routing
+
+When the user asks for one step, stay inside the scope of that step.
+
+- `setup-engine`: choose the engine and write `docs/technical-preferences.md`
+- `map-systems`: build or refresh `design/gdd/systems-index.md`
+- `design-system`: write one canonical system GDD
+- `prototype`: answer one risky question with disposable code and `REPORT.md`
+- `bootstrap-project`: create the smallest runnable scaffold
+- `implement-system`: implement one approved system in production code
+- `assemble-mvp`: wire implemented systems into one coherent playable loop
+- `playtest-and-tune`: run one focused tuning pass and write the report
+
+End by naming the next recommended skill. Do not silently consume multiple downstream stages unless the user asked for a full run.
+
+## Step-by-Step Full Cycle
+
+Use this when you want the whole path spelled out in the dumbest possible form.
+
+### Straight Path
+
+1. Write or confirm `design/gdd/game-concept.md`.
+   If the concept is still fuzzy, do not choose a stack or implement code yet.
+2. Run `setup-engine`.
+   Output: `docs/technical-preferences.md`.
+3. Run `map-systems`.
+   Output: `design/gdd/systems-index.md`.
+4. Run `design-system` for the first MVP system.
+   Usually start with the system that unlocks the most downstream work.
+5. If that system is risky or unclear, run `prototype`.
+   Then fold findings back into the canonical GDD before moving on.
+6. Repeat `design-system` for the next MVP systems until the first implementation set is stable.
+7. Run `bootstrap-project`.
+   Output: the smallest runnable project scaffold.
+8. Run `implement-system` for one approved system.
+   Repeat one system at a time.
+9. When at least two core systems exist in production code, run `assemble-mvp`.
+   Output: one coherent playable loop plus `reports/mvp-assembly-report.md`.
+10. Run `playtest-and-tune`.
+    Output: one focused tuning pass plus `reports/playtest-report.md`.
+11. If tuning finds a missing mechanic, return to `implement-system`.
+12. If tuning finds a design uncertainty, return to `design-system` or `prototype`.
+13. Repeat the loop until the MVP is playable, understandable, and stable enough for the next milestone.
+
+### Simple Decision Diagram
+
+```mermaid
+flowchart TD
+    A["Have game concept?"] -->|No| B["Write or confirm game-concept.md"]
+    A -->|Yes| C["Run setup-engine"]
+    B --> C
+    C --> D["Run map-systems"]
+    D --> E["Run design-system for next MVP system"]
+    E --> F{"System still risky?"}
+    F -->|Yes| G["Run prototype"]
+    G --> H["Sync findings back into design-system doc"]
+    H --> I{"Enough stable GDDs to start code?"}
+    F -->|No| I
+    I -->|No| E
+    I -->|Yes| J["Run bootstrap-project"]
+    J --> K["Run implement-system for one system"]
+    K --> L{"Enough implemented systems for a loop?"}
+    L -->|No| K
+    L -->|Yes| M["Run assemble-mvp"]
+    M --> N["Run playtest-and-tune"]
+    N --> O{"What did tuning reveal?"}
+    O -->|Missing feature| K
+    O -->|Design uncertainty| E
+    O -->|Playable and stable MVP| P["Stop or move to next milestone"]
+```
+
+### Shortcut Table
+
+| If user says | Start here | Usually next |
+|--------------|------------|--------------|
+| `подбери стек` | `setup-engine` | `map-systems` |
+| `разложи игру по системам` | `map-systems` | `design-system` |
+| `сделай диздок боёвки` | `design-system combat` | `prototype` or next `design-system` |
+| `проверь механику рывка` | `prototype` | update `design-system` |
+| `собери каркас проекта` | `bootstrap-project` | `implement-system` |
+| `реализуй movement` | `implement-system movement` | next `implement-system` or `assemble-mvp` |
+| `собери первый playable` | `assemble-mvp` | `playtest-and-tune` |
+| `сделай тюнинг боёвки` | `playtest-and-tune combat` | `implement-system` or another tuning pass |
+
+## Anti-Patterns
+
+Do not do the following:
+
+- jump from concept straight into `bootstrap-project` when the systems map is still unclear
+- treat `prototype` code as production code
+- implement multiple unrelated systems inside one `implement-system` pass
+- use `assemble-mvp` as a disguised feature factory
+- use `playtest-and-tune` to hide missing mechanics behind value tweaks
+
+## Expected Interaction Style
+
+The routing should feel deterministic, not magical.
+
+- If the user asks for an outcome, the agent may choose the next skill.
+- If the user asks for a specific step, the agent should stay on that step.
+- If the step is blocked, the agent should say which prerequisite is missing and route there explicitly.
+- If the repository already contains the needed artifacts, the agent should continue from them rather than restarting the flow.

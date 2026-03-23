@@ -9,4 +9,4 @@ Use it for:
 
 Default rule:
 - if an active skill or active template depends on a file, it does not belong here.
-- if a file is useful but not part of the default `setup-engine -> map-systems -> design-system -> prototype` path, archive it here instead of deleting it.
+- if a file is useful but not part of the default active path from `setup-engine` through `playtest-and-tune`, archive it here instead of deleting it.

@@ -81,4 +81,7 @@ List only real MVP risks; if only two exist, list two instead of padding.
 - [ ] Design MVP systems in dependency order
 - [ ] Prototype the highest-risk system early
 - [ ] Fold prototype findings back into the relevant GDDs and status rows
+- [ ] Bootstrap or refresh the runnable scaffold with `/bootstrap-project` once the stack and first implementation targets are stable
+- [ ] Implement one MVP system at a time with `/implement-system`
+- [ ] Assemble the smallest coherent playable loop with `/assemble-mvp`
 - [ ] Update this index when a system changes scope or status
