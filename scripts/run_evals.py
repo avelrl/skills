@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, UTC
+import os
 from pathlib import Path
 import shutil
 import sys
@@ -11,11 +12,17 @@ from eval_common import (
     DEFAULT_FIXTURES_ROOT,
     DEFAULT_RUNS_ROOT,
     DEFAULT_SCENARIOS_ROOT,
+    REPO_ROOT,
     Scenario,
     dump_json,
     load_scenario,
     load_scenarios,
 )
+
+
+SKILL_SOURCE_DIRS = ("core", "gamedev", "productivity")
+SOURCE_BUNDLE_DIRS = ("core", "gamedev", "productivity", "templates", "standards")
+DOC_SOURCE_FILES = ("context-management.md", "gamedev-workflow.md", "gamedev-manual-runs.md", "gamedev-autoimprovement.md")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -33,6 +40,11 @@ def build_parser() -> argparse.ArgumentParser:
     prepare_parser.add_argument("--out-root", type=Path, default=DEFAULT_RUNS_ROOT)
     prepare_parser.add_argument("--batch-name", help="Optional batch directory name.")
     prepare_parser.add_argument("--force", action="store_true", help="Overwrite an existing batch directory.")
+    prepare_parser.add_argument(
+        "--no-local-skills",
+        action="store_true",
+        help="Prepare the bare fixture without copying the local skill bundle into the workspace.",
+    )
     return parser
 
 
@@ -75,10 +87,63 @@ def render_instructions(scenario: Scenario, workspace_dir: Path, result_path: Pa
         "3. Fill result.json with the actual route and notes.",
         "4. Judge the run with scripts/judge_evals.py.",
         "",
+        "Prepared extras:",
+        "- local AGENTS.md is copied into the workspace",
+        "- local docs/ workflow references are copied into the workspace",
+        "- local skills are exposed under .codex/skills/",
+        "",
         f"Workspace: {workspace_dir}",
         f"Result file: {result_path}",
     ]
     return "\n".join(lines) + "\n"
+
+
+def copytree_merge(src: Path, dst: Path) -> None:
+    shutil.copytree(src, dst, dirs_exist_ok=True)
+
+
+def discover_skill_dirs(workspace_dir: Path) -> list[Path]:
+    skill_dirs: list[Path] = []
+    for root_name in SKILL_SOURCE_DIRS:
+        root = workspace_dir / root_name
+        if not root.exists():
+            continue
+        for skill_file in root.rglob("SKILL.md"):
+            if "_archive" in skill_file.parts:
+                continue
+            skill_dirs.append(skill_file.parent)
+    return sorted(skill_dirs)
+
+
+def create_skill_symlink(link_path: Path, target_dir: Path) -> None:
+    if link_path.exists() or link_path.is_symlink():
+        if link_path.is_dir() and not link_path.is_symlink():
+            shutil.rmtree(link_path)
+        else:
+            link_path.unlink()
+    relative_target = os.path.relpath(target_dir, start=link_path.parent)
+    os.symlink(relative_target, link_path)
+
+
+def inject_local_skill_bundle(workspace_dir: Path) -> None:
+    for directory_name in SOURCE_BUNDLE_DIRS:
+        copytree_merge(REPO_ROOT / directory_name, workspace_dir / directory_name)
+
+    docs_dir = workspace_dir / "docs"
+    docs_dir.mkdir(parents=True, exist_ok=True)
+    repo_docs = REPO_ROOT / "docs"
+    for filename in DOC_SOURCE_FILES:
+        src = repo_docs / filename
+        if src.exists():
+            shutil.copy2(src, docs_dir / filename)
+
+    shutil.copy2(REPO_ROOT / "AGENTS.md", workspace_dir / "AGENTS.md")
+
+    codex_skills_dir = workspace_dir / ".codex" / "skills"
+    codex_skills_dir.mkdir(parents=True, exist_ok=True)
+    for skill_dir in discover_skill_dirs(workspace_dir):
+        link_path = codex_skills_dir / skill_dir.name
+        create_skill_symlink(link_path, skill_dir)
 
 
 def prepare_scenarios(args: argparse.Namespace) -> int:
@@ -105,6 +170,8 @@ def prepare_scenarios(args: argparse.Namespace) -> int:
         run_dir = batch_dir / scenario_dir_name(scenario.name)
         workspace_dir = run_dir / "workspace"
         shutil.copytree(fixture_dir, workspace_dir)
+        if not args.no_local_skills:
+            inject_local_skill_bundle(workspace_dir)
 
         prompt_path = run_dir / "prompt.txt"
         prompt_path.write_text(scenario.prompt + "\n", encoding="utf-8")

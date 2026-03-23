@@ -44,6 +44,14 @@ For each manual run, record:
 - actual result
 - mismatch notes
 
+Prepared eval workspaces are self-contained:
+
+- `scripts/run_evals.py prepare ...` copies local `AGENTS.md` into each scenario `workspace/`
+- the same prepare step copies the local workflow docs needed for routing
+- active repo skills are exposed under `workspace/.codex/skills/`
+
+This means the manual run should be executed from the prepared `workspace/`, not from the root of this repo, and it does not depend on a global `$HOME/.codex`.
+
 ## Core Manual Scenarios
 
 These are the baseline scenarios.
