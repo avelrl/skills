@@ -11,6 +11,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCENARIOS_ROOT = REPO_ROOT / "evals" / "scenarios"
 DEFAULT_FIXTURES_ROOT = REPO_ROOT / "fixtures"
 DEFAULT_RUNS_ROOT = REPO_ROOT / "reports" / "evals" / "runs"
+DEFAULT_PROPOSALS_ROOT = REPO_ROOT / "reports" / "evals" / "proposals"
 
 
 @dataclass(frozen=True)

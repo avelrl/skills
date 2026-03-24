@@ -68,6 +68,50 @@ The loop should:
 2. rerun the eval suite
 3. keep the patch only if the score improves
 
+Phase 3 is still proposal-only.
+Do not apply the patch automatically.
+Do not edit the repo working tree during the proposal cycle.
+
+#### Phase 3 Scaffold
+
+Use an isolated proposal workspace rooted under `reports/evals/proposals/`.
+
+Minimum operator flow:
+
+```bash
+python3 scripts/run_evals.py prepare-proposal \
+  --baseline-batch reports/evals/runs/<baseline-batch> \
+  --focused-scenarios <scenario-a> <scenario-b>
+
+# edit only reports/evals/proposals/<proposal-id>/workspace/
+
+python3 scripts/run_evals.py finalize-proposal \
+  reports/evals/proposals/<proposal-id>
+
+python3 scripts/run_evals.py judge-proposal \
+  reports/evals/proposals/<proposal-id>
+```
+
+What each command does:
+
+- `prepare-proposal` copies only the allowed editable files into an isolated `workspace/` plus a `baseline/` snapshot
+- `finalize-proposal` validates the editable scope and writes `candidate.patch`
+- `judge-proposal` prepares focused reruns first, waits for those manual runs to be completed, compares them to baseline, and only then prepares the full rerun
+
+Expected proposal artifacts:
+
+- `proposal.json`
+- `candidate.patch`
+- `decision.json`
+- `runs/focused/` and `runs/full/` as disposable rerun workspaces
+
+Acceptance rule:
+
+1. focused rerun must not regress versus baseline
+2. only then run the full configured suite
+3. keep the proposal only if the full rerun improves score, or ties score with fewer failed checks
+4. otherwise keep the artifact only for inspection
+
 ### Phase 4. Controlled Self-Improve Loop
 
 Only after the harness is stable:
@@ -141,6 +185,7 @@ Do not let the loop freely rewrite:
 - unrelated repo docs
 - archived material
 - user project code outside the skill repo
+- proposal rerun artifacts under `reports/evals/proposals/`
 
 ## Failure Cases
 
@@ -199,3 +244,12 @@ The correct next move is:
 2. run it
 3. turn those scenarios into machine-readable evals
 4. only then add proposal or self-improvement logic
+
+That baseline is now in place.
+The correct next move after Phase 2 is a thin Phase 3 scaffold:
+
+1. isolate editable files in proposal workspaces
+2. save candidate patches as artifacts
+3. gate proposals through focused reruns first
+4. require a full rerun before calling a proposal an improvement
+5. keep human review as the final merge gate

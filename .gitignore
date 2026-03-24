@@ -1,6 +1,7 @@
 .DS_Store
 .tmp/
 reports/evals/runs/
+reports/evals/proposals/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -9,4 +10,3 @@ dist/
 coverage/
 .vite/
 *.tsbuildinfo
-
