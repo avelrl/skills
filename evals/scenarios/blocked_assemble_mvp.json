@@ -2,7 +2,7 @@
   "name": "blocked_assemble_mvp",
   "fixture": "scaffold_ready",
   "mode": "step-by-step",
-  "prompt": "Из текущего состояния собери первый playable для внутреннего теста. Если честный loop пока не собирается, не маскируй пробелы placeholder-only assembly и явно назови ближайший production step.",
+  "prompt": "Нужно собрать первый playable для внутреннего теста. Выполни только ближайший корректный шаг по workflow. Если для assemble-mvp не хватает уже implemented systems, не собирай обходной playable, не реализуй новые systems и явно назови следующий skill.",
   "expected_first_route": "implement-system",
   "expected_next_recommendation": "implement-system",
   "acceptable_next_recommendations": [
@@ -11,7 +11,8 @@
   "expected_paths": [],
   "expected_globs": [],
   "forbidden_behaviors": [
-    "fakes assembly with placeholders only",
-    "claims a coherent playable loop without enough implemented systems"
+    "creates reports/mvp-assembly-report.md for a blocked run",
+    "implements missing systems under an assemble-mvp request",
+    "turns a blocked step-by-step request into a full-run recovery"
   ]
 }

@@ -187,13 +187,15 @@ They are meant to stress the richer web-runtime path and end-result routing.
 
 ### 13. Blocked Assemble MVP
 
-- **Prompt**: `собери первый playable для внутреннего теста`
+- **Prompt**: `Нужно собрать первый playable... Выполни только ближайший корректный шаг по workflow`
 - **Fixture**: `scaffold_ready`
+- **Mode**: step-by-step blocked-route check, not a full-run recovery prompt
 - **Expected route**: stop the fake assembly path and route to `implement-system`
 - **Expected output**: no assembly report yet; only the blocked route and next handoff
 - **Bad signs**:
-  - pretends one scaffold plus placeholders is already a playable loop
-  - hides missing implemented systems behind UI-only glue
+  - writes `reports/mvp-assembly-report.md` for a blocked run
+  - unlocks the request by silently implementing missing systems first
+  - turns the blocked step into a disguised full-run recovery
 
 ### 14. Prototype Before Combat Lock
 
@@ -201,7 +203,7 @@ They are meant to stress the richer web-runtime path and end-result routing.
 - **Fixture**: `gdd_ready`
 - **Expected start**: `prototype`
 - **Expected output**: `prototypes/[slug]/REPORT.md`
-- **Typical next step**: `design-system`
+- **Typical next step**: another `prototype` if the spike returns `PIVOT`, otherwise `design-system`
 - **Bad signs**:
   - edits production code
   - writes a combat implementation instead of a spike

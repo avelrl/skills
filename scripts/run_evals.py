@@ -120,6 +120,7 @@ def render_instructions(scenario: Scenario, workspace_dir: Path, result_path: Pa
         "- scenario-local AGENTS.md is generated in the workspace root",
         "- local skill wrappers are exposed under .codex/skills/",
         "- shared repo references are copied into .codex/support/ as a snapshot",
+        "- if a skill references root docs that are not present in the project tree, use the mirrored copies under .codex/support/docs/",
         "",
         f"Workspace: {workspace_dir}",
         f"Result file: {result_path}",
@@ -180,6 +181,11 @@ This directory is a prepared eval sandbox for one scenario.
 - treat `.codex/` as support material, not as the project to modify
 - do not inspect sibling scenario directories or parent eval harness files unless explicitly asked
 - do not depend on a global `$HOME/.codex`; use the local bundle in this workspace instead
+
+## Support Paths
+
+- shared repo docs, templates, and standards are mirrored under `.codex/support/`
+- if a skill mentions root paths like `docs/context-management.md` or `docs/gamedev-workflow.md` and they do not exist in the project root, read the mirrored copies under `.codex/support/docs/`
 """
     (workspace_dir / "AGENTS.md").write_text(content, encoding="utf-8")
 
