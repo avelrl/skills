@@ -51,6 +51,20 @@ def glob_exists(workspace: Path | None, pattern: str, recorded_paths: set[str]) 
     return any(workspace.glob(pattern))
 
 
+def merge_expected_values(expected: str | None, acceptable: list[str]) -> list[str]:
+    values: list[str] = []
+    if expected:
+        values.append(expected)
+    for candidate in acceptable:
+        if candidate and candidate not in values:
+            values.append(candidate)
+    return values
+
+
+def route_matches(actual: str, expected: str | None, acceptable: list[str]) -> bool:
+    return actual in merge_expected_values(expected, acceptable)
+
+
 def score_run(scenario: Scenario, result: dict[str, object]) -> dict[str, object]:
     workspace_value = str(result.get("workspace", "")).strip()
     workspace = Path(workspace_value) if workspace_value else None
@@ -68,12 +82,20 @@ def score_run(scenario: Scenario, result: dict[str, object]) -> dict[str, object
     points_total = 0.0
     points_earned = 0.0
 
-    route_ok = actual_first_route == scenario.expected_first_route
+    expected_first_routes = merge_expected_values(
+        scenario.expected_first_route,
+        scenario.acceptable_first_routes,
+    )
+    route_ok = route_matches(
+        actual_first_route,
+        scenario.expected_first_route,
+        scenario.acceptable_first_routes,
+    )
     checks.append(
         {
             "name": "first_route",
             "passed": route_ok,
-            "expected": scenario.expected_first_route,
+            "expected": expected_first_routes,
             "actual": actual_first_route,
             "weight": 40,
         }
@@ -81,13 +103,21 @@ def score_run(scenario: Scenario, result: dict[str, object]) -> dict[str, object
     points_total += 40
     points_earned += 40 if route_ok else 0
 
-    if scenario.expected_next_recommendation:
-        next_ok = actual_next == scenario.expected_next_recommendation
+    expected_next_routes = merge_expected_values(
+        scenario.expected_next_recommendation,
+        scenario.acceptable_next_recommendations,
+    )
+    if expected_next_routes:
+        next_ok = route_matches(
+            actual_next,
+            scenario.expected_next_recommendation,
+            scenario.acceptable_next_recommendations,
+        )
         checks.append(
             {
                 "name": "next_recommendation",
                 "passed": next_ok,
-                "expected": scenario.expected_next_recommendation,
+                "expected": expected_next_routes,
                 "actual": actual_next,
                 "weight": 10,
             }

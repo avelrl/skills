@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, UTC
-import os
 from pathlib import Path
 import shutil
 import sys
@@ -21,8 +20,38 @@ from eval_common import (
 
 
 SKILL_SOURCE_DIRS = ("core", "gamedev", "productivity")
-SOURCE_BUNDLE_DIRS = ("core", "gamedev", "productivity", "templates", "standards")
-DOC_SOURCE_FILES = ("context-management.md", "gamedev-workflow.md", "gamedev-manual-runs.md", "gamedev-autoimprovement.md")
+SUPPORT_BUNDLE_DIRS = ("core", "gamedev", "productivity", "templates", "standards", "docs")
+SKILL_TEXT_REWRITE_RULES = (
+    ("docs/context-management.md", "__SUPPORT_DOC_CONTEXT__"),
+    ("docs/gamedev-workflow.md", "__SUPPORT_DOC_WORKFLOW__"),
+    ("docs/gamedev-manual-runs.md", "__SUPPORT_DOC_MANUAL_RUNS__"),
+    ("docs/gamedev-autoimprovement.md", "__SUPPORT_DOC_AUTOIMPROVEMENT__"),
+    ("gamedev/templates/", "__SUPPORT_GAMEDEV_TEMPLATES__"),
+    ("gamedev/standards/", "__SUPPORT_GAMEDEV_STANDARDS__"),
+    ("templates/", "__SUPPORT_SHARED_TEMPLATES__"),
+    ("standards/", "__SUPPORT_SHARED_STANDARDS__"),
+)
+SKILL_TEXT_SUPPORT_TARGETS = {
+    "__SUPPORT_DOC_CONTEXT__": "../../support/docs/context-management.md",
+    "__SUPPORT_DOC_WORKFLOW__": "../../support/docs/gamedev-workflow.md",
+    "__SUPPORT_DOC_MANUAL_RUNS__": "../../support/docs/gamedev-manual-runs.md",
+    "__SUPPORT_DOC_AUTOIMPROVEMENT__": "../../support/docs/gamedev-autoimprovement.md",
+    "__SUPPORT_GAMEDEV_TEMPLATES__": "../../support/gamedev/templates/",
+    "__SUPPORT_GAMEDEV_STANDARDS__": "../../support/gamedev/standards/",
+    "__SUPPORT_SHARED_TEMPLATES__": "../../support/templates/",
+    "__SUPPORT_SHARED_STANDARDS__": "../../support/standards/",
+}
+SUPPORT_TEXT_SUPPORT_TARGETS = {
+    "__SUPPORT_DOC_CONTEXT__": ".codex/support/docs/context-management.md",
+    "__SUPPORT_DOC_WORKFLOW__": ".codex/support/docs/gamedev-workflow.md",
+    "__SUPPORT_DOC_MANUAL_RUNS__": ".codex/support/docs/gamedev-manual-runs.md",
+    "__SUPPORT_DOC_AUTOIMPROVEMENT__": ".codex/support/docs/gamedev-autoimprovement.md",
+    "__SUPPORT_GAMEDEV_TEMPLATES__": ".codex/support/gamedev/templates/",
+    "__SUPPORT_GAMEDEV_STANDARDS__": ".codex/support/gamedev/standards/",
+    "__SUPPORT_SHARED_TEMPLATES__": ".codex/support/templates/",
+    "__SUPPORT_SHARED_STANDARDS__": ".codex/support/standards/",
+}
+TEXT_REWRITE_SUFFIXES = {".md", ".txt", ".json", ".yaml", ".yml"}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -88,9 +117,9 @@ def render_instructions(scenario: Scenario, workspace_dir: Path, result_path: Pa
         "4. Judge the run with scripts/judge_evals.py.",
         "",
         "Prepared extras:",
-        "- local AGENTS.md is copied into the workspace",
-        "- local docs/ workflow references are copied into the workspace",
-        "- local skills are exposed under .codex/skills/",
+        "- scenario-local AGENTS.md is generated in the workspace root",
+        "- local skill wrappers are exposed under .codex/skills/",
+        "- shared repo references are copied into .codex/support/ as a snapshot",
         "",
         f"Workspace: {workspace_dir}",
         f"Result file: {result_path}",
@@ -98,14 +127,10 @@ def render_instructions(scenario: Scenario, workspace_dir: Path, result_path: Pa
     return "\n".join(lines) + "\n"
 
 
-def copytree_merge(src: Path, dst: Path) -> None:
-    shutil.copytree(src, dst, dirs_exist_ok=True)
-
-
-def discover_skill_dirs(workspace_dir: Path) -> list[Path]:
+def discover_repo_skill_dirs() -> list[Path]:
     skill_dirs: list[Path] = []
     for root_name in SKILL_SOURCE_DIRS:
-        root = workspace_dir / root_name
+        root = REPO_ROOT / root_name
         if not root.exists():
             continue
         for skill_file in root.rglob("SKILL.md"):
@@ -115,35 +140,81 @@ def discover_skill_dirs(workspace_dir: Path) -> list[Path]:
     return sorted(skill_dirs)
 
 
-def create_skill_symlink(link_path: Path, target_dir: Path) -> None:
-    if link_path.exists() or link_path.is_symlink():
-        if link_path.is_dir() and not link_path.is_symlink():
-            shutil.rmtree(link_path)
-        else:
-            link_path.unlink()
-    relative_target = os.path.relpath(target_dir, start=link_path.parent)
-    os.symlink(relative_target, link_path)
+def rewrite_paths(text: str, target_map: dict[str, str]) -> str:
+    rewritten = text
+    for source, placeholder in SKILL_TEXT_REWRITE_RULES:
+        rewritten = rewritten.replace(source, placeholder)
+    for placeholder, target in target_map.items():
+        rewritten = rewritten.replace(placeholder, target)
+    return rewritten
+
+
+def rewrite_text_files(root: Path, target_map: dict[str, str]) -> None:
+    for path in root.rglob("*"):
+        if not path.is_file():
+            continue
+        if path.suffix.lower() not in TEXT_REWRITE_SUFFIXES and path.name != "SKILL.md":
+            continue
+        try:
+            original = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        rewritten = rewrite_paths(original, target_map)
+        if rewritten != original:
+            path.write_text(rewritten, encoding="utf-8")
+
+
+def write_workspace_agents(workspace_dir: Path) -> None:
+    content = """# Eval Workspace Guide
+
+This directory is a prepared eval sandbox for one scenario.
+
+## What Is In Scope
+
+- project files in this workspace are the files under test
+- local repo skills are available under `.codex/skills/`
+- shared skill references are copied under `.codex/support/` as a local snapshot
+
+## Working Rules
+
+- treat `.codex/` as support material, not as the project to modify
+- do not inspect sibling scenario directories or parent eval harness files unless explicitly asked
+- do not depend on a global `$HOME/.codex`; use the local bundle in this workspace instead
+"""
+    (workspace_dir / "AGENTS.md").write_text(content, encoding="utf-8")
+
+
+def install_support_bundle(workspace_dir: Path) -> None:
+    support_root = workspace_dir / ".codex" / "support"
+    support_root.mkdir(parents=True, exist_ok=True)
+    for directory_name in SUPPORT_BUNDLE_DIRS:
+        shutil.copytree(REPO_ROOT / directory_name, support_root / directory_name)
+    rewrite_text_files(support_root, SUPPORT_TEXT_SUPPORT_TARGETS)
+
+
+def install_skill_wrappers(workspace_dir: Path) -> None:
+    skills_root = workspace_dir / ".codex" / "skills"
+    skills_root.mkdir(parents=True, exist_ok=True)
+
+    for source_skill_dir in discover_repo_skill_dirs():
+        target_skill_dir = skills_root / source_skill_dir.name
+        shutil.copytree(source_skill_dir, target_skill_dir)
+
+        skill_file = target_skill_dir / "SKILL.md"
+        if skill_file.exists():
+            skill_file.write_text(
+                rewrite_paths(skill_file.read_text(encoding="utf-8"), SKILL_TEXT_SUPPORT_TARGETS),
+                encoding="utf-8",
+            )
 
 
 def inject_local_skill_bundle(workspace_dir: Path) -> None:
-    for directory_name in SOURCE_BUNDLE_DIRS:
-        copytree_merge(REPO_ROOT / directory_name, workspace_dir / directory_name)
-
-    docs_dir = workspace_dir / "docs"
-    docs_dir.mkdir(parents=True, exist_ok=True)
-    repo_docs = REPO_ROOT / "docs"
-    for filename in DOC_SOURCE_FILES:
-        src = repo_docs / filename
-        if src.exists():
-            shutil.copy2(src, docs_dir / filename)
-
-    shutil.copy2(REPO_ROOT / "AGENTS.md", workspace_dir / "AGENTS.md")
-
-    codex_skills_dir = workspace_dir / ".codex" / "skills"
-    codex_skills_dir.mkdir(parents=True, exist_ok=True)
-    for skill_dir in discover_skill_dirs(workspace_dir):
-        link_path = codex_skills_dir / skill_dir.name
-        create_skill_symlink(link_path, skill_dir)
+    codex_dir = workspace_dir / ".codex"
+    if codex_dir.exists():
+        shutil.rmtree(codex_dir)
+    write_workspace_agents(workspace_dir)
+    install_support_bundle(workspace_dir)
+    install_skill_wrappers(workspace_dir)
 
 
 def prepare_scenarios(args: argparse.Namespace) -> int:

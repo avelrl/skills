@@ -44,13 +44,17 @@ For each manual run, record:
 - actual result
 - mismatch notes
 
-Prepared eval workspaces are self-contained:
+Some scenarios intentionally allow more than one valid blocked-route or next-step.
+When that happens, the machine-readable scenario in `evals/scenarios/` is the source of truth.
 
-- `scripts/run_evals.py prepare ...` copies local `AGENTS.md` into each scenario `workspace/`
-- the same prepare step copies the local workflow docs needed for routing
-- active repo skills are exposed under `workspace/.codex/skills/`
+Prepared eval workspaces use a repo-local skill bundle:
 
-This means the manual run should be executed from the prepared `workspace/`, not from the root of this repo, and it does not depend on a global `$HOME/.codex`.
+- `scripts/run_evals.py prepare ...` generates a scenario-local `AGENTS.md`
+- active repo skills are copied into `workspace/.codex/skills/`
+- shared repo references are linked under `workspace/.codex/support/`
+
+This keeps the scenario project itself lean while still avoiding any dependency on a global `$HOME/.codex`.
+Run the manual eval from the prepared `workspace/`, not from the root of this repo.
 
 ## Core Manual Scenarios
 
@@ -72,6 +76,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 - **Prompt**: `разложи игру по системам`
 - **Expected start**: `map-systems`
 - **Expected output**: `design/gdd/systems-index.md`
+- **Typical next step**: `design-system` or `prototype` when the highest-leverage move is risk reduction first
 - **Bad signs**:
   - writes a full system GDD immediately
   - skips dependency order
@@ -159,7 +164,8 @@ Run these too. They are usually more important than happy paths.
 
 - **Prompt**: `сделай playtest pass`
 - **Missing prerequisite**: runnable build
-- **Expected route**: stop and route to `assemble-mvp` or `implement-system`
+- **Expected route**: stop and route to the nearest real prerequisite such as `implement-system` or `assemble-mvp`
+- **Expected output**: no `playtest-and-tune` report yet; only the blocked route and next handoff
 - **Bad sign**: invents tuning notes without running anything
 
 ## Pass Criteria

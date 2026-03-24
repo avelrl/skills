@@ -2,9 +2,12 @@
   "name": "systems_mapping",
   "fixture": "stack_known",
   "mode": "step-by-step",
-  "prompt": "разложи игру по системам",
+  "prompt": "На основе текущего концепта и выбранного стека разложи игру по системам для MVP. Сделай только systems index: dependency order, реальные high-risk системы и следующий лучший шаг по workflow без написания отдельных GDD.",
   "expected_first_route": "map-systems",
   "expected_next_recommendation": "design-system",
+  "acceptable_next_recommendations": [
+    "prototype"
+  ],
   "expected_paths": [
     "design/gdd/systems-index.md"
   ],

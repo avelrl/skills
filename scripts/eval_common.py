@@ -19,8 +19,10 @@ class Scenario:
     fixture: str
     mode: str
     prompt: str
-    expected_first_route: str
+    expected_first_route: str | None
+    acceptable_first_routes: list[str]
     expected_next_recommendation: str | None
+    acceptable_next_recommendations: list[str]
     expected_paths: list[str]
     expected_globs: list[str]
     forbidden_behaviors: list[str]
@@ -29,17 +31,27 @@ class Scenario:
     @classmethod
     def from_path(cls, path: Path) -> "Scenario":
         payload = json.loads(path.read_text(encoding="utf-8"))
-        required = ["name", "fixture", "mode", "prompt", "expected_first_route"]
+        required = ["name", "fixture", "mode", "prompt"]
         missing = [key for key in required if key not in payload or payload[key] == ""]
         if missing:
             raise ValueError(f"{path}: missing required fields: {', '.join(missing)}")
+        expected_first_route = payload.get("expected_first_route")
+        acceptable_first_routes = list(payload.get("acceptable_first_routes", []))
+        if expected_first_route in ("", None):
+            expected_first_route = None
+        if not expected_first_route and not acceptable_first_routes:
+            raise ValueError(f"{path}: missing required route expectation")
         return cls(
             name=payload["name"],
             fixture=payload["fixture"],
             mode=payload["mode"],
             prompt=payload["prompt"],
-            expected_first_route=payload["expected_first_route"],
+            expected_first_route=expected_first_route,
+            acceptable_first_routes=acceptable_first_routes,
             expected_next_recommendation=payload.get("expected_next_recommendation"),
+            acceptable_next_recommendations=list(
+                payload.get("acceptable_next_recommendations", [])
+            ),
             expected_paths=list(payload.get("expected_paths", [])),
             expected_globs=list(payload.get("expected_globs", [])),
             forbidden_behaviors=list(payload.get("forbidden_behaviors", [])),
@@ -53,7 +65,9 @@ class Scenario:
             "mode": self.mode,
             "prompt": self.prompt,
             "expected_first_route": self.expected_first_route,
+            "acceptable_first_routes": self.acceptable_first_routes,
             "expected_next_recommendation": self.expected_next_recommendation,
+            "acceptable_next_recommendations": self.acceptable_next_recommendations,
             "expected_paths": self.expected_paths,
             "expected_globs": self.expected_globs,
             "forbidden_behaviors": self.forbidden_behaviors,

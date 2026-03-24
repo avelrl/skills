@@ -1,10 +1,16 @@
 {
   "name": "tuning_without_build",
-  "fixture": "gdd_ready",
+  "fixture": "scaffold_ready",
   "mode": "step-by-step",
-  "prompt": "сделай playtest pass",
-  "expected_first_route": "assemble-mvp",
-  "expected_next_recommendation": "assemble-mvp",
+  "prompt": "Нужно провести playtest по текущей веб-сборке, зафиксировать проблемы и по возможности сразу подправить критичные вещи. Если полноценный playable loop ещё не собран, не выдумывай tuning и явно назови ближайший следующий skill.",
+  "expected_first_route": "implement-system",
+  "acceptable_first_routes": [
+    "assemble-mvp"
+  ],
+  "expected_next_recommendation": "implement-system",
+  "acceptable_next_recommendations": [
+    "assemble-mvp"
+  ],
   "expected_paths": [],
   "expected_globs": [],
   "forbidden_behaviors": [

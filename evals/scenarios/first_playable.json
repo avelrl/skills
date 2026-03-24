@@ -2,7 +2,7 @@
   "name": "first_playable",
   "fixture": "implemented_core_pair",
   "mode": "step-by-step",
-  "prompt": "собери первый playable",
+  "prompt": "Из уже реализованных Player Movement и Combat Loop собери первый playable MVP. Не переписывай системы с нуля; добавляй только assembly glue, минимальные связки, обновление статусов и mvp assembly report.",
   "expected_first_route": "assemble-mvp",
   "expected_next_recommendation": "playtest-and-tune",
   "expected_paths": [

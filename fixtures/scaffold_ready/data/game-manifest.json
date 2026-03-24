@@ -1,0 +1,22 @@
+{
+  "id": "courier-drift",
+  "title": "Courier Drift",
+  "tagline": "A small top-down action game about a courier escaping a collapsing industrial district.",
+  "targetSystem": "Player Movement",
+  "buildGoal": "Scaffold only",
+  "districts": ["Switchyard", "Canal Edge", "Furnace Spine"],
+  "todo": [
+    "TODO: replace the boot scene with the first real gameplay scene.",
+    "TODO: implement Player Movement before wiring combat or deliveries.",
+    "TODO: swap placeholder geometry for production UI, sprites, and level data."
+  ],
+  "palette": {
+    "sky": "#bccbd1",
+    "smog": "#7f9097",
+    "asphalt": "#1f2629",
+    "lane": "#46565d",
+    "signal": "#e6ede7",
+    "accent": "#ff8b3d",
+    "warning": "#ffd36c"
+  }
+}
