@@ -1,0 +1,17 @@
+{
+  "name": "blocked_assemble_mvp",
+  "fixture": "scaffold_ready",
+  "mode": "step-by-step",
+  "prompt": "Из текущего состояния собери первый playable для внутреннего теста. Если честный loop пока не собирается, не маскируй пробелы placeholder-only assembly и явно назови ближайший production step.",
+  "expected_first_route": "implement-system",
+  "expected_next_recommendation": "implement-system",
+  "acceptable_next_recommendations": [
+    "design-system"
+  ],
+  "expected_paths": [],
+  "expected_globs": [],
+  "forbidden_behaviors": [
+    "fakes assembly with placeholders only",
+    "claims a coherent playable loop without enough implemented systems"
+  ]
+}

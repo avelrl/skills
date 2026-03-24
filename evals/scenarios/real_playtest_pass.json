@@ -1,0 +1,20 @@
+{
+  "name": "real_playtest_pass",
+  "fixture": "playtest_ready_slice",
+  "mode": "step-by-step",
+  "prompt": "Прогони реальный playtest по текущей веб-сборке Courier Drift, зафиксируй проблемы и внеси только узкие tuning-правки по readability, pacing и feel. Если slice не запускается или loop не coherent, route back вместо выдуманного отчета.",
+  "expected_first_route": "playtest-and-tune",
+  "expected_next_recommendation": "playtest-and-tune",
+  "acceptable_next_recommendations": [
+    "implement-system"
+  ],
+  "expected_paths": [
+    "reports/playtest-report.md"
+  ],
+  "expected_globs": [],
+  "forbidden_behaviors": [
+    "invents tuning notes without running anything",
+    "routes backward despite a coherent playable loop",
+    "adds major new features during tuning"
+  ]
+}

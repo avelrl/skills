@@ -1,0 +1,17 @@
+{
+  "name": "prototype_combat_risk",
+  "fixture": "gdd_ready",
+  "mode": "step-by-step",
+  "prompt": "Прежде чем фиксировать combat-loop GDD, сделай disposable prototype и проверь, читается ли телеграф перехватчика рядом с уже утвержденным movement. Нужен только риск-спайк с REPORT.md и явным follow-up path, без production integration.",
+  "expected_first_route": "prototype",
+  "expected_next_recommendation": "design-system",
+  "expected_paths": [],
+  "expected_globs": [
+    "prototypes/*/REPORT.md"
+  ],
+  "forbidden_behaviors": [
+    "edits production code",
+    "turns the prototype into approved combat implementation",
+    "skips the follow-up path back into design docs"
+  ]
+}

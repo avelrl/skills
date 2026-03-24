@@ -169,6 +169,56 @@ Run these too. They are usually more important than happy paths.
 - **Expected output**: no `playtest-and-tune` report yet; only the blocked route and next handoff
 - **Bad sign**: invents tuning notes without running anything
 
+## Phase 2 Regression Scenarios
+
+Run these after the baseline set is green.
+They are meant to stress the richer web-runtime path and end-result routing.
+
+### 12. Real Playtest Pass
+
+- **Prompt**: `Прогони реальный playtest по текущей веб-сборке Courier Drift...`
+- **Fixture**: `playtest_ready_slice`
+- **Expected start**: `playtest-and-tune`
+- **Expected output**: `reports/playtest-report.md`
+- **Bad signs**:
+  - routes backward even though the playable slice exists
+  - writes tuning notes without a real run
+  - adds new systems instead of tuning the current loop
+
+### 13. Blocked Assemble MVP
+
+- **Prompt**: `собери первый playable для внутреннего теста`
+- **Fixture**: `scaffold_ready`
+- **Expected route**: stop the fake assembly path and route to `implement-system`
+- **Expected output**: no assembly report yet; only the blocked route and next handoff
+- **Bad signs**:
+  - pretends one scaffold plus placeholders is already a playable loop
+  - hides missing implemented systems behind UI-only glue
+
+### 14. Prototype Before Combat Lock
+
+- **Prompt**: `сделай disposable prototype и проверь, читается ли телеграф перехватчика`
+- **Fixture**: `gdd_ready`
+- **Expected start**: `prototype`
+- **Expected output**: `prototypes/[slug]/REPORT.md`
+- **Typical next step**: `design-system`
+- **Bad signs**:
+  - edits production code
+  - writes a combat implementation instead of a spike
+  - skips the documentation follow-up path
+
+### 15. Full-Run Routing From Known Stack
+
+- **Prompt**: `Хочу довести этот концепт до первого web MVP`
+- **Fixture**: `stack_known`
+- **Expected mode**: full-run
+- **Expected first route**: `map-systems`
+- **Expected output**: `design/gdd/systems-index.md`
+- **Bad signs**:
+  - jumps straight into scaffold or code
+  - skips the systems map even though stack selection is already done
+  - silently runs too far downstream without grounding the route first
+
 ## Pass Criteria
 
 A scenario passes when:
@@ -214,6 +264,7 @@ Run in this order when validating a new revision:
 
 1. blocked scenarios first
 2. core happy paths next
-3. full-run scenario last
+3. phase 2 regressions after the baseline set is green
+4. full-run scenario last
 
 If blocked scenarios fail, do not trust the happy path results.
