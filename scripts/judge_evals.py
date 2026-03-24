@@ -28,6 +28,24 @@ def load_result(path: Path) -> dict[str, object]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def missing_result_fields(scenario: Scenario, result: dict[str, object]) -> list[str]:
+    missing: list[str] = []
+
+    actual_first_route = str(result.get("actual_first_route", "")).strip()
+    if not actual_first_route:
+        missing.append("actual_first_route")
+
+    expected_next_routes = merge_expected_values(
+        scenario.expected_next_recommendation,
+        scenario.acceptable_next_recommendations,
+    )
+    actual_next = str(result.get("actual_next_recommendation", "")).strip()
+    if expected_next_routes and not actual_next:
+        missing.append("actual_next_recommendation")
+
+    return missing
+
+
 def candidate_paths(result: dict[str, object]) -> set[str]:
     values = result.get("created_or_updated_paths", [])
     if not isinstance(values, list):
@@ -197,6 +215,10 @@ def scenario_from_result(result: dict[str, object], scenarios_root: Path) -> Sce
 def judge_result(result_file: Path, scenarios_root: Path) -> dict[str, object]:
     result = load_result(result_file)
     scenario = scenario_from_result(result, scenarios_root)
+    missing_fields = missing_result_fields(scenario, result)
+    if missing_fields:
+        fields = ", ".join(missing_fields)
+        raise ValueError(f"{result_file}: missing required result fields: {fields}")
     summary = score_run(scenario, result)
     summary_path = result_file.with_name("judgement.json")
     dump_json(summary_path, summary)
@@ -212,7 +234,20 @@ def judge_batch(batch_dir: Path, scenarios_root: Path) -> int:
     if not result_files:
         raise SystemExit(f"no result.json files found under {batch_dir}")
 
-    summaries = [judge_result(result_file, scenarios_root) for result_file in result_files]
+    summaries: list[dict[str, object]] = []
+    errors: list[str] = []
+    for result_file in result_files:
+        try:
+            summaries.append(judge_result(result_file, scenarios_root))
+        except ValueError as exc:
+            errors.append(str(exc))
+
+    if errors:
+        print("incomplete result metadata:")
+        for error in errors:
+            print(f"  {error}")
+        return 1
+
     passed = sum(1 for summary in summaries if summary["passed"])
     average_score = round(sum(float(summary["score"]) for summary in summaries) / len(summaries), 1)
     batch_summary = {
