@@ -184,7 +184,7 @@ When the user asks for one step, stay inside the scope of that step.
 - `bootstrap-project`: create the smallest runnable scaffold
 - `implement-system`: implement one approved system in production code
 - `assemble-mvp`: wire implemented systems into one coherent playable loop
-- `playtest-and-tune`: run one focused tuning pass and write the report
+- `playtest-and-tune`: run one focused tuning pass and write the report only after the playable loop actually runs; otherwise route back with no report
 
 End by naming the next recommended skill. Do not silently consume multiple downstream stages unless the user asked for a full run.
 
@@ -255,7 +255,7 @@ flowchart TD
 | `собери каркас проекта` | `bootstrap-project` | `implement-system` |
 | `реализуй movement` | `implement-system movement` | next `implement-system` or `assemble-mvp` |
 | `собери первый playable` | `assemble-mvp` | `playtest-and-tune` |
-| `сделай тюнинг боёвки` | `playtest-and-tune combat` | `implement-system` or another tuning pass |
+| `сделай тюнинг боёвки` | `playtest-and-tune combat` | `implement-system`, `assemble-mvp`, or another tuning pass |
 
 ## Anti-Patterns
 
@@ -266,6 +266,7 @@ Do not do the following:
 - implement multiple unrelated systems inside one `implement-system` pass
 - use `assemble-mvp` as a disguised feature factory
 - use `playtest-and-tune` to hide missing mechanics behind value tweaks
+- write a `playtest-and-tune` report for a scaffold or blocked run that never became a real playable loop
 
 ## Expected Interaction Style
 

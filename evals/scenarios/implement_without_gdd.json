@@ -5,6 +5,9 @@
   "prompt": "Нужно добавить combat в текущий MVP. Выполни только ближайший корректный шаг по workflow. Если для реализации не хватает обязательного design-артефакта или другого prerequisite, не кодируй обходной путь и явно назови следующий skill.",
   "expected_first_route": "design-system",
   "expected_next_recommendation": "design-system",
+  "acceptable_next_recommendations": [
+    "bootstrap-project"
+  ],
   "expected_paths": [],
   "expected_globs": [],
   "forbidden_behaviors": [

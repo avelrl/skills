@@ -151,6 +151,7 @@ Run these too. They are usually more important than happy paths.
 - **Prompt**: `реализуй combat`
 - **Missing prerequisite**: system GDD
 - **Expected route**: stop and route to `design-system`
+- **Typical next step after the missing GDD is written**: `bootstrap-project` if the runnable scaffold is still missing
 - **Bad sign**: starts coding anyway
 
 ### 10. Assembly Without Enough Systems
