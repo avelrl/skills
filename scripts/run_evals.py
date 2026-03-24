@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, UTC
+from fnmatch import fnmatch
+import json
 from pathlib import Path
 import shutil
 import sys
@@ -52,6 +54,21 @@ SUPPORT_TEXT_SUPPORT_TARGETS = {
     "__SUPPORT_SHARED_STANDARDS__": ".codex/support/standards/",
 }
 TEXT_REWRITE_SUFFIXES = {".md", ".txt", ".json", ".yaml", ".yml"}
+RESULT_SYNC_IGNORE_PATTERNS = (
+    ".codex/**",
+    ".git/**",
+    ".DS_Store",
+    "AGENTS.md",
+    "coverage/**",
+    "dist/**",
+    "node_modules/**",
+    "package-lock.json",
+    "playwright-report/**",
+    "progress.md",
+    "test-results/**",
+    ".playwright/**",
+    ".playwrig/**",
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -74,6 +91,14 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Prepare the bare fixture without copying the local skill bundle into the workspace.",
     )
+
+    sync_parser = subparsers.add_parser(
+        "sync-results",
+        help="Refresh created_or_updated_paths in one run directory, one result.json, or a whole batch.",
+    )
+    sync_parser.add_argument("target", type=Path, help="Run directory, batch directory, or result.json path.")
+    sync_parser.add_argument("--scenarios-root", type=Path, default=DEFAULT_SCENARIOS_ROOT)
+    sync_parser.add_argument("--fixtures-root", type=Path, default=DEFAULT_FIXTURES_ROOT)
     return parser
 
 
@@ -83,6 +108,10 @@ def scenario_dir_name(name: str) -> str:
 
 def timestamp_slug() -> str:
     return datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+
+
+def load_result(path: Path) -> dict[str, object]:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def list_scenarios(scenarios_root: Path) -> int:
@@ -115,6 +144,7 @@ def render_instructions(scenario: Scenario, workspace_dir: Path, result_path: Pa
         "2. Run the agent against the prompt in prompt.txt.",
         "3. Fill result.json with the actual route fields and notes.",
         "   Required before judging: actual_first_route and actual_next_recommendation when the scenario expects a next step.",
+        "   Optional helper: python scripts/run_evals.py sync-results <run-dir-or-batch-dir> to refresh created_or_updated_paths from the workspace diff.",
         "4. Judge the run with scripts/judge_evals.py.",
         "",
         "Prepared extras:",
@@ -224,6 +254,100 @@ def inject_local_skill_bundle(workspace_dir: Path) -> None:
     install_skill_wrappers(workspace_dir)
 
 
+def should_ignore_result_sync_path(relative_path: str) -> bool:
+    normalized = relative_path.strip().replace("\\", "/")
+    if not normalized:
+        return True
+    return any(fnmatch(normalized, pattern) for pattern in RESULT_SYNC_IGNORE_PATTERNS)
+
+
+def tracked_files(root: Path) -> dict[str, Path]:
+    files: dict[str, Path] = {}
+    for path in root.rglob("*"):
+        if not path.is_file():
+            continue
+        relative_path = path.relative_to(root).as_posix()
+        if should_ignore_result_sync_path(relative_path):
+            continue
+        files[relative_path] = path
+    return files
+
+
+def detect_created_or_updated_paths(fixture_dir: Path, workspace_dir: Path) -> list[str]:
+    fixture_files = tracked_files(fixture_dir)
+    workspace_files = tracked_files(workspace_dir)
+
+    changed_paths: list[str] = []
+    for relative_path, workspace_file in sorted(workspace_files.items()):
+        fixture_file = fixture_files.get(relative_path)
+        if fixture_file is None:
+            changed_paths.append(relative_path)
+            continue
+        if workspace_file.read_bytes() != fixture_file.read_bytes():
+            changed_paths.append(relative_path)
+    return changed_paths
+
+
+def scenario_from_result_payload(result: dict[str, object], scenarios_root: Path) -> Scenario:
+    source = str(result.get("scenario_file", "")).strip()
+    if source:
+        source_path = Path(source)
+        if source_path.exists():
+            return Scenario.from_path(source_path)
+
+    name = str(result.get("scenario", "")).strip()
+    if not name:
+        raise SystemExit("result file is missing scenario name")
+    return load_scenario(name, scenarios_root)
+
+
+def result_files_from_target(target: Path) -> list[Path]:
+    if target.is_file():
+        if target.name != "result.json":
+            raise SystemExit(f"expected a result.json file, got: {target}")
+        return [target]
+
+    if not target.exists():
+        raise SystemExit(f"target not found: {target}")
+
+    direct_result = target / "result.json"
+    if direct_result.exists():
+        return [direct_result]
+
+    result_files = sorted(target.glob("*/result.json"))
+    if result_files:
+        return result_files
+
+    raise SystemExit(f"no result.json files found under {target}")
+
+
+def sync_result_file(result_file: Path, scenarios_root: Path, fixtures_root: Path) -> None:
+    result = load_result(result_file)
+    scenario = scenario_from_result_payload(result, scenarios_root)
+    fixture_dir = fixtures_root / scenario.fixture
+    if not fixture_dir.exists():
+        raise SystemExit(f"fixture not found for {scenario.name}: {fixture_dir}")
+
+    workspace_value = str(result.get("workspace", "")).strip()
+    if not workspace_value:
+        raise SystemExit(f"{result_file}: workspace is missing from result.json")
+    workspace_dir = Path(workspace_value)
+    if not workspace_dir.exists():
+        raise SystemExit(f"{result_file}: workspace not found: {workspace_dir}")
+
+    changed_paths = detect_created_or_updated_paths(fixture_dir, workspace_dir)
+    result["created_or_updated_paths"] = changed_paths
+    dump_json(result_file, result)
+    print(f"synced {scenario.name}: {len(changed_paths)} path(s)")
+
+
+def sync_results(args: argparse.Namespace) -> int:
+    result_files = result_files_from_target(args.target)
+    for result_file in result_files:
+        sync_result_file(result_file, args.scenarios_root, args.fixtures_root)
+    return 0
+
+
 def prepare_scenarios(args: argparse.Namespace) -> int:
     scenarios = select_scenarios(args)
     batch_name = args.batch_name or timestamp_slug()
@@ -299,6 +423,8 @@ def main() -> int:
         return list_scenarios(args.scenarios_root)
     if args.command == "prepare":
         return prepare_scenarios(args)
+    if args.command == "sync-results":
+        return sync_results(args)
     parser.print_help()
     return 1
 
