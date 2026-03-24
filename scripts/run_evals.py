@@ -99,6 +99,22 @@ def build_parser() -> argparse.ArgumentParser:
     sync_parser.add_argument("target", type=Path, help="Run directory, batch directory, or result.json path.")
     sync_parser.add_argument("--scenarios-root", type=Path, default=DEFAULT_SCENARIOS_ROOT)
     sync_parser.add_argument("--fixtures-root", type=Path, default=DEFAULT_FIXTURES_ROOT)
+
+    route_parser = subparsers.add_parser(
+        "record-routes",
+        help="Write actual_first_route and actual_next_recommendation into one result.json or one run directory.",
+    )
+    route_parser.add_argument("target", type=Path, help="Run directory or result.json path.")
+    route_parser.add_argument("--first-route", required=True, help="Actual first route chosen during the run.")
+    route_parser.add_argument(
+        "--next-route",
+        help="Actual next recommendation chosen during the run. Required when the scenario expects one and result.json is still blank.",
+    )
+    route_parser.add_argument(
+        "--note",
+        help="Optional note to write into result.json. Replaces the existing notes field when provided.",
+    )
+    route_parser.add_argument("--scenarios-root", type=Path, default=DEFAULT_SCENARIOS_ROOT)
     return parser
 
 
@@ -145,6 +161,7 @@ def render_instructions(scenario: Scenario, workspace_dir: Path, result_path: Pa
         "3. Fill result.json with the actual route fields and notes.",
         "   Required before judging: actual_first_route and actual_next_recommendation when the scenario expects a next step.",
         "   Optional helper: python scripts/run_evals.py sync-results <run-dir-or-batch-dir> to refresh created_or_updated_paths from the workspace diff.",
+        "   Optional helper: python scripts/run_evals.py record-routes <run-dir> --first-route <skill> --next-route <skill> to write route metadata.",
         "4. Judge the run with scripts/judge_evals.py.",
         "",
         "Prepared extras:",
@@ -348,6 +365,44 @@ def sync_results(args: argparse.Namespace) -> int:
     return 0
 
 
+def record_routes(args: argparse.Namespace) -> int:
+    result_files = result_files_from_target(args.target)
+    if len(result_files) != 1:
+        raise SystemExit("record-routes expects one run directory or one result.json, not a whole batch")
+
+    result_file = result_files[0]
+    result = load_result(result_file)
+    scenario = scenario_from_result_payload(result, args.scenarios_root)
+
+    result["actual_first_route"] = args.first_route.strip()
+
+    expected_next_routes = []
+    if scenario.expected_next_recommendation:
+        expected_next_routes.append(scenario.expected_next_recommendation)
+    for candidate in scenario.acceptable_next_recommendations:
+        if candidate and candidate not in expected_next_routes:
+            expected_next_routes.append(candidate)
+
+    existing_next = str(result.get("actual_next_recommendation", "")).strip()
+    if args.next_route is not None:
+        result["actual_next_recommendation"] = args.next_route.strip()
+    elif expected_next_routes and not existing_next:
+        raise SystemExit(
+            f"{result_file}: --next-route is required because scenario {scenario.name} expects a next recommendation"
+        )
+
+    if args.note is not None:
+        result["notes"] = args.note
+
+    dump_json(result_file, result)
+    actual_next = str(result.get("actual_next_recommendation", "")).strip()
+    print(
+        f"recorded {scenario.name}: first_route={result['actual_first_route']} "
+        f"next_recommendation={actual_next or '<empty>'}"
+    )
+    return 0
+
+
 def prepare_scenarios(args: argparse.Namespace) -> int:
     scenarios = select_scenarios(args)
     batch_name = args.batch_name or timestamp_slug()
@@ -425,6 +480,8 @@ def main() -> int:
         return prepare_scenarios(args)
     if args.command == "sync-results":
         return sync_results(args)
+    if args.command == "record-routes":
+        return record_routes(args)
     parser.print_help()
     return 1
 
