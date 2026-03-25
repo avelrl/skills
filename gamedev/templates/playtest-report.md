@@ -6,7 +6,8 @@
 - **Date**: [YYYY-MM-DD]
 - **Focus Area**: [General MVP sanity | combat-readability | controls | pacing]
 - **Build or Run Target**: [Command, scene, or target]
-- **Outcome**: [Improved | Mixed | No Improvement | Blocked]
+- **Verification Commands Run**: [Exact commands run or `Blocked by environment: ...`]
+- **Outcome**: [Improved | Mixed | Stable | No Improvement | Blocked]
 
 ## Baseline Observations
 
@@ -15,6 +16,7 @@
 
 ## Changes Made
 
+- [Use `None adopted` if the real playtest passed and no tuning change was accepted]
 - [Changed value, feedback, or small logic adjustment]
 - [Changed value, feedback, or small logic adjustment]
 
@@ -22,6 +24,11 @@
 
 - [What changed after tuning]
 - [What changed after tuning]
+
+## Evidence Artifacts
+
+- [Stable artifact path under `reports/` or another versioned project folder]
+- [Or one reproducible verification command if no artifact was kept]
 
 ## What Improved
 

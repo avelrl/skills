@@ -6,6 +6,7 @@
 - **Date**: [YYYY-MM-DD]
 - **Slice**: [Name]
 - **Build or Run Target**: [Command, scene, or target]
+- **Verification Commands Run**: [Exact commands run or `Blocked by environment: ...`]
 - **Assembly State**: [Playable | Partial | Blocked]
 
 ## Goal
@@ -30,6 +31,11 @@
 
 - [Confirmed working path or mechanic]
 - [Confirmed working path or mechanic]
+
+## Evidence Artifacts
+
+- [Stable artifact path under `reports/` or another versioned project folder]
+- [Or one reproducible verification command if no artifact was kept]
 
 ## Missing Glue or Broken Links
 

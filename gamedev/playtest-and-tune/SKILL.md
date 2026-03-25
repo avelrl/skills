@@ -23,8 +23,8 @@ Inputs / Required Context:
 - optional explicit argument: focus area such as combat, pacing, pickups, readability, or controls
 
 Outputs / Owned Artifacts:
-- owns one focused tuning pass on the current build only after a real pre-change run
-- owns `reports/playtest-report.md` only when a real tuning pass actually happened
+- owns one focused playtest pass on the current build and any small accepted tuning changes
+- owns `reports/playtest-report.md` whenever a real playable build was actually run, even if the final result is that no tuning change was adopted
 - may update constants, spawn values, timing, UI feedback, collision or recovery windows, and small QoL logic
 - uses `gamedev/templates/playtest-report.md`
 
@@ -39,9 +39,11 @@ Execution Rules:
 4. Identify the smallest set of changes that would most improve readability, feel, pacing, or control clarity.
 5. Tune values and lightweight feedback only; do not expand content scope during tuning.
 6. Re-run the build after changes and compare the result to the original state.
-7. Write `reports/playtest-report.md` using the canonical template and record what changed and why.
-8. If a tuning change becomes the new accepted default, sync the relevant GDD or record an explicit follow-up path; do not silently contradict design docs.
-9. Recommend either another small tuning pass or the next production step.
+7. Write `reports/playtest-report.md` using the canonical template and record what changed, or explicitly record that no change was adopted after the real pass.
+8. Save accepted evidence in stable project paths or make the verification command reproducible enough that another operator can regenerate it; do not cite ignored scratch dirs as the only durable proof.
+9. If a tuning change becomes the new accepted default, sync the relevant GDD in the same pass or record an explicit follow-up path; do not silently contradict design docs.
+10. If the playtest disproves an older prototype or GDD baseline, update the canonical docs to the new accepted read instead of leaving both versions live.
+11. Recommend either another small tuning pass or the next production step.
 
 Failure / Stop Conditions:
 - stop if no coherent playable loop exists yet; route back to `assemble-mvp` or `implement-system`

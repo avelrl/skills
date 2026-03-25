@@ -27,6 +27,7 @@ Outputs / Owned Artifacts:
 - owns the minimal folder structure for game code, data, assets, and tests
 - owns starter `README.md` run and build instructions when missing or stale
 - may create starter config files, package manifests, and placeholder entrypoints
+- may create or update `.gitignore` and other baseline hygiene files needed to keep generated output and local tooling artifacts out of version control
 
 Modes or Arguments:
 - no argument: derive naming from the repository folder or concept title
@@ -38,9 +39,11 @@ Execution Rules:
 3. Create the smallest runnable scaffold that matches the chosen stack; prefer fewer dependencies and fewer moving parts.
 4. Create only the folders and files needed for a sane start, such as `src/`, `assets/`, `data/`, `tests/`, and run or build config.
 5. Add one obvious entrypoint and one placeholder playable screen or scene so the project can boot successfully.
-6. Write or update `README.md` with setup, run, build, and test commands when it is missing or stale.
-7. Leave clear TODO markers where real implementation must replace placeholders.
-8. End with the next handoff in the flow: `map-systems`, `design-system`, or `implement-system`, depending on design maturity.
+6. Create or update `.gitignore` with the standard generated folders and local tool artifacts for the chosen stack, such as dependency folders, build output, coverage, and local browser automation scratch paths.
+7. Write or update `README.md` with setup, run, build, and test commands when it is missing or stale.
+8. Ensure the scaffold exposes real commands, not placeholders only; the repo should be installable and bootable by a human after this step.
+9. Leave clear TODO markers where real implementation must replace placeholders.
+10. End with the next handoff in the flow: `map-systems`, `design-system`, or `implement-system`, depending on design maturity.
 
 Failure / Stop Conditions:
 - stop if `docs/technical-preferences.md` is missing or too vague to determine the stack

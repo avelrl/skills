@@ -1,7 +1,7 @@
 # [Mechanic/System Name]
 
 ## Status
-- **Document Status**: [Draft | In Review | Approved | Implemented]
+- **Document Status**: [Draft | In Review | Approved | Implemented | Integrated]
 - **System Index Status**: [identified | designed | prototyped | informed-by-prototype | implemented | integrated]
 - **Author**: [Name]
 - **Last Updated**: [Date]

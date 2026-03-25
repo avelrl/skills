@@ -26,6 +26,7 @@ Outputs / Owned Artifacts:
 - owns production-facing implementation for the requested system in the main project code
 - may add or update data files, tests, configuration, and minimal placeholder assets required by the system
 - may update `design/gdd/systems-index.md` so implementation status reflects reality
+- may update the target GDD status block and acceptance criteria so canonical docs match the implementation
 
 Modes or Arguments:
 - `<system-name>`: normalized to the matching GDD file and code concern
@@ -38,11 +39,17 @@ Execution Rules:
 5. Implement the smallest production-facing version of the system that satisfies the GDD and current MVP scope.
 6. Prefer simple data flows, explicit state, and obvious seams over premature abstraction.
 7. Add or update tests where the repository stack supports them; if tests are not yet practical, document the gap explicitly.
-8. Update `design/gdd/systems-index.md` when present so status reflects the strongest confirmed state:
+8. Run the narrowest relevant verification command the repository supports, such as a unit test, build, or local smoke entrypoint, and record the actual command or explicit blocker.
+9. Update `design/gdd/systems-index.md` when present so status reflects the strongest confirmed state:
    - use `implemented` when production code exists but the system is not yet verified in the main playable loop
    - never downgrade `integrated`
-9. Record doc mismatches as assumptions or follow-up work instead of silently redesigning the system in code.
-10. End with the next handoff in the flow: another `implement-system`, `assemble-mvp`, or `playtest-and-tune`.
+10. Update the target GDD status block to match reality:
+   - use `Implemented` for `Document Status` when production code now exists but main-loop verification is still pending
+   - if the system is already verified in the main playable loop, use `Integrated`
+   - keep `System Index Status` aligned with the strongest confirmed systems-index state
+11. If one or more GDD acceptance criteria are now satisfied, check them or rewrite them so the document does not lag behind the code.
+12. Record doc mismatches as assumptions or follow-up work instead of silently redesigning the system in code.
+13. End with the next handoff in the flow: another `implement-system`, `assemble-mvp`, or `playtest-and-tune`.
 
 Failure / Stop Conditions:
 - stop if the target system GDD does not exist

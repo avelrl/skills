@@ -75,6 +75,18 @@ Typical prompts:
 
 In full-run mode, the agent should choose the next skill based on the current repository state and move forward through the active flow instead of waiting for the user to name every step.
 
+Full-run mode is not complete just because the repo has docs.
+Treat the run as complete only when the current repository state supports one real MVP closure point:
+
+- concept, stack choice, systems map, and required MVP system GDDs exist
+- a runnable scaffold exists in the main project tree
+- core MVP systems exist in production code
+- one coherent playable loop exists
+- `README.md` tells a human how to install, run, build, and test the project
+- `reports/mvp-assembly-report.md` exists and describes the actual verified loop
+- `reports/playtest-report.md` exists after a real playtest pass, even if no tuning changes were accepted
+- best-effort verification commands have been run and recorded, or the environment blocker is stated explicitly
+
 ### 2. Step-by-Step Mode
 
 Use step-by-step mode when the user explicitly asks for one artifact, one decision, or one named skill.
@@ -173,6 +185,34 @@ Route:
 1. return to `implement-system` if the blocker is missing functionality
 2. return to `design-system` or `prototype` if the blocker is actually a design uncertainty
 
+## Full-Run Guardrails
+
+Use these rules to keep full-run mode from stalling or drifting.
+
+### Prototype Ceiling
+
+- Do not open a new `prototype` just because a system is still interesting.
+- Use `prototype` only when one concrete unanswered question is actively blocking confident implementation or tuning.
+- If an existing prototype already picked a usable default, fold that evidence into the canonical GDD and continue downstream.
+- If implementation or playtest evidence contradicts an older prototype, update the canonical docs to the new accepted baseline instead of opening a near-duplicate spike by default.
+
+### Doc Sync Rule
+
+- `design/gdd/systems-index.md` is not enough on its own.
+- When a system becomes `implemented` or `integrated`, sync the matching system GDD header and acceptance criteria so the canonical docs match reality.
+- Do not leave a system GDD in `Draft` or `informed-by-prototype` if the repo already treats that system as part of the integrated playable baseline.
+
+### Durable Evidence Rule
+
+- Accepted evidence must live in stable project paths such as `reports/` or the relevant `prototypes/[slug]/` folder.
+- Do not rely on ignored scratch paths like temporary Playwright logs or local daemon output as the only evidence referenced by durable reports.
+- If a report cites screenshots, captures, or logs as evidence, either save a stable copy under versioned project paths or make the verification command reproducible enough that another operator can regenerate it.
+
+### Verification Rule
+
+- For Web MVPs, prefer ending full-run with at least install, build, and one repeatable smoke or sanity command when the stack supports it.
+- Do not claim a first playable is closed if the build does not run, the loop is not actually reachable, or the reports were written without a real run.
+
 ## Step-by-Step Routing
 
 When the user asks for one step, stay inside the scope of that step.
@@ -212,10 +252,10 @@ Use this when you want the whole path spelled out in the dumbest possible form.
 9. When at least two core systems exist in production code, run `assemble-mvp`.
    Output: one coherent playable loop plus `reports/mvp-assembly-report.md`.
 10. Run `playtest-and-tune`.
-    Output: one focused tuning pass plus `reports/playtest-report.md`.
+    Output: one real playtest pass plus `reports/playtest-report.md`, even if the final conclusion is to keep the current baseline unchanged.
 11. If tuning finds a missing mechanic, return to `implement-system`.
 12. If tuning finds a design uncertainty, return to `design-system` or `prototype`.
-13. Repeat the loop until the MVP is playable, understandable, and stable enough for the next milestone.
+13. Repeat the loop until the MVP is playable, understandable, verified, and stable enough for the next milestone.
 
 ### Simple Decision Diagram
 

@@ -27,6 +27,7 @@ Outputs / Owned Artifacts:
 - owns the integration work needed for one playable MVP or vertical slice
 - owns `reports/mvp-assembly-report.md`
 - may create or update scene wiring, state flow, HUD glue, restart flow, stub content, and build scripts
+- may create or update one lightweight repeatable smoke or sanity entrypoint when the stack supports it cheaply
 - uses `gamedev/templates/mvp-assembly-report.md`
 
 Modes or Arguments:
@@ -39,14 +40,20 @@ Execution Rules:
 3. Integrate only what is needed for one coherent slice: boot, play, feedback, fail, and restart or exit.
 4. Prefer glue code, placeholders, and one arena or scene over expanding content breadth.
 5. Ensure controls, core interaction, objective pressure, fail state, and restart or exit flow are actually reachable in one run.
-6. Run the game or build, capture the current status, and write `reports/mvp-assembly-report.md` from the canonical template.
-7. Update `design/gdd/systems-index.md` when present so systems verified inside the main playable loop move to `integrated`.
-8. List missing glue, blocked systems, and obvious follow-up work without trying to solve everything in one pass.
+6. Run the actual build or game target before writing the report; do not backfill `reports/mvp-assembly-report.md` from assumptions.
+7. When the stack supports it cheaply, add or update one repeatable smoke or sanity command for the assembled loop instead of relying only on ad hoc manual clicking.
+8. Write `reports/mvp-assembly-report.md` from the canonical template and record the actual verification commands, observed loop, and real blockers.
+9. Update `design/gdd/systems-index.md` when present so systems verified inside the main playable loop move to `integrated`.
+10. Sync matching system GDDs so their status blocks and acceptance criteria reflect the new integrated state instead of leaving them at prototype-era status.
+11. Save accepted evidence in stable project paths under `reports/` or another versioned folder; do not rely only on ignored scratch dirs.
+12. Update `README.md` when needed so install, run, build, test, and smoke commands match the assembled repo.
+13. List missing glue, blocked systems, and obvious follow-up work without trying to solve everything in one pass.
 
 Failure / Stop Conditions:
 - stop if the scaffold is missing or cannot boot
 - stop if there are not enough implemented systems to form a loop
 - stop if the request is really asking for tuning rather than assembly
+- stop if the loop cannot actually be run or verified; do not write an optimistic `Playable` report
 - do not turn this skill into an all-systems implementation marathon
 
 Return Format:

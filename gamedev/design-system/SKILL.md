@@ -24,6 +24,7 @@ Outputs / Owned Artifacts:
 - owns `design/gdd/[system-name].md`
 - updates the matching row in `design/gdd/systems-index.md`
 - uses `gamedev/templates/game-design-document.md`
+- updates the GDD status block and acceptance criteria so the document matches the strongest confirmed project state
 
 Modes or Arguments:
 - `<system-name>`: normalized to kebab-case for the target GDD path
@@ -49,8 +50,14 @@ Execution Rules:
    - use `designed` when the GDD exists but prototype findings are not yet folded into it
    - use `informed-by-prototype` when prototype findings and baseline decisions are reflected in the GDD
    - never downgrade `implemented` or `integrated`
-11. If prototype evidence changes scope or assumptions, rewrite the affected sections so the document stays internally consistent instead of appending contradictory notes.
-12. When the GDD is implementation-ready and the scaffold already exists, end with a handoff to `implement-system`; otherwise hand off to another `design-system` or `prototype`.
+11. Sync the GDD `## Status` block to the same strongest confirmed state you are relying on:
+   - keep `Document Status` as `Draft` only while implementation blockers remain
+   - use `Approved` when the document is implementation-ready
+   - use `Implemented` when production code already exists for the system
+   - use `Integrated` when the system is already verified inside the main playable loop
+12. If acceptance criteria are already satisfied by the current repository state, check them or rewrite them so the document does not pretend the repo is less complete than it really is.
+13. If prototype or playtest evidence changes scope or assumptions, rewrite the affected sections so the document stays internally consistent instead of appending contradictory notes.
+14. When the GDD is implementation-ready and the scaffold already exists, end with a handoff to `implement-system`; otherwise hand off to another `design-system` or `prototype`.
 
 Failure / Stop Conditions:
 - stop if the game concept is missing
