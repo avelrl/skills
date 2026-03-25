@@ -6,7 +6,7 @@
   "expected_first_route": "implement-system",
   "expected_next_recommendation": "implement-system",
   "expected_paths": [
-    "src/gameplay/player-movement.txt"
+    "src/gameplay/player-movement.ts"
   ],
   "expected_globs": [],
   "forbidden_behaviors": [

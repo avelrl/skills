@@ -154,12 +154,11 @@ Run these too. They are usually more important than happy paths.
 - **Typical next step after the missing GDD is written**: `bootstrap-project` if the runnable scaffold is still missing
 - **Bad sign**: starts coding anyway
 
-### 10. Assembly Without Enough Systems
+### 10. Assembly Without Enough Systems (Retired)
 
-- **Prompt**: `собери playable`
-- **Missing prerequisite**: enough implemented systems
-- **Expected route**: stop and route to `implement-system`
-- **Bad sign**: fakes assembly with placeholders only
+- This legacy blocked check is no longer part of the active eval suite.
+- Reason: the short prompt `собери playable` is too ambiguous and overlaps with full-run recovery behavior.
+- Use `Blocked Assemble MVP` instead when you want a deterministic blocked step-by-step check for `assemble-mvp`.
 
 ### 11. Tuning Without Playable Build
 
