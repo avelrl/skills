@@ -82,6 +82,7 @@ Treat the run as complete only when the current repository state supports one re
 - a runnable scaffold exists in the main project tree
 - core MVP systems exist in production code
 - one coherent playable loop exists
+- every high-risk system listed in `design/gdd/systems-index.md` is covered either by a relevant `prototypes/[slug]/REPORT.md` or by durable downstream evidence recorded in canonical docs or reports
 - `README.md` tells a human how to install, run, build, and test the project
 - `reports/mvp-assembly-report.md` exists and describes the actual verified loop
 - `reports/playtest-report.md` exists after a real playtest pass, even if no tuning changes were accepted
@@ -196,6 +197,15 @@ Use these rules to keep full-run mode from stalling or drifting.
 - If an existing prototype already picked a usable default, fold that evidence into the canonical GDD and continue downstream.
 - If implementation or playtest evidence contradicts an older prototype, update the canonical docs to the new accepted baseline instead of opening a near-duplicate spike by default.
 
+### Risk Coverage Rule
+
+- If `design/gdd/systems-index.md` has a `High-Risk Systems` section, treat it as a closure ledger, not as brainstorming.
+- Each high-risk row must close in one of two ways before full-run mode can stop:
+  - a relevant `prototypes/[slug]/REPORT.md` exists and its findings are folded back into the canonical docs, or
+  - durable downstream evidence in versioned project paths proves the risk is now covered without a separate prototype
+- `Prototype Candidate: None planned` is valid only when `Evidence Needed` names the concrete downstream proof expected to close that row.
+- Do not claim a full-run MVP is closed while `High-risk systems without evidence coverage` is still non-zero unless the user explicitly accepts that unresolved risk as a follow-up.
+
 ### Doc Sync Rule
 
 - `design/gdd/systems-index.md` is not enough on its own.
@@ -211,6 +221,8 @@ Use these rules to keep full-run mode from stalling or drifting.
 ### Verification Rule
 
 - For Web MVPs, prefer ending full-run with at least install, build, and one repeatable smoke or sanity command when the stack supports it.
+- Prefer repo-native verification owned by the project, such as `npm run smoke`, over ambient browser probing that depends on externally installed Playwright browsers or user-level caches.
+- Treat browser-open, snapshot, or screenshot probes as secondary best-effort checks unless the repo already owns a pinned Playwright package and documented browser-install path.
 - Do not claim a first playable is closed if the build does not run, the loop is not actually reachable, or the reports were written without a real run.
 
 ## Step-by-Step Routing
@@ -252,10 +264,11 @@ Use this when you want the whole path spelled out in the dumbest possible form.
 9. When at least two core systems exist in production code, run `assemble-mvp`.
    Output: one coherent playable loop plus `reports/mvp-assembly-report.md`.
 10. Run `playtest-and-tune`.
-    Output: one real playtest pass plus `reports/playtest-report.md`, even if the final conclusion is to keep the current baseline unchanged.
-11. If tuning finds a missing mechanic, return to `implement-system`.
-12. If tuning finds a design uncertainty, return to `design-system` or `prototype`.
-13. Repeat the loop until the MVP is playable, understandable, verified, and stable enough for the next milestone.
+   Output: one real playtest pass plus `reports/playtest-report.md`, even if the final conclusion is to keep the current baseline unchanged.
+11. Update the `High-Risk Systems` section and progress snapshot so every remaining open risk has an explicit closure path.
+12. If tuning finds a missing mechanic, return to `implement-system`.
+13. If tuning finds a design uncertainty, return to `design-system` or `prototype`.
+14. Repeat the loop until the MVP is playable, understandable, verified, and stable enough for the next milestone.
 
 ### Simple Decision Diagram
 

@@ -64,6 +64,10 @@ Call out any cycles or risky dependencies explicitly.
 
 Keep only systems that can change scope, schedule, or architecture.
 List only real MVP risks; if only two exist, list two instead of padding.
+Each row needs a real closure path. A row is covered only when either:
+- a relevant `prototypes/[slug]/REPORT.md` exists and its findings were folded back into the canonical docs, or
+- durable downstream evidence in versioned project paths satisfies `Evidence Needed`
+Do not write `Prototype Candidate: None planned` unless `Evidence Needed` names the specific downstream proof that will close the risk.
 
 ## Progress Snapshot
 
@@ -79,8 +83,8 @@ List only real MVP risks; if only two exist, list two instead of padding.
 
 - [ ] Review the system list against the current concept and pillars
 - [ ] Design MVP systems in dependency order
-- [ ] Prototype the highest-risk system early
-- [ ] Fold prototype findings back into the relevant GDDs and status rows
+- [ ] Close each high-risk row with either a prototype report or durable downstream evidence
+- [ ] Fold accepted prototype or playtest findings back into the relevant GDDs and status rows
 - [ ] Bootstrap or refresh the runnable scaffold with `/bootstrap-project` once the stack and first implementation targets are stable
 - [ ] Implement one MVP system at a time with `/implement-system`
 - [ ] Assemble the smallest coherent playable loop with `/assemble-mvp`

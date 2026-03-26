@@ -51,13 +51,16 @@ Execution Rules:
    - `Mitigation`
    - `Prototype Candidate`
    - `Evidence Needed`
-9. If prototype reports already exist, use them to update relevant system statuses and risk notes rather than treating the index as a fresh document.
-10. Create or update `design/gdd/systems-index.md` using the canonical template.
-11. In `next` mode, refresh the index first if it is missing or stale, then recommend the next highest-leverage move.
-12. In `next` mode, prefer a target that either:
+9. For each high-risk row, name a real closure path:
+   - `Prototype Candidate` should name a concrete prototype route, or explicitly say why downstream evidence is expected to close the risk without a prototype.
+   - `Evidence Needed` should name the exact proof that will close the row, not a vague aspiration.
+10. If prototype reports or durable downstream evidence already exist, use them to update relevant system statuses, risk notes, and `High-risk systems without evidence coverage` instead of treating the index as a fresh document.
+11. Create or update `design/gdd/systems-index.md` using the canonical template.
+12. In `next` mode, refresh the index first if it is missing or stale, then recommend the next highest-leverage move.
+13. In `next` mode, prefer a target that either:
     - unlocks multiple downstream systems, or
     - reduces a high-risk uncertainty that blocks confident design.
-13. In `next` mode, if the highest-leverage move is evidence gathering rather than spec writing, recommend `prototype` before `design-system`.
+14. In `next` mode, if the highest-leverage move is evidence gathering rather than spec writing, recommend `prototype` before `design-system`.
 
 Failure / Stop Conditions:
 - stop if the concept is too vague to separate MVP systems from wish-list ideas
@@ -67,6 +70,7 @@ Return Format:
 - systems index path
 - top MVP systems
 - high-risk systems
+- unresolved high-risk systems without evidence coverage
 - any system statuses updated from existing evidence
 - next recommended move: `design-system` or `prototype`
 - rationale for that recommendation

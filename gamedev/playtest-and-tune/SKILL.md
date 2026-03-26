@@ -35,20 +35,25 @@ Modes or Arguments:
 Execution Rules:
 1. Before changing anything, verify that a coherent playable loop exists and can actually be run in the current environment.
 2. If the loop is missing or the build does not start, stop immediately and route back to `assemble-mvp` or `implement-system`; do not write `reports/playtest-report.md` and do not make tuning edits.
-3. Run the current build and observe one focused playtest pass before changing values.
-4. Identify the smallest set of changes that would most improve readability, feel, pacing, or control clarity.
-5. Tune values and lightweight feedback only; do not expand content scope during tuning.
-6. Re-run the build after changes and compare the result to the original state.
-7. Write `reports/playtest-report.md` using the canonical template and record what changed, or explicitly record that no change was adopted after the real pass.
-8. Save accepted evidence in stable project paths or make the verification command reproducible enough that another operator can regenerate it; do not cite ignored scratch dirs as the only durable proof.
-9. If a tuning change becomes the new accepted default, sync the relevant GDD in the same pass or record an explicit follow-up path; do not silently contradict design docs.
-10. If the playtest disproves an older prototype or GDD baseline, update the canonical docs to the new accepted read instead of leaving both versions live.
-11. Recommend either another small tuning pass or the next production step.
+3. Read unresolved `High-Risk Systems` rows in `design/gdd/systems-index.md` when present and prefer closing the most important still-open evidence gap during this pass.
+4. Run the current build and observe one focused playtest pass before changing values.
+5. Identify the smallest set of changes that would most improve readability, feel, pacing, or control clarity.
+6. Tune values and lightweight feedback only; do not expand content scope during tuning.
+7. Re-run the build after changes and compare the result to the original state.
+8. Prefer repo-native verification commands over ambient browser CLI probes that depend on a separately installed Playwright browser stack.
+9. If a secondary browser probe fails only because the environment lacks an installed browser or similar tool-layer prerequisite, record the exact blocker but continue the tuning pass when the primary run target already worked.
+10. Write `reports/playtest-report.md` using the canonical template and record what changed, or explicitly record that no change was adopted after the real pass.
+11. Save accepted evidence in stable project paths or make the verification command reproducible enough that another operator can regenerate it; do not cite ignored scratch dirs as the only durable proof.
+12. If this pass closes one or more unresolved `High-Risk Systems` rows, update their notes and the progress snapshot in `design/gdd/systems-index.md` in the same pass.
+13. If a tuning change becomes the new accepted default, sync the relevant GDD in the same pass or record an explicit follow-up path; do not silently contradict design docs.
+14. If the playtest disproves an older prototype or GDD baseline, update the canonical docs to the new accepted read instead of leaving both versions live.
+15. Recommend either another small tuning pass, `prototype`, or the next production step.
 
 Failure / Stop Conditions:
 - stop if no coherent playable loop exists yet; route back to `assemble-mvp` or `implement-system`
 - stop if the build does not run at all; route back to `assemble-mvp` or `implement-system`
 - do not emit `reports/playtest-report.md` for a blocked run
+- do not treat a missing optional Playwright browser install as a blocked run when the primary playtest target already executed successfully
 - stop if the request is really a major redesign instead of a tuning pass
 - do not hide major structural problems behind endless constant tweaking
 
@@ -58,6 +63,7 @@ Return Format:
 - observed improvement or lack of improvement
 - report path
 - docs synced or follow-up path recorded
+- high-risk rows closed or still unresolved, if any
 - next recommended skill: `implement-system`, `assemble-mvp`, or another `playtest-and-tune`
 
 Example Invocation:
