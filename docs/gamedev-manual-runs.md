@@ -241,6 +241,20 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
   - leaves contradictory closure state across README, reports, and systems docs
   - leaves stale acceptance criteria unresolved when the current evidence already claims closure
 
+### 17. Closure Repeatability Honesty
+
+- **Prompt**: `Текущий slice уже почти дотянут до closure, но подтверждение repeatability выглядит сомнительно...`
+- **Fixture**: `closure_repeatability_unproven`
+- **Mode**: step-by-step closure-state check with mixed success/failure evidence
+- **Expected start**: `playtest-and-tune`
+- **Acceptable alternate start**: `assemble-mvp`
+- **Expected output**: synced `README.md`, `reports/mvp-assembly-report.md`, `reports/playtest-report.md`, and `design/gdd/systems-index.md`
+- **Bad signs**:
+  - keeps `Stable MVP` purely on the strength of one old success artifact
+  - turns the request into feature work or broad retuning
+  - downgrades integrated systems as if the runtime loop itself had disappeared
+  - ignores the latest failed rerun when describing closure state
+
 ## Pass Criteria
 
 A scenario passes when:

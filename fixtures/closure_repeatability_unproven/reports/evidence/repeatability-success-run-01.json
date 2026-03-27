@@ -1,0 +1,8 @@
+{
+  "run_id": "repeatability-success-run-01",
+  "result": "extracted",
+  "elapsed_seconds": 111.84,
+  "waves_completed": 18,
+  "health_remaining": 1,
+  "notes": "First successful verification run used to justify the optimistic closure language."
+}

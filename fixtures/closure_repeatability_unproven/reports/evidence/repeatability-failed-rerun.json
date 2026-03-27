@@ -1,0 +1,7 @@
+{
+  "run_id": "repeatability-failed-rerun",
+  "result": "failed",
+  "elapsed_seconds": 74.12,
+  "failure_reason": "failed to stabilize the extraction hold during the later rerun",
+  "notes": "Latest rerun did not reproduce the prior success, so repeatability is not yet proven."
+}
