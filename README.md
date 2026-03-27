@@ -73,7 +73,7 @@ The next useful information will not come from building another MVP repo of the 
 Priority order:
 
 1. Turn the strongest manual runs into reusable regression fixtures or scenarios.
-2. Decide whether the shared `core/` skills need their own manual-run doc instead of living only under the gamedev runbook.
+2. Use `docs/core-manual-runs.md` as the shared runbook for future `core/` validation instead of keeping that logic only in chat history.
 3. Turn the new core docs into reusable review or regression targets.
 
 De-prioritized for now:
@@ -89,8 +89,8 @@ De-prioritized for now:
 
 1. Convert the strongest browser and non-browser manual runs into reusable fixtures or `evals/` scenarios.
    Goal: preserve the current coverage without re-running the same manual loops from scratch.
-2. Decide whether `core/architecture-decision`, `core/reverse-document`, and `core/tech-debt` need a separate `docs/core-manual-runs.md`.
-   Goal: avoid pretending the gamedev runbook covers the whole shared-core library.
+2. Use `docs/core-manual-runs.md` for the next shared-core validation passes.
+   Goal: keep `core/` evaluation out of ad-hoc chat memory and out of the `gamedev` runbook.
 3. Turn the new core artifacts into reusable review or regression targets.
    Goal: keep this first-pass core coverage from becoming one-off manual evidence.
 
@@ -119,4 +119,5 @@ De-prioritized for now:
 - `docs/gamedev-workflow.md`
 - `docs/gamedev-specialist-handoffs.md`
 - `docs/gamedev-manual-runs.md`
+- `docs/core-manual-runs.md`
 - `docs/gamedev-autoimprovement.md`
