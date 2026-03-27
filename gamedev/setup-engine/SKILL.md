@@ -9,7 +9,7 @@ Purpose: Choose a game engine or runtime direction and create the canonical proj
 
 Use when:
 - a game project needs a runtime direction or a technical-preferences baseline
-- the team needs one place for engine or runtime, language, budgets, and tooling defaults
+- the team needs one place for engine or runtime, target platforms, language, budgets, and tooling defaults
 
 Do not use for:
 - system decomposition
@@ -38,8 +38,10 @@ Execution Rules:
 1. Read `design/gdd/game-concept.md` when it exists and extract project constraints.
 2. In guided mode, ask only the minimum questions needed to narrow the engine or runtime choice.
 3. If the version is missing, verify the latest stable release before using it; if it cannot be verified, mark it unresolved instead of guessing.
-4. Write or update `docs/technical-preferences.md` with runtime or engine, language, conventions, performance budgets, testing defaults, and approved addons.
-5. End with the next handoff in the flow: `map-systems`, then `design-system`, then `prototype`.
+4. If the target runtime is browser-based, use `Game Studio` when available as the runtime-specialist source for stack-specific guidance instead of copying Phaser, Three.js, or browser-UI doctrine into this skill.
+5. If the target runtime is not browser-based, rely on official engine docs or project-local specialists for engine-specific implementation details instead of inventing a parallel doctrine here.
+6. Write or update `docs/technical-preferences.md` with runtime or engine, target platforms, language, conventions, performance budgets, testing defaults, and approved addons.
+7. End with the next handoff in the flow: `map-systems`, then `design-system`, then `prototype`.
 
 Failure / Stop Conditions:
 - stop if guided answers are too thin to narrow the runtime choice and return a short comparison instead of forcing a decision
@@ -49,6 +51,7 @@ Return Format:
 - chosen or shortlisted runtime or engine
 - provisional or confirmed status
 - output path
+- specialist source used, if any
 - critical open decisions
 - next recommended skill: `map-systems`
 
@@ -59,4 +62,5 @@ Example Invocation:
 
 Related Skills / Boundary:
 - use `map-systems` after engine setup to define the MVP design surface
+- use browser specialists such as `Game Studio` only for browser-runtime depth; keep `docs/technical-preferences.md` as the canonical artifact here
 - use `architecture-decision` later for durable technical choices beyond engine selection

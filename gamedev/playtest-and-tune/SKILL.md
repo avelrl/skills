@@ -40,20 +40,21 @@ Execution Rules:
 5. Identify the smallest set of changes that would most improve readability, feel, pacing, or control clarity.
 6. Tune values and lightweight feedback only; do not expand content scope during tuning.
 7. Re-run the build after changes and compare the result to the original state.
-8. Prefer repo-native verification commands over ambient browser CLI probes that depend on a separately installed Playwright browser stack.
-9. If a secondary browser probe fails only because the environment lacks an installed browser or similar tool-layer prerequisite, record the exact blocker but continue the tuning pass when the primary run target already worked.
-10. Write `reports/playtest-report.md` using the canonical template and record what changed, or explicitly record that no change was adopted after the real pass.
-11. Save accepted evidence in stable project paths or make the verification command reproducible enough that another operator can regenerate it; do not cite ignored scratch dirs as the only durable proof.
-12. If this pass closes one or more unresolved `High-Risk Systems` rows, update their notes and the progress snapshot in `design/gdd/systems-index.md` in the same pass.
-13. If a tuning change becomes the new accepted default, sync the relevant GDD in the same pass or record an explicit follow-up path; do not silently contradict design docs.
-14. If the playtest disproves an older prototype or GDD baseline, update the canonical docs to the new accepted read instead of leaving both versions live.
-15. Recommend either another small tuning pass, `prototype`, or the next production step.
+8. Prefer repo-native verification commands for the chosen runtime over ambient external tooling that is not part of the repo or platform contract.
+9. If specialist QA tooling is unavailable but the primary run target already worked, record the exact blocker and continue the tuning pass instead of treating the run as failed.
+10. For browser-specific HUD, render, or overlay issues, use browser specialist playtest guidance when available but keep the accepted result and canonical report in this step.
+11. Write `reports/playtest-report.md` using the canonical template and record what changed, or explicitly record that no change was adopted after the real pass.
+12. Save accepted evidence in stable project paths or make the verification command reproducible enough that another operator can regenerate it; do not cite ignored scratch dirs as the only durable proof.
+13. If this pass closes one or more unresolved `High-Risk Systems` rows, update their notes and the progress snapshot in `design/gdd/systems-index.md` in the same pass.
+14. If a tuning change becomes the new accepted default, sync the relevant GDD in the same pass or record an explicit follow-up path; do not silently contradict design docs.
+15. If the playtest disproves an older prototype or GDD baseline, update the canonical docs to the new accepted read instead of leaving both versions live.
+16. Recommend either another small tuning pass, `prototype`, or the next production step.
 
 Failure / Stop Conditions:
 - stop if no coherent playable loop exists yet; route back to `assemble-mvp` or `implement-system`
 - stop if the build does not run at all; route back to `assemble-mvp` or `implement-system`
 - do not emit `reports/playtest-report.md` for a blocked run
-- do not treat a missing optional Playwright browser install as a blocked run when the primary playtest target already executed successfully
+- do not treat missing optional specialist QA tooling as a blocked run when the primary playtest target already executed successfully
 - stop if the request is really a major redesign instead of a tuning pass
 - do not hide major structural problems behind endless constant tweaking
 
@@ -72,4 +73,5 @@ Example Invocation:
 
 Related Skills / Boundary:
 - use `assemble-mvp` before this skill so there is a coherent playable loop and a real run target
+- use platform specialists only for runtime-specific QA depth; keep accepted tuning, reporting, and doc sync in this step
 - use `implement-system` if a missing mechanic, not tuning, is the real blocker

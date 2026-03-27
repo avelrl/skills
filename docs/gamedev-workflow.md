@@ -6,6 +6,7 @@ Related docs:
 
 - manual runbook: `docs/gamedev-manual-runs.md`
 - automation design: `docs/gamedev-autoimprovement.md`
+- specialist boundaries: `docs/gamedev-specialist-handoffs.md`
 
 Use it to answer two questions:
 
@@ -15,6 +16,16 @@ Use it to answer two questions:
 ## Default Modes
 
 There are only two normal usage modes.
+
+## Scope Of This Workflow
+
+`gamedev/` is platform-agnostic.
+
+It owns workflow routing, prerequisite checks, canonical artifacts, evidence closure, and status sync for games across browser, desktop, console, mobile, and engine-native projects.
+
+It does not try to be the deepest runtime specialist for every stack.
+When runtime-, UI-, asset-, or QA-specific depth is needed, overlay the appropriate specialist guidance for that platform.
+For browser projects, that usually means `Game Studio` when available.
 
 ## One-Screen Cheat Sheet
 
@@ -116,6 +127,8 @@ Use these rules in order:
    If the requested step cannot be done cleanly, route to the nearest missing prerequisite skill instead of improvising around the gap.
 5. Existing files are the source of truth.
    Prefer continuing from `docs/technical-preferences.md`, `design/gdd/systems-index.md`, system GDDs, prototype reports, and current code instead of re-asking questions already answered in files.
+6. Specialist overlays do not replace artifact ownership.
+   Browser or engine specialists may guide implementation details, but `gamedev/` still owns the canonical docs, reports, and step-to-step handoff.
 
 ## Active Flow
 
@@ -134,6 +147,17 @@ The active gamedev path has two connected lanes.
 2. `implement-system`
 3. `assemble-mvp`
 4. `playtest-and-tune`
+
+## Specialist Overlays
+
+This is not a third lane.
+It is an overlay on top of the same flow.
+
+- Browser projects may use `Game Studio` or another browser specialist for runtime architecture, scaffold defaults, UI direction, asset pipeline depth, and browser QA.
+- Non-browser projects should use engine-native docs or project-local specialists for Godot, Unity, Unreal, custom engines, or proprietary runtimes.
+- `gamedev/` still owns `docs/technical-preferences.md`, `design/gdd/`, `prototypes/`, `reports/`, and the status model.
+
+Use `docs/gamedev-specialist-handoffs.md` for the detailed ownership split.
 
 ## Full-Run Routing
 
@@ -168,8 +192,9 @@ Route:
 Route:
 
 1. run `bootstrap-project` once `docs/technical-preferences.md` is stable
-2. run `implement-system` for one MVP system at a time
-3. update the systems index as systems move to `implemented`
+2. if the project needs runtime-specific scaffold or architecture depth, apply the relevant specialist guidance without replacing the `bootstrap-project` artifact contract
+3. run `implement-system` for one MVP system at a time
+4. update the systems index as systems move to `implemented`
 
 ### Multiple systems exist in code
 
@@ -215,27 +240,27 @@ Use these rules to keep full-run mode from stalling or drifting.
 ### Durable Evidence Rule
 
 - Accepted evidence must live in stable project paths such as `reports/` or the relevant `prototypes/[slug]/` folder.
-- Do not rely on ignored scratch paths like temporary Playwright logs or local daemon output as the only evidence referenced by durable reports.
+- Do not rely on ignored scratch paths, temporary tool logs, or local daemon output as the only evidence referenced by durable reports.
 - If a report cites screenshots, captures, or logs as evidence, either save a stable copy under versioned project paths or make the verification command reproducible enough that another operator can regenerate it.
 
 ### Verification Rule
 
-- For Web MVPs, prefer ending full-run with at least install, build, and one repeatable smoke or sanity command when the stack supports it.
-- Prefer repo-native verification owned by the project, such as `npm run smoke`, over ambient browser probing that depends on externally installed Playwright browsers or user-level caches.
-- Treat browser-open, snapshot, or screenshot probes as secondary best-effort checks unless the repo already owns a pinned Playwright package and documented browser-install path.
+- For any platform, prefer ending full-run with at least install, build, run, and one repeatable sanity command or checklist when the stack supports it.
+- Prefer repo-native verification owned by the project over ambient external tooling that is not part of the chosen runtime or repository contract.
+- For browser projects, browser-open, screenshot, and specialist QA probes are supporting evidence unless the repo explicitly owns that automation path.
 - Do not claim a first playable is closed if the build does not run, the loop is not actually reachable, or the reports were written without a real run.
 
 ## Step-by-Step Routing
 
 When the user asks for one step, stay inside the scope of that step.
 
-- `setup-engine`: choose the engine and write `docs/technical-preferences.md`
+- `setup-engine`: choose the engine and write `docs/technical-preferences.md`; for browser projects, record which browser specialist guidance shaped the runtime choice
 - `map-systems`: build or refresh `design/gdd/systems-index.md`
 - `design-system`: write one canonical system GDD
 - `prototype`: answer one risky question with disposable code and `REPORT.md`
-- `bootstrap-project`: create the smallest runnable scaffold
+- `bootstrap-project`: create the smallest runnable scaffold; for browser projects, use the relevant specialist runtime conventions instead of inventing a parallel local doctrine
 - `implement-system`: implement one approved system in production code
-- `assemble-mvp`: wire implemented systems into one coherent playable loop
+- `assemble-mvp`: wire implemented systems into one coherent playable loop and keep the canonical assembly report here even when specialist QA tools are used
 - `playtest-and-tune`: run one focused tuning pass and write the report only after the playable loop actually runs; otherwise route back with no report
 
 End by naming the next recommended skill. Do not silently consume multiple downstream stages unless the user asked for a full run.
@@ -315,6 +340,7 @@ flowchart TD
 Do not do the following:
 
 - jump from concept straight into `bootstrap-project` when the systems map is still unclear
+- let browser fixtures or specialist plugins rewrite the generic flow into a browser-only workflow
 - treat `prototype` code as production code
 - implement multiple unrelated systems inside one `implement-system` pass
 - use `assemble-mvp` as a disguised feature factory

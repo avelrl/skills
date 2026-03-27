@@ -2,6 +2,12 @@
 
 Fill this once the project has a confirmed runtime or engine direction. Update it when material technical decisions change.
 
+## Product Targets
+
+- **Target Platforms**: [TO BE CONFIGURED]
+- **Primary Input Methods**: [TO BE CONFIGURED]
+- **Distribution / Delivery**: [TO BE CONFIGURED]
+
 ## Runtime / Engine & Language
 
 - **Runtime / Engine**: [TO BE CONFIGURED]
@@ -32,7 +38,14 @@ Fill this once the project has a confirmed runtime or engine direction. Update i
 
 - **Framework**: [TO BE CONFIGURED]
 - **Minimum Coverage**: [TO BE CONFIGURED]
-- **Required Tests**: core gameplay logic, risky integrations, save/load, networking if applicable
+- **Required Tests**: core gameplay logic, risky integrations, save/load, networking if applicable, platform-critical flows
+
+## Specialist Guidance Sources
+
+- **Runtime / Engine Guidance**: [Official docs / Game Studio / project-local specialist / None configured]
+- **UI / Presentation Guidance**: [TO BE CONFIGURED]
+- **Asset Pipeline Guidance**: [TO BE CONFIGURED]
+- **QA / Playtest Guidance**: [TO BE CONFIGURED]
 
 ## Forbidden Patterns
 

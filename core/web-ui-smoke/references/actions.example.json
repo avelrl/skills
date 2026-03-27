@@ -1,0 +1,11 @@
+{
+  "steps": [
+    { "op": "waitForSelector", "selector": "body", "state": "visible" },
+    { "op": "fill", "selector": "input[name='email']", "text": "test@example.com" },
+    { "op": "fill", "selector": "input[name='password']", "text": "secret123" },
+    { "op": "click", "selector": "button[type='submit']" },
+    { "op": "waitForText", "selector": "body", "text": "Dashboard" },
+    { "op": "assertVisible", "selector": "nav" },
+    { "op": "screenshot", "name": "dashboard", "fullPage": true }
+  ]
+}

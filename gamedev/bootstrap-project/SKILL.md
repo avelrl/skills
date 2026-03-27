@@ -36,14 +36,15 @@ Modes or Arguments:
 Execution Rules:
 1. Read `docs/technical-preferences.md` first and treat it as the source of truth for stack and constraints.
 2. If `design/gdd/systems-index.md` or one or more system GDDs exist, read only enough to align naming, folder layout, and the first placeholder scene or module. Do not implement systems here.
-3. Create the smallest runnable scaffold that matches the chosen stack; prefer fewer dependencies and fewer moving parts.
-4. Create only the folders and files needed for a sane start, such as `src/`, `assets/`, `data/`, `tests/`, and run or build config.
-5. Add one obvious entrypoint and one placeholder playable screen or scene so the project can boot successfully.
-6. Create or update `.gitignore` with the standard generated folders and local tool artifacts for the chosen stack, such as dependency folders, build output, coverage, and local browser automation scratch paths.
-7. Write or update `README.md` with setup, run, build, and test commands when it is missing or stale.
-8. Ensure the scaffold exposes real commands, not placeholders only; the repo should be installable and bootable by a human after this step.
-9. Leave clear TODO markers where real implementation must replace placeholders.
-10. End with the next handoff in the flow: `map-systems`, `design-system`, or `implement-system`, depending on design maturity.
+3. If the chosen stack has an external runtime specialist path, use that specialist for runtime-specific scaffold conventions instead of inventing a duplicate local doctrine inside this skill.
+4. Create the smallest runnable scaffold that matches the chosen stack; prefer fewer dependencies and fewer moving parts.
+5. Create only the folders and files needed for a sane start, such as `src/`, `assets/`, `data/`, `tests/`, and run or build config.
+6. Add one obvious entrypoint and one placeholder playable screen or scene so the project can boot successfully.
+7. Create or update `.gitignore` with the standard generated folders and local tool artifacts for the chosen stack, such as dependency folders, build output, coverage, and local runtime scratch paths.
+8. Write or update `README.md` with setup, run, build, and test commands when it is missing or stale.
+9. Ensure the scaffold exposes real commands, not placeholders only; the repo should be installable and bootable by a human after this step.
+10. Leave clear TODO markers where real implementation must replace placeholders.
+11. End with the next handoff in the flow: `map-systems`, `design-system`, or `implement-system`, depending on design maturity.
 
 Failure / Stop Conditions:
 - stop if `docs/technical-preferences.md` is missing or too vague to determine the stack
@@ -54,6 +55,7 @@ Return Format:
 - scaffold root or key created paths
 - starter run command
 - starter build command
+- specialist source used, if any
 - files created or updated
 - next recommended skill: `map-systems`, `design-system`, or `implement-system`
 
@@ -63,6 +65,7 @@ Example Invocation:
 
 Related Skills / Boundary:
 - use `setup-engine` before this skill to lock the stack
+- use runtime specialists for stack-specific scaffold depth; this skill still owns the canonical scaffold contract and repo hygiene
 - use `map-systems` if the system order is still unclear
 - use `design-system` before `implement-system` when a system contract is missing
 - use `assemble-mvp` only after multiple core systems exist in code

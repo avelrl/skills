@@ -1,5 +1,11 @@
 # Technical Preferences
 
+## Product Targets
+
+- **Target Platforms**: Web
+- **Primary Input Methods**: Keyboard
+- **Distribution / Delivery**: Browser build
+
 ## Runtime / Engine & Language
 
 - **Runtime / Engine**: Web Runtime
@@ -10,4 +16,4 @@
 
 ## Testing
 
-- **Framework**: Vitest plus lightweight browser smoke checks
+- **Framework**: Vitest plus lightweight runtime smoke checks

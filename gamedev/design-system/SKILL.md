@@ -35,29 +35,30 @@ Execution Rules:
 3. Stop and refresh the systems index if the requested system is not present there.
 4. Summarize the system's layer, priority, dependencies, interfaces, formulas, assumptions, and existing evidence.
 5. Create or update `design/gdd/[system-name].md` using the canonical GDD template and shared design-doc rules.
-6. Ensure the `Scope Boundaries` section clearly separates:
+6. Keep the system contract platform-agnostic unless a runtime capability, input mode, hardware limit, or delivery constraint is genuinely part of the design.
+7. Ensure the `Scope Boundaries` section clearly separates:
    - `In MVP`
    - `In Vertical Slice`
    - `Deferred / Later`
-7. If a relevant prototype report exists, keep an explicit `Evidence / Prototype Inputs` section that:
+8. If a relevant prototype report exists, keep an explicit `Evidence / Prototype Inputs` section that:
    - references the report path or paths
    - extracts up to 4 key findings
    - records adopted baseline values or `None adopted yet`
    - records remaining open questions or evidence gaps
-8. If no relevant prototype exists, keep the section and explicitly mark `None yet` instead of implying certainty.
-9. Update the matching row in `design/gdd/systems-index.md` so status reflects the strongest confirmed state.
-10. When syncing status:
+9. If no relevant prototype exists, keep the section and explicitly mark `None yet` instead of implying certainty.
+10. Update the matching row in `design/gdd/systems-index.md` so status reflects the strongest confirmed state.
+11. When syncing status:
    - use `designed` when the GDD exists but prototype findings are not yet folded into it
    - use `informed-by-prototype` when prototype findings and baseline decisions are reflected in the GDD
    - never downgrade `implemented` or `integrated`
-11. Sync the GDD `## Status` block to the same strongest confirmed state you are relying on:
+12. Sync the GDD `## Status` block to the same strongest confirmed state you are relying on:
    - keep `Document Status` as `Draft` only while implementation blockers remain
    - use `Approved` when the document is implementation-ready
    - use `Implemented` when production code already exists for the system
    - use `Integrated` when the system is already verified inside the main playable loop
-12. If acceptance criteria are already satisfied by the current repository state, check them or rewrite them so the document does not pretend the repo is less complete than it really is.
-13. If prototype or playtest evidence changes scope or assumptions, rewrite the affected sections so the document stays internally consistent instead of appending contradictory notes.
-14. When the GDD is implementation-ready and the scaffold already exists, end with a handoff to `implement-system`; otherwise hand off to another `design-system` or `prototype`.
+13. If acceptance criteria are already satisfied by the current repository state, check them or rewrite them so the document does not pretend the repo is less complete than it really is.
+14. If prototype or playtest evidence changes scope or assumptions, rewrite the affected sections so the document stays internally consistent instead of appending contradictory notes.
+15. When the GDD is implementation-ready and the scaffold already exists, end with a handoff to `implement-system`; otherwise hand off to another `design-system` or `prototype`.
 
 Failure / Stop Conditions:
 - stop if the game concept is missing

@@ -1,5 +1,11 @@
 # Technical Preferences
 
+## Product Targets
+
+- **Target Platforms**: Web
+- **Primary Input Methods**: Keyboard
+- **Distribution / Delivery**: Browser build
+
 ## Runtime / Engine & Language
 
 - **Runtime / Engine**: Web Runtime

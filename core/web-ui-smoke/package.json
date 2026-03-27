@@ -1,0 +1,13 @@
+{
+  "name": "codex-web-ui-smoke-skill",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Reusable Playwright runner for Codex browser smoke tests across repos.",
+  "scripts": {
+    "install:runtime": "bash ./scripts/install_runtime.sh"
+  },
+  "dependencies": {
+    "playwright": "^1.52.0"
+  }
+}

@@ -19,7 +19,13 @@ Use manual runs when:
 - the agent started choosing the wrong next step
 
 Do manual runs before building auto-improvement loops.
-The current Phase 1 fixtures default to a lightweight web runtime so the harness does not assume Godot or any other specific engine.
+
+## Coverage Model
+
+- Core workflow scenarios must stay platform-agnostic.
+- Overlay scenarios may use browser fixtures when that is the cheapest reproducible way to exercise specialist handoffs.
+- A web fixture is a harness convenience, not a statement that `gamedev/` is browser-only.
+- Browser-specialist behavior must not leak back into generic skills unless the rule is truly platform-agnostic.
 
 ## Goal
 
@@ -63,7 +69,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 ### 1. Stack Selection
 
-- **Prompt**: `подбери стек для небольшой браузерной игры`
+- **Prompt**: `подбери стек для небольшой top-down action игры`
 - **Expected start**: `setup-engine`
 - **Expected output**: `docs/technical-preferences.md`
 - **Bad signs**:
@@ -162,7 +168,7 @@ Run these too. They are usually more important than happy paths.
 
 ### 11. Tuning Without Playable Build
 
-- **Prompt**: `сделай playtest pass`
+- **Prompt**: `сделай playtest pass по текущему билду`
 - **Missing prerequisite**: runnable build
 - **Expected route**: stop and route to the nearest real prerequisite such as `implement-system` or `assemble-mvp`
 - **Expected output**: no `playtest-and-tune` report yet; only the blocked route and next handoff
@@ -171,12 +177,13 @@ Run these too. They are usually more important than happy paths.
 ## Phase 2 Regression Scenarios
 
 Run these after the baseline set is green.
-They are meant to stress the richer web-runtime path and end-result routing.
+They are meant to stress overlay behavior, richer runtime paths, and end-result routing.
 
 ### 12. Real Playtest Pass
 
 - **Prompt**: `Прогони реальный playtest по текущей веб-сборке Courier Drift...`
 - **Fixture**: `playtest_ready_slice`
+- **Note**: this is intentionally a browser-overlay scenario, not the definition of the whole workflow
 - **Expected start**: `playtest-and-tune`
 - **Expected output**: `reports/playtest-report.md`
 - **Bad signs**:
@@ -210,7 +217,7 @@ They are meant to stress the richer web-runtime path and end-result routing.
 
 ### 15. Full-Run Routing From Known Stack
 
-- **Prompt**: `Хочу довести этот концепт до первого web MVP`
+- **Prompt**: `Хочу довести этот концепт до первого MVP`
 - **Fixture**: `stack_known`
 - **Expected mode**: full-run
 - **Expected first route**: `map-systems`

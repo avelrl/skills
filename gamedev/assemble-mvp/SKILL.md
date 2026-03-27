@@ -26,7 +26,7 @@ Inputs / Required Context:
 Outputs / Owned Artifacts:
 - owns the integration work needed for one playable MVP or vertical slice
 - owns `reports/mvp-assembly-report.md`
-- may create or update scene wiring, state flow, HUD glue, restart flow, stub content, and build scripts
+- may create or update scene wiring, state flow, UI or presentation glue, restart flow, stub content, and build scripts
 - may create or update one lightweight repeatable smoke or sanity entrypoint when the stack supports it cheaply
 - uses `gamedev/templates/mvp-assembly-report.md`
 
@@ -41,23 +41,24 @@ Execution Rules:
 4. Prefer glue code, placeholders, and one arena or scene over expanding content breadth.
 5. Ensure controls, core interaction, objective pressure, fail state, and restart or exit flow are actually reachable in one run.
 6. Run the actual build or game target before writing the report; do not backfill `reports/mvp-assembly-report.md` from assumptions.
-7. When the stack supports it cheaply, add or update one repeatable smoke or sanity command for the assembled loop instead of relying only on ad hoc manual clicking.
-8. Prefer repo-native verification commands over ambient browser CLI probes that depend on a separately installed Playwright browser stack.
-9. If a secondary browser probe fails only because the environment lacks an installed browser or similar tool-layer prerequisite, record the exact blocker but do not downgrade an otherwise verified playable loop to `Blocked`.
-10. Write `reports/mvp-assembly-report.md` from the canonical template and record the actual verification commands, observed loop, and real blockers.
-11. Update `design/gdd/systems-index.md` when present so systems verified inside the main playable loop move to `integrated`.
-12. If assembly evidence closes one or more `High-Risk Systems` rows, update their notes and the progress snapshot in the same pass instead of leaving them stale.
-13. Sync matching system GDDs so their status blocks and acceptance criteria reflect the new integrated state instead of leaving them at prototype-era status.
-14. Save accepted evidence in stable project paths under `reports/` or another versioned folder; do not rely only on ignored scratch dirs.
-15. Update `README.md` when needed so install, run, build, test, and smoke commands match the assembled repo.
-16. List missing glue, blocked systems, and obvious follow-up work without trying to solve everything in one pass. If unresolved high-risk rows remain, name the next evidence-closing move instead of implying full closure.
+7. When the stack supports it cheaply, add or update one repeatable sanity command or checklist for the assembled loop instead of relying only on ad hoc manual checks.
+8. Prefer repo-native verification commands for the chosen runtime over ambient external tooling that is not part of the repo or platform contract.
+9. If specialist QA tooling is unavailable but the primary run target already proved the loop, record the exact blocker without downgrading an otherwise verified playable slice to `Blocked`.
+10. For browser projects, treat browser-open, screenshot, or specialist visual probes as supporting evidence unless the repo explicitly owns that automation path.
+11. Write `reports/mvp-assembly-report.md` from the canonical template and record the actual verification commands, observed loop, and real blockers.
+12. Update `design/gdd/systems-index.md` when present so systems verified inside the main playable loop move to `integrated`.
+13. If assembly evidence closes one or more `High-Risk Systems` rows, update their notes and the progress snapshot in the same pass instead of leaving them stale.
+14. Sync matching system GDDs so their status blocks and acceptance criteria reflect the new integrated state instead of leaving them at prototype-era status.
+15. Save accepted evidence in stable project paths under `reports/` or another versioned folder; do not rely only on ignored scratch dirs.
+16. Update `README.md` when needed so install, run, build, test, and smoke commands match the assembled repo.
+17. List missing glue, blocked systems, and obvious follow-up work without trying to solve everything in one pass. If unresolved high-risk rows remain, name the next evidence-closing move instead of implying full closure.
 
 Failure / Stop Conditions:
 - stop if the scaffold is missing or cannot boot
 - stop if there are not enough implemented systems to form a loop
 - stop if the request is really asking for tuning rather than assembly
 - stop if the loop cannot actually be run or verified; do not write an optimistic `Playable` report
-- do not treat a missing optional Playwright browser install as assembly failure when repo-native verification already proved the loop
+- do not treat missing optional specialist QA tooling as assembly failure when repo-native verification already proved the loop
 - do not turn this skill into an all-systems implementation marathon
 
 Return Format:
@@ -76,4 +77,5 @@ Example Invocation:
 
 Related Skills / Boundary:
 - use `implement-system` before this skill to build the ingredients
+- use platform specialists only for runtime-specific QA or presentation depth; keep the assembly report and integration-state sync here
 - use `playtest-and-tune` after this skill to improve pacing and feel

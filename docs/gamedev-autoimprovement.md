@@ -40,7 +40,8 @@ Expected pieces:
 - `scripts/judge_evals.py` to score outputs
 - `reports/evals/` for summaries
 - scenario files are plain JSON for now so the harness stays stdlib-only
-- the current fixtures intentionally default to a web runtime so evals do not depend on Godot knowledge
+- some fixtures intentionally use a lightweight web runtime because it is cheap to execute, but that must not turn the generic workflow into a browser-only design
+- keep core routing expectations platform-agnostic and use browser fixtures only where overlay behavior actually matters
 
 ### Phase 2. Batch Regression Runs
 
@@ -132,6 +133,7 @@ The judge should score:
 - scope discipline
 - correct next recommended skill
 - correct systems-index status updates when relevant
+- correct specialist boundary handling when a scenario intentionally uses a browser overlay
 
 ## Suggested Scenario Record
 
@@ -175,6 +177,7 @@ python scripts/judge_evals.py judge-batch reports/evals/runs/<batch-name>
 If self-improvement is enabled later, restrict writes to:
 
 - `docs/gamedev-workflow.md`
+- `docs/gamedev-specialist-handoffs.md`
 - `docs/gamedev-manual-runs.md`
 - `docs/gamedev-autoimprovement.md`
 - `gamedev/*/SKILL.md`

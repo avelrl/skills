@@ -2,7 +2,7 @@
   "name": "full_run_from_stack_known",
   "fixture": "stack_known",
   "mode": "full-run",
-  "prompt": "Хочу довести этот концепт до первого web MVP. Не жди, пока я назову каждый skill: выбери ближайший корректный шаг по gamedev workflow, сделай его и оставь ясный handoff дальше.",
+  "prompt": "Хочу довести этот концепт до первого MVP. Не жди, пока я назову каждый skill: выбери ближайший корректный шаг по gamedev workflow, сделай его и оставь ясный handoff дальше.",
   "expected_first_route": "map-systems",
   "expected_next_recommendation": "design-system",
   "acceptable_next_recommendations": [

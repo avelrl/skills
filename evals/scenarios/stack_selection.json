@@ -2,7 +2,7 @@
   "name": "stack_selection",
   "fixture": "concept_only",
   "mode": "step-by-step",
-  "prompt": "подбери стек для небольшой браузерной игры",
+  "prompt": "подбери стек для небольшой top-down action игры",
   "expected_first_route": "setup-engine",
   "expected_next_recommendation": "map-systems",
   "expected_paths": [
