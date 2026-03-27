@@ -227,6 +227,20 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
   - skips the systems map even though stack selection is already done
   - silently runs too far downstream without grounding the route first
 
+### 16. Closure Doc Sync Honesty
+
+- **Prompt**: `Текущий playable slice уже собран, но closure docs расходятся между собой...`
+- **Fixture**: `closure_sync_needed`
+- **Mode**: step-by-step closure-sync check on an already verified slice
+- **Expected start**: `playtest-and-tune`
+- **Acceptable alternate start**: `assemble-mvp`
+- **Expected output**: synced `README.md`, `reports/mvp-assembly-report.md`, `reports/playtest-report.md`, `design/gdd/systems-index.md`, and relevant system GDD status/checklist updates
+- **Bad signs**:
+  - adds new systems or a fresh feature pass during doc sync
+  - turns the request into hidden recovery work instead of honest closure sync
+  - leaves contradictory closure state across README, reports, and systems docs
+  - leaves stale acceptance criteria unresolved when the current evidence already claims closure
+
 ## Pass Criteria
 
 A scenario passes when:

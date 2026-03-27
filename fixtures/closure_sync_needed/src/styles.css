@@ -1,0 +1,128 @@
+:root {
+  color-scheme: dark;
+  font-family: "Avenir Next", "Trebuchet MS", sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(26, 56, 83, 0.7), transparent 42%),
+    linear-gradient(180deg, #050b13 0%, #08111b 100%);
+  color: #edf3f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(233, 162, 75, 0.08), transparent 24%),
+    radial-gradient(circle at 80% 15%, rgba(45, 191, 181, 0.1), transparent 25%),
+    linear-gradient(180deg, #04070c 0%, #091421 100%);
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.shell {
+  width: min(1120px, 100%);
+  display: grid;
+  gap: 18px;
+}
+
+.shell__header {
+  display: grid;
+  gap: 8px;
+}
+
+.shell__eyebrow {
+  margin: 0;
+  color: #f1b56a;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.shell__title {
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 4.4rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.shell__deck {
+  margin: 0;
+  max-width: 60ch;
+  color: rgba(237, 243, 248, 0.78);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.game-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(241, 181, 106, 0.2);
+  border-radius: 28px;
+  padding: 18px;
+  background:
+    linear-gradient(135deg, rgba(13, 27, 41, 0.96), rgba(8, 18, 29, 0.95)),
+    rgba(8, 18, 29, 0.95);
+  box-shadow:
+    0 22px 80px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.game-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.05), transparent 28%),
+    radial-gradient(circle at top right, rgba(241, 181, 106, 0.08), transparent 24%);
+  pointer-events: none;
+}
+
+.game-frame canvas {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  display: block;
+  border-radius: 20px;
+  background: #050b13;
+}
+
+.shell__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: rgba(237, 243, 248, 0.72);
+  font-size: 0.88rem;
+}
+
+.shell__footer span {
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 720px) {
+  #app {
+    padding: 14px;
+  }
+
+  .game-frame {
+    padding: 12px;
+    border-radius: 22px;
+  }
+
+  .shell__footer {
+    font-size: 0.8rem;
+  }
+}

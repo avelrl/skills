@@ -32,6 +32,7 @@ Current manual validation has focused on `gamedev/`, browser-game overlays, one 
 - Newly confirmed lane: desktop Pygame full-run to honest `Stable MVP` on a repo-local conda environment
 - Newly confirmed behavior: blocked step-by-step routing across three core prereq scenarios
 - Newly confirmed behavior: deliberate `web-ui-doctor` failure-path diagnosis with exact layer classification
+- Newly added reusable regression asset: `closure_doc_sync_honesty` for stale closure/doc-sync drift
 - Biggest remaining gaps: reusable regression fixtures for the strongest manual runs and a clearer manual-run story for shared `core/` skills as a group
 
 Status labels below are intentionally rough:
@@ -53,6 +54,7 @@ Status labels below are intentionally rough:
 | `gamedev/assemble-mvp` | checked | browser and non-browser loops were assembled and pushed through closure reports | none critical |
 | `gamedev/playtest-and-tune` | checked | real tuning passes happened with evidence, doc sync, and closure in browser and non-browser repos | none critical |
 | Blocked step-by-step routing from `docs/gamedev-manual-runs.md` | checked | `implement_without_gdd`, `blocked_assemble_mvp`, and `tuning_without_build` all routed to the nearest prerequisite without hidden recovery | broader blocked matrix still worth growing later |
+| Late doc-sync / closure honesty regression | checked | `closure_doc_sync_honesty` scenario plus `closure_sync_needed` fixture now cover stale README/report/GDD closure drift | broader reusable regression set still worth growing |
 | Specialist handoff rules in `docs/gamedev-specialist-handoffs.md` | checked | browser-specific depth stayed in specialist overlays while the Pygame run stayed generic | none critical |
 | Browser 2D overlay (`Game Studio` + Phaser lane) | checked | strongest current lane; reached honest `Stable MVP` | none critical |
 | Browser 3D overlay (`Game Studio` + Three.js lane) | checked | reached `Stable MVP` with saved repeatable browser-smoke evidence | opening readability polish remains, but it is not a closure blocker |
@@ -87,7 +89,7 @@ De-prioritized for now:
 
 ### Immediate
 
-1. Convert the strongest browser and non-browser manual runs into reusable fixtures or `evals/` scenarios.
+1. Expand the reusable regression set beyond `closure_doc_sync_honesty` and the current blocked-routing scenarios.
    Goal: preserve the current coverage without re-running the same manual loops from scratch.
 2. Use `docs/core-manual-runs.md` for the next shared-core validation passes.
    Goal: keep `core/` evaluation out of ad-hoc chat memory and out of the `gamedev` runbook.
@@ -96,7 +98,7 @@ De-prioritized for now:
 
 ### Next
 
-1. Add one regression scenario that exercises late doc-sync and closure honesty.
+1. Add a second reusable regression scenario for browser or non-browser closure repeatability.
 2. Re-check browser or non-browser lanes only if routing or evidence contracts change again.
 3. Add one more non-browser engine only if the platform-agnostic claim becomes doubtful again.
 
