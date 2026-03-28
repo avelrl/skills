@@ -2,7 +2,7 @@
   "name": "closure_doc_sync_honesty",
   "fixture": "closure_sync_needed",
   "mode": "step-by-step",
-  "prompt": "Текущий playable slice уже собран, но closure docs расходятся между собой. Выполни только ближайший корректный шаг по workflow. Не делай новый feature pass. Проверь текущее evidence, приведи README, assembly report, playtest report, systems index и relevant system docs к одному честному состоянию. Не заявляй Stable MVP без реального подтверждения. После doc-sync остановись.",
+  "prompt": "The current playable slice already exists, but the closure docs disagree with each other. Perform only the nearest correct workflow step. Do not start a new feature pass. Check the current evidence and bring the README, assembly report, playtest report, systems index, and relevant system docs into one honest state. Do not claim Stable MVP without real confirmation. Stop after doc sync.",
   "expected_first_route": "playtest-and-tune",
   "acceptable_first_routes": [
     "assemble-mvp"

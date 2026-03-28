@@ -33,8 +33,8 @@ Use this as the short version.
 
 ### Fast Rule
 
-- user asks for result like `сделай игру` -> full-run mode
-- user asks for one artifact or one skill like `сделай диздок` -> step-by-step mode
+- user asks for result like `make a game` -> full-run mode
+- user asks for one artifact or one skill like `write a design doc` -> step-by-step mode
 - if the requested step is blocked, route to the nearest missing prerequisite
 
 ### Short Path
@@ -65,14 +65,14 @@ flowchart LR
 
 | User asks for | Start with |
 |---------------|------------|
-| `подбери стек` | `setup-engine` |
-| `разложи по системам` | `map-systems` |
-| `сделай диздок` | `design-system` |
-| `проверь рискованную механику` | `prototype` |
-| `собери каркас проекта` | `bootstrap-project` |
-| `реализуй систему` | `implement-system` |
-| `собери первый playable` | `assemble-mvp` |
-| `сделай тюнинг` | `playtest-and-tune` |
+| `pick the stack` | `setup-engine` |
+| `break the game into systems` | `map-systems` |
+| `write a design doc` | `design-system` |
+| `test a risky mechanic` | `prototype` |
+| `bootstrap the project` | `bootstrap-project` |
+| `implement a system` | `implement-system` |
+| `assemble the first playable` | `assemble-mvp` |
+| `do a tuning pass` | `playtest-and-tune` |
 
 ### 1. Full-Run Mode
 
@@ -80,9 +80,9 @@ Use full-run mode when the user asks for an end result rather than a specific ar
 
 Typical prompts:
 
-- `сделай мне игру про X`
-- `собери первый playable`
-- `доведи концепт до MVP`
+- `make me a game about X`
+- `assemble the first playable`
+- `take this concept to MVP`
 
 In full-run mode, the agent should choose the next skill based on the current repository state and move forward through the active flow instead of waiting for the user to name every step.
 
@@ -105,11 +105,11 @@ Use step-by-step mode when the user explicitly asks for one artifact, one decisi
 
 Typical prompts:
 
-- `сделай диздок боёвки`
-- `подбери стек`
-- `собери scaffold`
-- `реализуй movement`
-- `сделай playtest pass`
+- `write the combat design doc`
+- `pick the stack`
+- `bootstrap the scaffold`
+- `implement movement`
+- `do a playtest pass`
 
 In step-by-step mode, the agent should stay inside that step, produce the requested artifact, and return the next recommended handoff without silently running the whole chain.
 
@@ -326,14 +326,14 @@ flowchart TD
 
 | If user says | Start here | Usually next |
 |--------------|------------|--------------|
-| `подбери стек` | `setup-engine` | `map-systems` |
-| `разложи игру по системам` | `map-systems` | `design-system` |
-| `сделай диздок боёвки` | `design-system combat` | `prototype` or next `design-system` |
-| `проверь механику рывка` | `prototype` | update `design-system` |
-| `собери каркас проекта` | `bootstrap-project` | `implement-system` |
-| `реализуй movement` | `implement-system movement` | next `implement-system` or `assemble-mvp` |
-| `собери первый playable` | `assemble-mvp` | `playtest-and-tune` |
-| `сделай тюнинг боёвки` | `playtest-and-tune combat` | `implement-system`, `assemble-mvp`, or another tuning pass |
+| `pick the stack` | `setup-engine` | `map-systems` |
+| `break the game into systems` | `map-systems` | `design-system` |
+| `write the combat design doc` | `design-system combat` | `prototype` or next `design-system` |
+| `test the dash mechanic` | `prototype` | update `design-system` |
+| `bootstrap the project` | `bootstrap-project` | `implement-system` |
+| `implement movement` | `implement-system movement` | next `implement-system` or `assemble-mvp` |
+| `assemble the first playable` | `assemble-mvp` | `playtest-and-tune` |
+| `tune the combat loop` | `playtest-and-tune combat` | `implement-system`, `assemble-mvp`, or another tuning pass |
 
 ## Anti-Patterns
 

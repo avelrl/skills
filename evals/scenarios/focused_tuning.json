@@ -2,7 +2,7 @@
   "name": "focused_tuning",
   "fixture": "playable_slice",
   "mode": "step-by-step",
-  "prompt": "сделай тюнинг боёвки",
+  "prompt": "tune the combat loop",
   "expected_first_route": "playtest-and-tune",
   "expected_next_recommendation": "playtest-and-tune",
   "expected_paths": [

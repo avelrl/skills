@@ -2,7 +2,7 @@
   "name": "prototype_combat_risk",
   "fixture": "gdd_ready",
   "mode": "step-by-step",
-  "prompt": "Прежде чем фиксировать combat-loop GDD, сделай disposable prototype и проверь, читается ли телеграф перехватчика рядом с уже утвержденным movement. Нужен только риск-спайк с REPORT.md и явным follow-up path, без production integration.",
+  "prompt": "Before locking the combat-loop GDD, make a disposable prototype and check whether the interceptor telegraph reads clearly next to the already approved movement. Only a risk spike is needed, with REPORT.md and an explicit follow-up path, without production integration.",
   "expected_first_route": "prototype",
   "expected_next_recommendation": "prototype",
   "acceptable_next_recommendations": [

@@ -2,7 +2,7 @@
   "name": "project_scaffold",
   "fixture": "gdd_ready",
   "mode": "step-by-step",
-  "prompt": "Собери минимальный runnable scaffold под текущие technical preferences. Не реализуй Player Movement или другие gameplay systems; сделай только каркас, placeholder scene, базовые папки и README с правильным handoff.",
+  "prompt": "Assemble a minimal runnable scaffold for the current technical preferences. Do not implement Player Movement or other gameplay systems; create only the scaffold, a placeholder scene, the basic folders, and a README with the correct handoff.",
   "expected_first_route": "bootstrap-project",
   "expected_next_recommendation": "implement-system",
   "expected_paths": [

@@ -2,7 +2,7 @@
   "name": "blocked_assemble_mvp",
   "fixture": "scaffold_ready",
   "mode": "step-by-step",
-  "prompt": "Нужно собрать первый playable для внутреннего теста. Выполни только ближайший корректный шаг по workflow. Если для assemble-mvp не хватает уже implemented systems, не собирай обходной playable, не реализуй новые systems и явно назови следующий skill.",
+  "prompt": "We need the first playable for internal testing. Perform only the nearest correct workflow step. If assemble-mvp does not yet have enough implemented systems, do not assemble a workaround playable, do not implement new systems, and name the next skill explicitly.",
   "expected_first_route": "implement-system",
   "expected_next_recommendation": "implement-system",
   "acceptable_next_recommendations": [

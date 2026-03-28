@@ -152,7 +152,7 @@ Each auto-eval scenario should define:
 {
   "name": "implement_without_gdd",
   "fixture": "scaffold_only",
-  "prompt": "реализуй combat",
+  "prompt": "implement combat",
   "expected_first_route": "design-system",
   "expected_paths": [],
   "forbidden_behaviors": [
@@ -164,13 +164,18 @@ Each auto-eval scenario should define:
 
 ## Phase 1 Commands
 
-The current baseline commands are:
+The recommended cheap baseline batch is:
 
 ```bash
-python scripts/run_evals.py list
-python scripts/run_evals.py prepare --all
-python scripts/judge_evals.py judge-batch reports/evals/runs/<batch-name>
+python3 scripts/run_evals.py list
+python3 scripts/run_evals.py prepare \
+  implement_without_gdd blocked_assemble_mvp tuning_without_build \
+  closure_doc_sync_honesty closure_repeatability_honesty \
+  --batch-name baseline-regression-01 --force
+python3 scripts/judge_evals.py judge-batch reports/evals/runs/<batch-name>
 ```
+
+Use `prepare --all` only when workflow contracts or scenario coverage changed enough that the cheap baseline is no longer representative.
 
 ## Safety Boundaries
 

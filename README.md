@@ -5,6 +5,23 @@ Small local skill and template library with one active domain package: `gamedev/
 `AGENTS.md` stays the routing source of truth.
 This README is the high-level entrypoint: repo map, current validation status, and the next test plan.
 
+## Quick Start
+
+This repo is meant to be used as a local Codex skill bundle plus a small eval harness.
+
+1. Start with `AGENTS.md` for repo boundaries and routing.
+2. Use `docs/gamedev-workflow.md` for the active game-related workflow.
+3. Use `docs/core-manual-runs.md` and `docs/gamedev-manual-runs.md` when you want repeatable manual validation.
+4. Use `python3 scripts/run_evals.py list` to inspect the current eval scenarios.
+5. Use the recommended baseline batch below when you want a cheap regression check after workflow or template changes.
+
+If you are reading this on GitHub, the fastest way to understand the repo is:
+
+- `core/` for shared skills
+- `gamedev/` for the active domain workflow
+- `evals/` and `fixtures/` for regression assets
+- `docs/` for guidance, design notes, ADRs, and runbooks
+
 ## Repo Map
 
 - `core/`: shared workflows that still make sense without `gamedev/`
@@ -109,6 +126,33 @@ De-prioritized for now:
 1. Add one real asset-pipeline validation pass once a repo actually ships file-based assets.
 2. Add one real localization-table validation pass once a repo stops being English-only.
 3. Revisit opening-readability polish only after blocked-routing and failure-path coverage are no longer missing.
+
+## Recommended Regression Batch
+
+When you want a fast, meaningful re-check of the current validated baseline, start with this batch instead of `prepare --all`:
+
+```bash
+python3 scripts/run_evals.py prepare \
+  implement_without_gdd blocked_assemble_mvp tuning_without_build \
+  closure_doc_sync_honesty closure_repeatability_honesty \
+  --batch-name baseline-regression-01 --force
+```
+
+This batch intentionally covers:
+
+- blocked prerequisite routing
+- stale closure/doc sync
+- premature `Stable MVP` claims under mixed evidence
+
+Run the broader scenario set only when workflow contracts, templates, or skill boundaries change enough that the cheap baseline stops being representative.
+
+## Useful Next Steps
+
+If we continue later, the next highest-signal work is:
+
+1. Add one reusable shared-`core` regression target, not another game repo.
+2. Add real asset and localization validation only when a repo actually needs those lanes.
+3. Re-run the baseline batch only after meaningful workflow or template changes.
 
 ## Stop Rules
 

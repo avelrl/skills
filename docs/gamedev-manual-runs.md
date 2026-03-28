@@ -69,7 +69,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 ### 1. Stack Selection
 
-- **Prompt**: `подбери стек для небольшой top-down action игры`
+- **Prompt**: `pick the stack for a small top-down action game`
 - **Expected start**: `setup-engine`
 - **Expected output**: `docs/technical-preferences.md`
 - **Bad signs**:
@@ -79,7 +79,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 ### 2. Systems Mapping
 
-- **Prompt**: `разложи игру по системам`
+- **Prompt**: `break the game into systems`
 - **Expected start**: `map-systems`
 - **Expected output**: `design/gdd/systems-index.md`
 - **Typical next step**: `design-system` or `prototype` when the highest-leverage move is risk reduction first
@@ -90,7 +90,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 ### 3. Single System Design
 
-- **Prompt**: `сделай диздок боёвки`
+- **Prompt**: `write the combat design doc`
 - **Expected start**: `design-system`
 - **Expected output**: one canonical system GDD
 - **Bad signs**:
@@ -100,7 +100,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 ### 4. Risky Mechanic Check
 
-- **Prompt**: `проверь механику рывка, не развалится ли бой`
+- **Prompt**: `test the dash mechanic and check whether the combat loop still reads`
 - **Expected start**: `prototype`
 - **Expected output**: `prototypes/[slug]/REPORT.md`
 - **Bad signs**:
@@ -110,7 +110,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 ### 5. Project Scaffold
 
-- **Prompt**: `собери каркас проекта`
+- **Prompt**: `bootstrap the project scaffold`
 - **Expected start**: `bootstrap-project`
 - **Expected output**: runnable scaffold plus `README.md` guidance
 - **Bad signs**:
@@ -120,7 +120,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 ### 6. Single System Implementation
 
-- **Prompt**: `реализуй movement`
+- **Prompt**: `implement movement`
 - **Expected start**: `implement-system`
 - **Expected output**: one system implemented in production code
 - **Bad signs**:
@@ -130,7 +130,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 ### 7. First Playable
 
-- **Prompt**: `собери первый playable`
+- **Prompt**: `assemble the first playable`
 - **Expected start**: `assemble-mvp`
 - **Expected output**: playable loop plus `reports/mvp-assembly-report.md`
 - **Bad signs**:
@@ -140,7 +140,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 ### 8. Focused Tuning
 
-- **Prompt**: `сделай тюнинг боёвки`
+- **Prompt**: `tune the combat loop`
 - **Expected start**: `playtest-and-tune`
 - **Expected output**: `reports/playtest-report.md`
 - **Bad signs**:
@@ -154,7 +154,7 @@ Run these too. They are usually more important than happy paths.
 
 ### 9. Implementation Without GDD
 
-- **Prompt**: `реализуй combat`
+- **Prompt**: `implement combat`
 - **Missing prerequisite**: system GDD
 - **Expected route**: stop and route to `design-system`
 - **Typical next step after the missing GDD is written**: `bootstrap-project` if the runnable scaffold is still missing
@@ -163,12 +163,12 @@ Run these too. They are usually more important than happy paths.
 ### 10. Assembly Without Enough Systems (Retired)
 
 - This legacy blocked check is no longer part of the active eval suite.
-- Reason: the short prompt `собери playable` is too ambiguous and overlaps with full-run recovery behavior.
+- Reason: the short prompt `assemble a playable` is too ambiguous and overlaps with full-run recovery behavior.
 - Use `Blocked Assemble MVP` instead when you want a deterministic blocked step-by-step check for `assemble-mvp`.
 
 ### 11. Tuning Without Playable Build
 
-- **Prompt**: `сделай playtest pass по текущему билду`
+- **Prompt**: `do a playtest pass on the current build`
 - **Missing prerequisite**: runnable build
 - **Expected route**: stop and route to the nearest real prerequisite such as `implement-system` or `assemble-mvp`
 - **Expected output**: no `playtest-and-tune` report yet; only the blocked route and next handoff
@@ -181,7 +181,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
 
 ### 12. Real Playtest Pass
 
-- **Prompt**: `Прогони реальный playtest по текущей веб-сборке Courier Drift...`
+- **Prompt**: `Run a real playtest pass on the current Courier Drift web build...`
 - **Fixture**: `playtest_ready_slice`
 - **Note**: this is intentionally a browser-overlay scenario, not the definition of the whole workflow
 - **Expected start**: `playtest-and-tune`
@@ -193,7 +193,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
 
 ### 13. Blocked Assemble MVP
 
-- **Prompt**: `Нужно собрать первый playable... Выполни только ближайший корректный шаг по workflow`
+- **Prompt**: `We need the first playable... Perform only the nearest correct workflow step`
 - **Fixture**: `scaffold_ready`
 - **Mode**: step-by-step blocked-route check, not a full-run recovery prompt
 - **Expected route**: stop the fake assembly path and route to `implement-system`
@@ -205,7 +205,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
 
 ### 14. Prototype Before Combat Lock
 
-- **Prompt**: `сделай disposable prototype и проверь, читается ли телеграф перехватчика`
+- **Prompt**: `make a disposable prototype and check whether the interceptor telegraph reads clearly`
 - **Fixture**: `gdd_ready`
 - **Expected start**: `prototype`
 - **Expected output**: `prototypes/[slug]/REPORT.md`
@@ -217,7 +217,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
 
 ### 15. Full-Run Routing From Known Stack
 
-- **Prompt**: `Хочу довести этот концепт до первого MVP`
+- **Prompt**: `Take this concept to the first MVP`
 - **Fixture**: `stack_known`
 - **Expected mode**: full-run
 - **Expected first route**: `map-systems`
@@ -229,7 +229,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
 
 ### 16. Closure Doc Sync Honesty
 
-- **Prompt**: `Текущий playable slice уже собран, но closure docs расходятся между собой...`
+- **Prompt**: `The current playable slice already exists, but the closure docs disagree with each other...`
 - **Fixture**: `closure_sync_needed`
 - **Mode**: step-by-step closure-sync check on an already verified slice
 - **Expected start**: `playtest-and-tune`
@@ -243,7 +243,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
 
 ### 17. Closure Repeatability Honesty
 
-- **Prompt**: `Текущий slice уже почти дотянут до closure, но подтверждение repeatability выглядит сомнительно...`
+- **Prompt**: `The current slice is close to closure, but the repeatability evidence still looks doubtful...`
 - **Fixture**: `closure_repeatability_unproven`
 - **Mode**: step-by-step closure-state check with mixed success/failure evidence
 - **Expected start**: `playtest-and-tune`

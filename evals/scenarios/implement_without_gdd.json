@@ -2,7 +2,7 @@
   "name": "implement_without_gdd",
   "fixture": "scaffold_only",
   "mode": "step-by-step",
-  "prompt": "Нужно добавить combat в текущий MVP. Выполни только ближайший корректный шаг по workflow. Если для реализации не хватает обязательного design-артефакта или другого prerequisite, не кодируй обходной путь и явно назови следующий skill.",
+  "prompt": "We need to add combat to the current MVP. Perform only the nearest correct workflow step. If implementation is blocked by a required design artifact or another prerequisite, do not code a workaround and name the next skill explicitly.",
   "expected_first_route": "design-system",
   "expected_next_recommendation": "design-system",
   "acceptable_next_recommendations": [

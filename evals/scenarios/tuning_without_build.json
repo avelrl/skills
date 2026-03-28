@@ -2,7 +2,7 @@
   "name": "tuning_without_build",
   "fixture": "scaffold_ready",
   "mode": "step-by-step",
-  "prompt": "Нужно провести playtest по текущему билду, зафиксировать проблемы и по возможности сразу подправить критичные вещи. Если полноценный playable loop ещё не собран, не выдумывай tuning и явно назови ближайший следующий skill.",
+  "prompt": "We need to run a playtest on the current build, capture problems, and fix critical issues if possible. If a full playable loop has not been assembled yet, do not invent tuning and name the nearest next skill explicitly.",
   "expected_first_route": "implement-system",
   "acceptable_first_routes": [
     "assemble-mvp"

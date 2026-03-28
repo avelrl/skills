@@ -30,7 +30,7 @@ Modes or Arguments:
 
 Execution Rules:
 1. Keep the note in the same language as the input.
-2. Never invent facts, quotes, links, sources, tasks, or decisions; move uncertainty to `Открытые вопросы`.
+2. Never invent facts, quotes, links, sources, tasks, or decisions; move uncertainty to `Open Questions`.
 3. Preserve Obsidian syntax exactly: `[[...]]`, `![[...]]`, callouts, `==...==`, block refs, tags, and fenced code blocks.
 4. Ensure YAML frontmatter exists at the top; keep existing keys intact and ensure `type`, `status`, `summary`, and `tags`.
 5. Merge frontmatter tags with meaningful inline hashtags into a deduplicated YAML list using kebab-case and no `#` prefix.
@@ -77,11 +77,11 @@ Transformation Rules:
 - Structure:
   - generic order:
     - TL;DR admonition
-    - `## Контекст`
-    - `## Основное`
-    - `## Решения`
-    - `## Ссылки и материалы`
-    - `## Приложение: сырьё`
+    - `## Context`
+    - `## Main Points`
+    - `## Decisions`
+    - `## Links and Materials`
+    - `## Appendix: Raw Notes`
   - use `##` for main sections and `###` for subsections
   - use checkboxes for action items
   - annotate external links with one short reason and keep them focused

@@ -2,7 +2,7 @@
   "name": "closure_repeatability_honesty",
   "fixture": "closure_repeatability_unproven",
   "mode": "step-by-step",
-  "prompt": "Текущий slice уже почти дотянут до closure, но подтверждение repeatability выглядит сомнительно. Выполни только ближайший корректный шаг по workflow. Не добавляй features и не делай hidden recovery. Используй текущие reports и evidence artifacts, чтобы честно определить closure state: если repeatable success не доказан, не оставляй `Stable MVP` только по одному удачному run. Синхронизируй README, assembly report, playtest report и systems index с фактическим состоянием и остановись.",
+  "prompt": "The current slice is close to closure, but the repeatability evidence still looks doubtful. Perform only the nearest correct workflow step. Do not add features and do not do hidden recovery. Use the current reports and evidence artifacts to classify the closure state honestly: if repeatable success is not proven, do not keep `Stable MVP` based on a single lucky run. Sync the README, assembly report, playtest report, and systems index to the actual state and stop.",
   "expected_first_route": "playtest-and-tune",
   "acceptable_first_routes": [
     "assemble-mvp"

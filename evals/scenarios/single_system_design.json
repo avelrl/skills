@@ -2,7 +2,7 @@
   "name": "single_system_design",
   "fixture": "systems_mapped",
   "mode": "step-by-step",
-  "prompt": "сделай диздок боёвки",
+  "prompt": "write the combat design doc",
   "expected_first_route": "design-system",
   "expected_next_recommendation": "prototype",
   "expected_paths": [

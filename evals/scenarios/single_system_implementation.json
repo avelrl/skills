@@ -2,7 +2,7 @@
   "name": "single_system_implementation",
   "fixture": "scaffold_only",
   "mode": "step-by-step",
-  "prompt": "реализуй movement",
+  "prompt": "implement movement",
   "expected_first_route": "implement-system",
   "expected_next_recommendation": "implement-system",
   "expected_paths": [
