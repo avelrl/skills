@@ -1,0 +1,226 @@
+# Gamedev Assets Guide
+
+Практическое руководство по тому, как добавлять графику, UI-ассеты и анимационные решения внутри `gamedev`-процесса этого репозитория.
+
+Связанные документы:
+
+- общее руководство: `docs/gamedev-guide.ru.md`
+- канонический workflow: `docs/gamedev-workflow.md`
+- границы specialist-handoff: `docs/gamedev-specialist-handoffs.md`
+- готовые промты: `docs/gamedev-quickstart.ru.md`
+
+## Базовое правило
+
+`gamedev/` отвечает за момент появления ассетов, правила по placeholder-ам, канонические документы и handoff-ы.
+Он не пытается быть самым глубоким production pipeline для каждого движка и рантайма.
+
+Из этого следует:
+
+- через `gamedev/` решаем, когда временные ассеты допустимы
+- через `prepare-demo` фиксируем, что обязано быть заменено перед реальным демо
+- за runtime-specific глубину пайплайна отвечают specialists или внешние инструменты
+- после импорта ассетов используем `asset-audit`, чтобы проверить naming, formats, references и явный drift
+
+## Где ассеты сидят в процессе
+
+### Ранний препродакшен
+
+На `setup-engine`, `map-systems` и раннем `design-system` фиксируй только те визуальные ограничения, которые влияют на геймплей или tooling:
+
+- целевой визуальный стиль и уровень детализации
+- платформенные бюджеты
+- системы, где читаемость критична, например telegraph-ы или плотный HUD
+- ожидаемый тип ассетов: pixel sprites, painted 2D или shipped 3D assets
+
+Не превращай этот этап в массовое производство ассетов.
+
+### MVP-этап
+
+Во время `prototype`, `bootstrap-project` и раннего `implement-system` placeholder-ы нормальны.
+Нужны самые дешевые ассеты, которые позволяют проверить взаимодействие, читаемость, масштаб и темп.
+
+Обычно безопасно оставлять временными:
+
+- пропсы
+- грубые фоны
+- временные панели UI
+- сырые VFX
+- тестовую графику персонажей
+
+### Переход к демо
+
+Когда цель меняется с `доказать цикл` на `показать внятное демо`, запускай `prepare-demo`.
+Именно здесь проект должен явно зафиксировать:
+
+- какие placeholder-ы еще допустимы
+- какие ассеты нужно заменить до демо
+- какие классы ассетов требуют уже стабильного production pipeline
+- какой specialist должен вести следующий asset или animation pass
+
+Если визуальная несогласованность или drift источников ассетов становятся реальной проблемой, создай или обнови `design/gdd/art-bible.md`.
+
+## Что такое art bible
+
+`design/gdd/art-bible.md` это общий визуальный контракт проекта.
+Канонический шаблон лежит в `gamedev/templates/art-bible.md`.
+
+В нем имеет смысл фиксировать:
+
+- visual identity и набор референсов
+- палитру и эмоциональную цветовую карту
+- стандарты для персонажей, окружения, UI и VFX
+- naming rules и texture limits
+- ожидания по анимациям: число кадров, frame rate, strip rules, rig rules
+
+Это не:
+
+- замена `docs/technical-preferences.md`
+- GDD одной игровой системы
+- бэклог всех будущих ассетов
+- причина тормозить MVP, если placeholder-ов пока достаточно
+
+## Когда создавать art bible
+
+Создавай или обновляй его, когда выполняется хотя бы одно из условий:
+
+- графику делает больше одного человека или инструмента
+- проект смешивает packs, AI outputs и ручные правки, которым нужен единый визуальный контракт
+- `prepare-demo` показал, что drift placeholder-ов уже ломает доверие к демо
+- UI, props, characters и VFX начинают выглядеть как части разных игр
+
+Для маленького проекта документ не должен быть большим.
+Короткий и конкретный визуальный контракт почти всегда лучше раздутого lore-heavy art bible.
+
+## Как пользоваться art bible
+
+1. Начни с `gamedev/templates/art-bible.md`.
+2. Проектную копию по умолчанию сохраняй в `design/gdd/art-bible.md`, если у проекта нет более сильной существующей структуры.
+3. Заполняй только те разделы, которые убирают неоднозначность прямо сейчас.
+4. Используй документ как brief для художников, подрядчиков, AI generation pass-ов и runtime specialists.
+5. Обновляй его, когда меняется контракт демо, правила читаемости или asset budgets.
+6. Держи его согласованным с `reports/demo-readiness.md`, если меняется placeholder policy.
+
+## Три практические схемы asset pipeline
+
+### 1. 2D Pixel или Sprite Game
+
+Лучше всего подходит, когда:
+
+- нужен дешевый и быстрый MVP
+- анимация должна быть читаемой и детерминированной
+- рантайм дружит со спрайтами
+
+Рекомендуемый production pattern:
+
+- сначала утверждается один in-game seed frame
+- дальше генерируется или редактируется весь strip целиком, а не кадры по одному
+- до импорта нормализуются frame size, anchor и scale
+- UI animation держится отдельно от sprite animation
+
+Базовая анимация:
+
+- sprite strips для состояний персонажа
+- engine tweens для HUD и меню
+- короткие sheets или code-driven effects для VFX
+
+Codex полезен для:
+
+- prompt shaping
+- glue-кода вокруг sprite strip workflow
+- нормализации и import checks
+- фиксации placeholder policy в документах
+
+Specialist или MCP особенно полезны, когда:
+
+- нужен стабильный 2D strip generation workflow
+- важна работа через Aseprite-подобный редактор или спрайтовый review
+- нужно удерживать визуальную консистентность между несколькими персонажами и сетами атак
+
+Для browser-проектов типичный overlay здесь это `sprite-pipeline`.
+
+### 2. 2D Hand-Painted или UI-Heavy Demo
+
+Лучше всего подходит, когда:
+
+- следующий milestone это pitch build или polished vertical slice
+- большая часть ценности идет через interface quality и presentation
+- проект смешивает backgrounds, UI, portraits и легкие gameplay assets
+
+Рекомендуемый production pattern:
+
+- перед широким производством ассетов сначала заводится art bible
+- gameplay props, backgrounds, portraits, UI и VFX раскладываются по разным production lanes
+- production assets приходят из packs, ручной правки или подрядчиков
+- AI используется в основном для concept art, splash art, portraits и moodboards, а не для каждого shipped UI element
+
+Базовая анимация:
+
+- tweens и layout motion для UI
+- skeletal или cutout animation там, где это уместно
+- layered particles и screen feedback для VFX
+
+Codex полезен для:
+
+- превращения размытых визуальных пожеланий в короткий asset contract
+- синхронизации prompt-ов с art bible
+- встраивания ассетов в репозиторий и проверки drift-а
+
+Specialist или MCP особенно полезны, когда:
+
+- пайплайн зависит от Figma, Photoshop-like tooling или asset manager-а
+- revision loop для UI важнее, чем сырая gameplay animation depth
+
+Для browser-проектов типичный overlay здесь это `game-ui-frontend`.
+
+### 3. 3D Web или GLB Pipeline
+
+Лучше всего подходит, когда:
+
+- проект браузерный, но хочет production look сильнее, чем дают простые 2D placeholder-ы
+- рантайм уже ожидает GLB или glTF assets
+- вас устраивает greybox-first разработка
+
+Рекомендуемый production pattern:
+
+- сначала ship-ятся greybox proxies
+- к cleaned source assets переходят только после появления реального playable loop
+- перед импортом GLB или glTF экспортируются, оптимизируются и валидируются
+- pivots, scale, material reuse, collision и бюджеты чинятся upstream, а не костылятся кодом
+
+Базовая анимация:
+
+- skeletal animation для персонажей
+- retargeted motion sets, когда это возможно
+- code-driven или timeline-driven motion для пропсов
+- UI animation ведется отдельно от 3D character animation
+
+Codex полезен для:
+
+- loader integration
+- asset indexing
+- validation scripts
+- проектных import и budget checks
+
+Specialist или MCP особенно полезны, когда:
+
+- пайплайн завязан на Blender или другой DCC tool
+- ключевыми становятся rigging, retargeting, compression и texture packaging
+
+Для browser-проектов типичный overlay здесь это `web-3d-asset-pipeline`.
+
+## Практичные дефолты
+
+- Если вы соло или очень маленькая команда, по умолчанию выбирай 2D pixel или sprite path.
+- Если важнее убедительное демо и presentation, чем глубокая gameplay animation, по умолчанию выбирай 2D hand-painted или UI-heavy path.
+- Если у команды уже есть реальный опыт с 3D pipeline и проект явно web 3D, используй GLB path.
+
+## Рекомендуемая форма промта
+
+Используй такой запрос, если хочешь, чтобы Codex создал или обновил общий визуальный контракт:
+
+```text
+Создай или обнови `design/gdd/art-bible.md` на основе `gamedev/templates/art-bible.md`.
+Сделай документ коротким и практичным для маленькой команды.
+Зафиксируй палитру, правила силуэта, плотность UI, направление VFX, ожидания по анимациям, naming ассетов и какие placeholder-ы допустимы для следующего milestone.
+Не превращай это в lore-документ или гигантский backlog ассетов.
+```

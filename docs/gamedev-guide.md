@@ -5,6 +5,7 @@ Human-facing guide for using the repo's `gamedev` flow without reverse-engineeri
 Related docs:
 
 - quickstart: `docs/gamedev-quickstart.md`
+- assets guide: `docs/gamedev-assets.md`
 - troubleshooting: `docs/gamedev-troubleshooting.md`
 - glossary: `docs/gamedev-glossary.md`
 - canonical workflow: `docs/gamedev-workflow.md`
@@ -97,6 +98,7 @@ It is the step where the repo names the demo contract for the whole slice:
 - QA and verification expectations
 
 If the demo problem is actually missing gameplay, `prepare-demo` should surface that and route back into `design-system` or `implement-system`.
+If the blocker is visual consistency or asset-source drift, create or refresh `design/gdd/art-bible.md` from `gamedev/templates/art-bible.md` and keep it aligned with the demo contract.
 
 ## What Each Step Produces
 
@@ -145,6 +147,7 @@ Use the existing systems index and do not implement code.
 
 ## If You Are Not Sure Where To Start
 
+- Start with `docs/gamedev-assets.md` if the current blocker is assets, animation, or visual consistency.
 - Start with `docs/gamedev-quickstart.md` if you want ready-made prompt examples.
 - Start with `docs/gamedev-troubleshooting.md` if you already have a repo and something feels wrong.
 - Start with `docs/gamedev-glossary.md` if the terms themselves are still fuzzy.

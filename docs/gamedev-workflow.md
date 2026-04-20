@@ -187,6 +187,7 @@ It is an overlay on top of the same flow.
 - Browser projects may use `Game Studio` or another browser specialist for runtime architecture, scaffold defaults, UI direction, asset pipeline depth, and browser QA.
 - Non-browser projects should use engine-native docs or project-local specialists for Godot, Unity, Unreal, custom engines, or proprietary runtimes.
 - `gamedev/` still owns `docs/technical-preferences.md`, `design/gdd/`, `prototypes/`, `reports/`, and the status model.
+- When visual consistency or asset-source drift becomes a real blocker, create or refresh `design/gdd/art-bible.md` from `gamedev/templates/art-bible.md` as the shared visual contract. This supports `prepare-demo`; it does not replace it.
 
 Use `docs/gamedev-specialist-handoffs.md` for the detailed ownership split.
 

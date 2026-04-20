@@ -118,3 +118,14 @@ Do not jump straight into random UI implementation.
 ```
 
 Expected start: usually `prepare-demo`
+
+### 9. I need a visual contract before buying, generating, or importing assets
+
+```text
+Create or update `design/gdd/art-bible.md` from `gamedev/templates/art-bible.md`.
+Keep it concise and practical for a small team.
+Capture palette, silhouette rules, UI density, VFX direction, animation expectations, asset naming, and which placeholders are acceptable for the next milestone.
+Do not turn this into lore or a giant asset backlog.
+```
+
+Expected start: explicit artifact request, usually near `prepare-demo` or before broader asset production

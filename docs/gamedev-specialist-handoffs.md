@@ -9,7 +9,7 @@ Use this document to keep `gamedev/` cleanly separated from platform- or engine-
 It owns:
 
 - mode selection and prerequisite routing
-- canonical project artifacts such as `docs/technical-preferences.md`, `design/gdd/systems-index.md`, system GDDs, prototype reports, and MVP, demo, or playtest reports
+- canonical project artifacts such as `docs/technical-preferences.md`, `design/gdd/systems-index.md`, system GDDs, optional shared visual contracts such as `design/gdd/art-bible.md`, prototype reports, and MVP, demo, or playtest reports
 - evidence closure and status sync
 - step-to-step handoffs
 
@@ -64,5 +64,5 @@ For Godot, Unity, Unreal, custom engines, or proprietary runtimes:
 - `bootstrap-project`: own the scaffold contract and repo hygiene; let specialists shape runtime-specific folder and architecture defaults.
 - `implement-system`: own one-system-at-a-time scope and doc sync; use specialists for runtime-specific implementation patterns when needed.
 - `assemble-mvp`: own playable-loop closure, durable evidence, and integration status.
-- `prepare-demo`: own the demo contract, the inventory of demo-critical presentation systems, the placeholder policy, and the specialist handoff capture.
+- `prepare-demo`: own the demo contract, the inventory of demo-critical presentation systems, the placeholder policy, the specialist handoff capture, and the decision of whether the project now needs a refreshed `design/gdd/art-bible.md`.
 - `playtest-and-tune`: own the accepted tuning changes, report, and canonical doc sync even when specialist QA tools are used.
