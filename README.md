@@ -5,15 +5,24 @@ Small local skill and template library with one active domain package: `gamedev/
 `AGENTS.md` stays the routing source of truth.
 This README is the high-level entrypoint: repo map, current validation status, and the next test plan.
 
+Human-facing gamedev entry docs:
+
+- English guide: `docs/gamedev-guide.md`
+- Russian guide: `docs/gamedev-guide.ru.md`
+- English quickstart: `docs/gamedev-quickstart.md`
+- Russian quickstart: `docs/gamedev-quickstart.ru.md`
+- Russian repo entrypoint: `README.ru.md`
+
 ## Quick Start
 
 This repo is meant to be used as a local Codex skill bundle plus a small eval harness.
 
 1. Start with `AGENTS.md` for repo boundaries and routing.
-2. Use `docs/gamedev-workflow.md` for the active game-related workflow.
-3. Use `docs/core-manual-runs.md` and `docs/gamedev-manual-runs.md` when you want repeatable manual validation.
-4. Use `python3 scripts/run_evals.py list` to inspect the current eval scenarios.
-5. Use the recommended baseline batch below when you want a cheap regression check after workflow or template changes.
+2. If you want the human-facing path first, read `docs/gamedev-guide.md` or `docs/gamedev-guide.ru.md`.
+3. Use `docs/gamedev-workflow.md` for the canonical game-related workflow.
+4. Use `docs/core-manual-runs.md` and `docs/gamedev-manual-runs.md` when you want repeatable manual validation.
+5. Use `python3 scripts/run_evals.py list` to inspect the current eval scenarios.
+6. Use the recommended baseline batch below when you want a cheap regression check after workflow or template changes.
 
 If you are reading this on GitHub, the fastest way to understand the repo is:
 
@@ -164,6 +173,15 @@ If we continue later, the next highest-signal work is:
 ## Useful Docs
 
 - `AGENTS.md`
+- `README.ru.md`
+- `docs/gamedev-guide.md`
+- `docs/gamedev-guide.ru.md`
+- `docs/gamedev-quickstart.md`
+- `docs/gamedev-quickstart.ru.md`
+- `docs/gamedev-troubleshooting.md`
+- `docs/gamedev-troubleshooting.ru.md`
+- `docs/gamedev-glossary.md`
+- `docs/gamedev-glossary.ru.md`
 - `docs/gamedev-workflow.md`
 - `docs/gamedev-specialist-handoffs.md`
 - `docs/gamedev-manual-runs.md`

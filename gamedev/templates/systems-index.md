@@ -4,6 +4,7 @@
 **Created**: [YYYY-MM-DD]
 **Last Updated**: [YYYY-MM-DD]
 **Source Concept**: `design/gdd/game-concept.md`
+**Documentation Language**: [Match `design/gdd/game-concept.md` and `docs/technical-preferences.md`]
 
 ## Overview
 
@@ -88,4 +89,5 @@ Do not write `Prototype Candidate: None planned` unless `Evidence Needed` names 
 - [ ] Bootstrap or refresh the runnable scaffold with `/bootstrap-project` once the stack and first implementation targets are stable
 - [ ] Implement one MVP system at a time with `/implement-system`
 - [ ] Assemble the smallest coherent playable loop with `/assemble-mvp`
+- [ ] Prepare the first audience-facing demo contract with `/prepare-demo` once the goal shifts from proof-of-loop to presentation and readability
 - [ ] Update this index when a system changes scope or status

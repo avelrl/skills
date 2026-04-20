@@ -5,6 +5,11 @@
 - **Status**: [Draft | Approved]
 - **Owner**: [Name]
 
+## Language Policy
+
+- **Working / Documentation Language**: [Match `design/gdd/game-concept.md`]
+- **Player-Facing Language(s)**: [Match `design/gdd/game-concept.md`]
+
 ## Core Fantasy
 
 [What experience the whole project is trying to deliver.]

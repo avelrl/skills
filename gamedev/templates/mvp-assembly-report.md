@@ -61,4 +61,5 @@
 ## Recommended Next Step
 
 - [Run `/playtest-and-tune [focus-area]`]
+- [Run `/prepare-demo [demo-name]` if the next milestone is an audience-facing demo]
 - [Or name the system that must return to `/implement-system`]

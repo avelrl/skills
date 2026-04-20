@@ -6,6 +6,8 @@
 - **Author**: [Name]
 - **Last Updated**: [Date]
 - **Supports Pillar**: [Which pillar this serves]
+- **Documentation Language**: [Match project language policy]
+- **Player-Facing Language(s)**: [Match project language policy]
 
 ## Overview
 

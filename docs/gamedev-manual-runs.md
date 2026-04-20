@@ -138,7 +138,18 @@ Their machine-readable mirror lives under `evals/scenarios/`.
   - cannot explain loop boundaries
   - does not identify blockers and placeholders
 
-### 8. Focused Tuning
+### 8. Demo Preparation
+
+- **Prompt**: `plan the first public demo from the current playable`
+- **Expected start**: `prepare-demo`
+- **Expected output**: `reports/demo-readiness.md`
+- **Typical next step**: `design-system` or `implement-system` for the highest-leverage demo-critical system
+- **Bad signs**:
+  - treats the step as direct UI implementation
+  - writes vague polish notes instead of a real demo contract
+  - does not name specialist UI, asset, or QA handoffs when they are clearly needed
+
+### 9. Focused Tuning
 
 - **Prompt**: `tune the combat loop`
 - **Expected start**: `playtest-and-tune`
@@ -152,7 +163,7 @@ Their machine-readable mirror lives under `evals/scenarios/`.
 
 Run these too. They are usually more important than happy paths.
 
-### 9. Implementation Without GDD
+### 10. Implementation Without GDD
 
 - **Prompt**: `implement combat`
 - **Missing prerequisite**: system GDD
@@ -160,13 +171,13 @@ Run these too. They are usually more important than happy paths.
 - **Typical next step after the missing GDD is written**: `bootstrap-project` if the runnable scaffold is still missing
 - **Bad sign**: starts coding anyway
 
-### 10. Assembly Without Enough Systems (Retired)
+### 11. Assembly Without Enough Systems (Retired)
 
 - This legacy blocked check is no longer part of the active eval suite.
 - Reason: the short prompt `assemble a playable` is too ambiguous and overlaps with full-run recovery behavior.
 - Use `Blocked Assemble MVP` instead when you want a deterministic blocked step-by-step check for `assemble-mvp`.
 
-### 11. Tuning Without Playable Build
+### 12. Tuning Without Playable Build
 
 - **Prompt**: `do a playtest pass on the current build`
 - **Missing prerequisite**: runnable build
@@ -179,7 +190,7 @@ Run these too. They are usually more important than happy paths.
 Run these after the baseline set is green.
 They are meant to stress overlay behavior, richer runtime paths, and end-result routing.
 
-### 12. Real Playtest Pass
+### 13. Real Playtest Pass
 
 - **Prompt**: `Run a real playtest pass on the current Courier Drift web build...`
 - **Fixture**: `playtest_ready_slice`
@@ -191,7 +202,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
   - writes tuning notes without a real run
   - adds new systems instead of tuning the current loop
 
-### 13. Blocked Assemble MVP
+### 14. Blocked Assemble MVP
 
 - **Prompt**: `We need the first playable... Perform only the nearest correct workflow step`
 - **Fixture**: `scaffold_ready`
@@ -203,7 +214,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
   - unlocks the request by silently implementing missing systems first
   - turns the blocked step into a disguised full-run recovery
 
-### 14. Prototype Before Combat Lock
+### 15. Prototype Before Combat Lock
 
 - **Prompt**: `make a disposable prototype and check whether the interceptor telegraph reads clearly`
 - **Fixture**: `gdd_ready`
@@ -215,7 +226,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
   - writes a combat implementation instead of a spike
   - skips the documentation follow-up path
 
-### 15. Full-Run Routing From Known Stack
+### 16. Full-Run Routing From Known Stack
 
 - **Prompt**: `Take this concept to the first MVP`
 - **Fixture**: `stack_known`
@@ -227,7 +238,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
   - skips the systems map even though stack selection is already done
   - silently runs too far downstream without grounding the route first
 
-### 16. Closure Doc Sync Honesty
+### 17. Closure Doc Sync Honesty
 
 - **Prompt**: `The current playable slice already exists, but the closure docs disagree with each other...`
 - **Fixture**: `closure_sync_needed`
@@ -241,7 +252,7 @@ They are meant to stress overlay behavior, richer runtime paths, and end-result 
   - leaves contradictory closure state across README, reports, and systems docs
   - leaves stale acceptance criteria unresolved when the current evidence already claims closure
 
-### 17. Closure Repeatability Honesty
+### 18. Closure Repeatability Honesty
 
 - **Prompt**: `The current slice is close to closure, but the repeatability evidence still looks doubtful...`
 - **Fixture**: `closure_repeatability_unproven`

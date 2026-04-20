@@ -56,11 +56,12 @@ Execution Rules:
    - `Evidence Needed` should name the exact proof that will close the row, not a vague aspiration.
 10. If prototype reports or durable downstream evidence already exist, use them to update relevant system statuses, risk notes, and `High-risk systems without evidence coverage` instead of treating the index as a fresh document.
 11. Create or update `design/gdd/systems-index.md` using the canonical template.
-12. In `next` mode, refresh the index first if it is missing or stale, then recommend the next highest-leverage move.
-13. In `next` mode, prefer a target that either:
+12. Preserve the project's working or documentation language and player-facing terminology policy when it is already captured in the concept or technical-preferences docs; do not let the systems index drift into a different default language without an explicit reason.
+13. In `next` mode, refresh the index first if it is missing or stale, then recommend the next highest-leverage move.
+14. In `next` mode, prefer a target that either:
     - unlocks multiple downstream systems, or
     - reduces a high-risk uncertainty that blocks confident design.
-14. In `next` mode, if the highest-leverage move is evidence gathering rather than spec writing, recommend `prototype` before `design-system`.
+15. In `next` mode, if the highest-leverage move is evidence gathering rather than spec writing, recommend `prototype` before `design-system`.
 
 Failure / Stop Conditions:
 - stop if the concept is too vague to separate MVP systems from wish-list ideas

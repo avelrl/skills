@@ -8,6 +8,13 @@ Fill this once the project has a confirmed runtime or engine direction. Update i
 - **Primary Input Methods**: [TO BE CONFIGURED]
 - **Distribution / Delivery**: [TO BE CONFIGURED]
 
+## Language Policy
+
+- **Working / Documentation Language**: [TO BE CONFIGURED]
+- **Player-Facing Language(s)**: [TO BE CONFIGURED]
+- **Source of Truth**: [Copied from `design/gdd/game-concept.md` or confirmed here]
+- **Localization Scope**: [Prototype-only | MVP | Demo | Release | TO BE CONFIGURED]
+
 ## Runtime / Engine & Language
 
 - **Runtime / Engine**: [TO BE CONFIGURED]

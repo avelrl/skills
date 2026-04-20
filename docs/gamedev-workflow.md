@@ -39,9 +39,11 @@ Use this as the short version.
 
 ### Short Path
 
-`concept -> setup-engine -> map-systems -> design-system -> prototype if risky -> bootstrap-project -> implement-system x N -> assemble-mvp -> playtest-and-tune`
+`concept -> setup-engine -> map-systems -> design-system -> prototype if risky -> bootstrap-project -> implement-system x N -> assemble-mvp -> playtest-and-tune -> prepare-demo if the next milestone is a real demo -> design-system/implement-system -> assemble-mvp -> playtest-and-tune`
 
 ### Tiny Diagram
+
+#### Part 1. Concept To MVP
 
 ```mermaid
 flowchart LR
@@ -55,10 +57,24 @@ flowchart LR
     G --> H["implement-system x N"]
     H --> I["assemble-mvp"]
     I --> J["playtest-and-tune"]
-    J --> K{"Gap found?"}
-    K -->|Missing feature| H
-    K -->|Design unclear| D
+    J --> K{"Next goal?"}
+    K -->|Tuning only| J
     K -->|Stable MVP| L["Stop / next milestone"]
+    K -->|Need audience-facing demo| M["Continue to Part 2"]
+```
+
+#### Part 2. MVP To Demo
+
+```mermaid
+flowchart LR
+    A["Playable MVP"] --> B["prepare-demo"]
+    B --> C["design-system / implement-system"]
+    C --> D["assemble-mvp"]
+    D --> E["playtest-and-tune"]
+    E --> F{"Demo credible?"}
+    F -->|No, missing system| C
+    F -->|No, tuning only| E
+    F -->|Yes| G["Stop / next milestone"]
 ```
 
 ### Start Here
@@ -73,6 +89,7 @@ flowchart LR
 | `implement a system` | `implement-system` |
 | `assemble the first playable` | `assemble-mvp` |
 | `do a tuning pass` | `playtest-and-tune` |
+| `plan the first public demo` | `prepare-demo` |
 
 ### 1. Full-Run Mode
 
@@ -83,6 +100,7 @@ Typical prompts:
 - `make me a game about X`
 - `assemble the first playable`
 - `take this concept to MVP`
+- `take this current slice to a real demo`
 
 In full-run mode, the agent should choose the next skill based on the current repository state and move forward through the active flow instead of waiting for the user to name every step.
 
@@ -99,6 +117,9 @@ Treat the run as complete only when the current repository state supports one re
 - `reports/playtest-report.md` exists after a real playtest pass, even if no tuning changes were accepted
 - best-effort verification commands have been run and recorded, or the environment blocker is stated explicitly
 
+For demo-focused requests, MVP closure is the prerequisite checkpoint, not always the stopping point.
+If the user asked for a real demo, continue into the demo extension after the playable slice is proven.
+
 ### 2. Step-by-Step Mode
 
 Use step-by-step mode when the user explicitly asks for one artifact, one decision, or one named skill.
@@ -109,6 +130,7 @@ Typical prompts:
 - `pick the stack`
 - `bootstrap the scaffold`
 - `implement movement`
+- `plan the first public demo`
 - `do a playtest pass`
 
 In step-by-step mode, the agent should stay inside that step, produce the requested artifact, and return the next recommended handoff without silently running the whole chain.
@@ -122,7 +144,7 @@ Use these rules in order:
 2. Explicit artifact wins.
    If the user asks for `docs/technical-preferences.md`, `design/gdd/systems-index.md`, a system GDD, or a report, treat that as step-by-step mode even if the user does not know the skill name.
 3. End-result requests use full-run mode.
-   If the user asks for a game, MVP, vertical slice, or playable build without naming a step, route through the full flow based on what already exists in the repo.
+   If the user asks for a game, MVP, vertical slice, playable build, or audience-facing demo without naming a step, route through the full flow based on what already exists in the repo.
 4. Missing prerequisites route backward.
    If the requested step cannot be done cleanly, route to the nearest missing prerequisite skill instead of improvising around the gap.
 5. Existing files are the source of truth.
@@ -132,7 +154,7 @@ Use these rules in order:
 
 ## Active Flow
 
-The active gamedev path has two connected lanes.
+The active gamedev path has two core lanes plus one optional demo extension.
 
 ### Preproduction Lane
 
@@ -145,6 +167,15 @@ The active gamedev path has two connected lanes.
 
 1. `bootstrap-project`
 2. `implement-system`
+3. `assemble-mvp`
+4. `playtest-and-tune`
+
+### Demo Extension
+
+Use this only when the milestone changes from proving the loop to showing a credible audience-facing demo.
+
+1. `prepare-demo`
+2. `design-system` or `implement-system` for the highest-leverage demo-critical systems
 3. `assemble-mvp`
 4. `playtest-and-tune`
 
@@ -204,6 +235,16 @@ Route:
 2. verify which systems are now truly `integrated`
 3. run `playtest-and-tune`
 
+### A playable slice exists, but the next milestone is a real demo
+
+Route:
+
+1. run `prepare-demo`
+2. add or refresh demo-critical presentation or meta systems in `design/gdd/systems-index.md`
+3. run `design-system` or `implement-system` for the highest-leverage demo blocker
+4. rerun `assemble-mvp`
+5. rerun `playtest-and-tune`
+
 ### Tuning reveals a real feature gap
 
 Route:
@@ -261,6 +302,7 @@ When the user asks for one step, stay inside the scope of that step.
 - `bootstrap-project`: create the smallest runnable scaffold; for browser projects, use the relevant specialist runtime conventions instead of inventing a parallel local doctrine
 - `implement-system`: implement one approved system in production code
 - `assemble-mvp`: wire implemented systems into one coherent playable loop and keep the canonical assembly report here even when specialist QA tools are used
+- `prepare-demo`: define the first audience-facing demo contract, name the demo-critical systems, and capture specialist UI, asset, and QA handoffs before broad polish work starts
 - `playtest-and-tune`: run one focused tuning pass and write the report only after the playable loop actually runs; otherwise route back with no report
 
 End by naming the next recommended skill. Do not silently consume multiple downstream stages unless the user asked for a full run.
@@ -290,12 +332,18 @@ Use this when you want the whole path spelled out in the dumbest possible form.
    Output: one coherent playable loop plus `reports/mvp-assembly-report.md`.
 10. Run `playtest-and-tune`.
    Output: one real playtest pass plus `reports/playtest-report.md`, even if the final conclusion is to keep the current baseline unchanged.
-11. Update the `High-Risk Systems` section and progress snapshot so every remaining open risk has an explicit closure path.
-12. If tuning finds a missing mechanic, return to `implement-system`.
-13. If tuning finds a design uncertainty, return to `design-system` or `prototype`.
-14. Repeat the loop until the MVP is playable, understandable, verified, and stable enough for the next milestone.
+11. If the next milestone is an audience-facing demo rather than MVP proof, run `prepare-demo`.
+   Output: `reports/demo-readiness.md` plus named demo-critical systems and specialist handoffs.
+12. Run `design-system` or `implement-system` for the highest-leverage demo blocker.
+   Repeat one system at a time, then rerun integration and tuning.
+13. Update the `High-Risk Systems` section and progress snapshot so every remaining open risk has an explicit closure path.
+14. If tuning finds a missing mechanic, return to `implement-system`.
+15. If tuning finds a design uncertainty, return to `design-system` or `prototype`.
+16. Repeat the loop until the target milestone is playable, understandable, verified, and stable enough for the next milestone.
 
 ### Simple Decision Diagram
+
+#### Part 1. Concept To MVP
 
 ```mermaid
 flowchart TD
@@ -316,10 +364,25 @@ flowchart TD
     L -->|No| K
     L -->|Yes| M["Run assemble-mvp"]
     M --> N["Run playtest-and-tune"]
-    N --> O{"What did tuning reveal?"}
+    N --> O{"What is the next milestone?"}
     O -->|Missing feature| K
     O -->|Design uncertainty| E
     O -->|Playable and stable MVP| P["Stop or move to next milestone"]
+    O -->|Audience-facing demo| Q["Continue to Part 2"]
+```
+
+#### Part 2. MVP To Demo
+
+```mermaid
+flowchart TD
+    A["Playable MVP exists"] --> B["Run prepare-demo"]
+    B --> C["Run design-system or implement-system"]
+    C --> D["Run assemble-mvp"]
+    D --> E["Run playtest-and-tune"]
+    E --> F{"Demo ready?"}
+    F -->|No, missing system| C
+    F -->|No, tuning only| E
+    F -->|Yes| G["Stop or move to next milestone"]
 ```
 
 ### Shortcut Table
@@ -333,6 +396,7 @@ flowchart TD
 | `bootstrap the project` | `bootstrap-project` | `implement-system` |
 | `implement movement` | `implement-system movement` | next `implement-system` or `assemble-mvp` |
 | `assemble the first playable` | `assemble-mvp` | `playtest-and-tune` |
+| `plan the first public demo` | `prepare-demo` | `design-system`, `implement-system`, or `assemble-mvp` |
 | `tune the combat loop` | `playtest-and-tune combat` | `implement-system`, `assemble-mvp`, or another tuning pass |
 
 ## Anti-Patterns
@@ -344,6 +408,7 @@ Do not do the following:
 - treat `prototype` code as production code
 - implement multiple unrelated systems inside one `implement-system` pass
 - use `assemble-mvp` as a disguised feature factory
+- use `prepare-demo` as a vague `make it pretty` bucket with no explicit demo contract
 - use `playtest-and-tune` to hide missing mechanics behind value tweaks
 - write a `playtest-and-tune` report for a scaffold or blocked run that never became a real playable loop
 

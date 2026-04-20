@@ -34,12 +34,13 @@ This repository is a small skill and template library with one explicit domain p
 
 ## Gamedev Flow
 
-- The active `gamedev/` path now has two connected lanes. Preproduction: `setup-engine -> map-systems -> design-system -> prototype`. Production bridge: `bootstrap-project -> implement-system -> assemble-mvp -> playtest-and-tune`.
-- Typical small-game handoff: lock the stack, map systems, design the first MVP systems, prototype only where risk is real, then bootstrap the scaffold and move into implementation and playable-loop assembly.
+- The active `gamedev/` path now has two core lanes plus one optional demo extension. Preproduction: `setup-engine -> map-systems -> design-system -> prototype`. Production bridge: `bootstrap-project -> implement-system -> assemble-mvp -> playtest-and-tune`. Demo extension: `prepare-demo -> design-system/implement-system -> assemble-mvp -> playtest-and-tune`.
+- Typical small-game handoff: lock the stack, map systems, design the first MVP systems, prototype only where risk is real, then bootstrap the scaffold and move into implementation and playable-loop assembly. When the milestone changes from `prove the loop` to `show a credible demo`, run `prepare-demo` before broad UI, asset, or presentation work.
 - The flow is platform-agnostic. Browser projects may overlay `Game Studio` or another browser specialist for runtime, UI, asset, and playtest depth. Non-browser projects should use engine-native specialists or official engine docs without changing the core flow ownership.
 - `bootstrap-project` may happen as soon as `docs/technical-preferences.md` is stable and the repository needs a runnable codebase, but do not skip `map-systems` or `design-system` when system scope is still unclear.
 - `implement-system` is for one approved system at a time and should push the systems index to `implemented` when code exists.
 - `assemble-mvp` is only for wiring multiple implemented systems into one coherent playable loop and should push verified systems to `integrated`.
+- `prepare-demo` is for defining the first audience-facing demo contract from a proven slice and should turn vague polish wishes into explicit presentation, asset, and QA handoffs.
 - `playtest-and-tune` is for focused tuning after a playable slice exists.
 - Keep prototype code isolated under `prototypes/`; do not quietly promote it into production.
 - Prefer a small playable loop over broad feature coverage.

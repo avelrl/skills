@@ -5,6 +5,13 @@
 - **Status**: [Draft | Under Review | Approved]
 - **Owner**: [Name]
 
+## Language Policy
+
+- **Working / Documentation Language**: [English | Russian | Other]
+- **Player-Facing Language(s)**: [English-only | Russian-only | English + Russian | Other]
+- **Localization Scope**: [Prototype-only | MVP | Demo | Release | TBD]
+- **Downstream Rule**: Keep later project docs in the working or documentation language and keep player-facing terms consistent across GDDs, reports, and UI copy.
+
 ## Elevator Pitch
 
 > [One or two sentences that explain the game clearly and quickly.]

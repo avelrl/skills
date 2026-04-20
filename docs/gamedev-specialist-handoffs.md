@@ -9,7 +9,7 @@ Use this document to keep `gamedev/` cleanly separated from platform- or engine-
 It owns:
 
 - mode selection and prerequisite routing
-- canonical project artifacts such as `docs/technical-preferences.md`, `design/gdd/systems-index.md`, system GDDs, prototype reports, and MVP or playtest reports
+- canonical project artifacts such as `docs/technical-preferences.md`, `design/gdd/systems-index.md`, system GDDs, prototype reports, and MVP, demo, or playtest reports
 - evidence closure and status sync
 - step-to-step handoffs
 
@@ -33,10 +33,10 @@ When browser-game specialization is needed and OpenAI `Game Studio` is available
 |------|-------------------|----------------------------|
 | Browser stack choice and runtime architecture | `game-studio`, `web-game-foundations`, `phaser-2d-game`, `three-webgl-game`, `react-three-fiber-game` | `setup-engine` |
 | Browser scaffold conventions | runtime specialist from `Game Studio` | `bootstrap-project` |
-| Browser UI, HUD, menus, overlay direction | `game-ui-frontend` | `bootstrap-project`, `assemble-mvp`, `playtest-and-tune` |
-| 2D sprite generation workflow | `sprite-pipeline` | `prototype`, `implement-system` |
-| 3D web asset shipping | `web-3d-asset-pipeline` | `bootstrap-project`, `implement-system` |
-| Browser QA and visual review | `game-playtest`, plus repo-owned smoke tooling where appropriate | `assemble-mvp`, `playtest-and-tune` |
+| Browser UI, HUD, menus, overlay direction | `game-ui-frontend` | `prepare-demo`, `bootstrap-project`, `assemble-mvp`, `playtest-and-tune` |
+| 2D sprite generation workflow | `sprite-pipeline` | `prototype`, `prepare-demo`, `implement-system` |
+| 3D web asset shipping | `web-3d-asset-pipeline` | `prepare-demo`, `bootstrap-project`, `implement-system` |
+| Browser QA and visual review | `game-playtest`, plus repo-owned smoke tooling where appropriate | `prepare-demo`, `assemble-mvp`, `playtest-and-tune` |
 
 The specialist may supply runtime-specific implementation guidance or evidence, but the canonical reports and status updates still belong to the `gamedev/` flow.
 
@@ -45,7 +45,7 @@ The specialist may supply runtime-specific implementation guidance or evidence, 
 For Godot, Unity, Unreal, custom engines, or proprietary runtimes:
 
 - use official engine documentation or project-local specialists for engine-specific implementation details
-- keep the same `gamedev/` flow for stack capture, systems mapping, GDDs, prototypes, implementation scope, MVP assembly, and tuning reports
+- keep the same `gamedev/` flow for stack capture, systems mapping, GDDs, prototypes, implementation scope, MVP assembly, demo preparation, and tuning reports
 - record engine-specific constraints in `docs/technical-preferences.md` instead of cloning engine doctrine into generic skill text
 
 ## Anti-Duplication Rules
@@ -64,4 +64,5 @@ For Godot, Unity, Unreal, custom engines, or proprietary runtimes:
 - `bootstrap-project`: own the scaffold contract and repo hygiene; let specialists shape runtime-specific folder and architecture defaults.
 - `implement-system`: own one-system-at-a-time scope and doc sync; use specialists for runtime-specific implementation patterns when needed.
 - `assemble-mvp`: own playable-loop closure, durable evidence, and integration status.
+- `prepare-demo`: own the demo contract, the inventory of demo-critical presentation systems, the placeholder policy, and the specialist handoff capture.
 - `playtest-and-tune`: own the accepted tuning changes, report, and canonical doc sync even when specialist QA tools are used.
