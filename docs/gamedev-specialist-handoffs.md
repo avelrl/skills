@@ -40,6 +40,9 @@ When browser-game specialization is needed and OpenAI `Game Studio` is available
 
 The specialist may supply runtime-specific implementation guidance or evidence, but the canonical reports and status updates still belong to the `gamedev/` flow.
 
+Optional browser-specific working notes may live under `experimental/browser-gamedev/` in this repo.
+Treat them as overlays or scratchpads for browser work, not as replacements for the canonical `gamedev/` artifacts or ownership rules above.
+
 ## Non-Browser Projects
 
 For Godot, Unity, Unreal, custom engines, or proprietary runtimes:

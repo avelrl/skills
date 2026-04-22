@@ -9,6 +9,7 @@ Related docs:
 - troubleshooting: `docs/gamedev-troubleshooting.md`
 - glossary: `docs/gamedev-glossary.md`
 - canonical workflow: `docs/gamedev-workflow.md`
+- OpenGame adaptation notes: `docs/opengame-adoption.md`
 
 ## Start With These Decisions
 
@@ -97,6 +98,8 @@ It is the step where the repo names the demo contract for the whole slice:
 - asset and content gaps
 - QA and verification expectations
 
+When the same demo now depends on a real asset inventory, create or refresh `design/gdd/asset-registry.md` in parallel with `reports/demo-readiness.md`.
+
 If the demo problem is actually missing gameplay, `prepare-demo` should surface that and route back into `design-system` or `implement-system`.
 If the blocker is visual consistency or asset-source drift, create or refresh `design/gdd/art-bible.md` from `gamedev/templates/art-bible.md` and keep it aligned with the demo contract.
 
@@ -113,6 +116,8 @@ If the blocker is visual consistency or asset-source drift, create or refresh `d
 | `assemble-mvp` | `reports/mvp-assembly-report.md` | a real playable loop exists |
 | `playtest-and-tune` | `reports/playtest-report.md` | you have evidence for the current baseline, not guesses |
 | `prepare-demo` | `reports/demo-readiness.md` | demo-critical gaps and next handoffs are explicit |
+
+`prepare-demo` may also create `design/gdd/asset-registry.md` when asset naming, provenance, placeholder control, or demo-critical replacements need a concrete contract.
 
 ## Good Prompt Shape
 
@@ -143,6 +148,7 @@ Use the existing systems index and do not implement code.
 - `assemble-mvp` proves the playable loop; it is not a hidden feature-factory step.
 - `playtest-and-tune` is for focused tuning after a real run, not for guessing.
 - `prepare-demo` is for demo-wide scope control, not a vague `make it prettier` request.
+- `design/gdd/art-bible.md` and `design/gdd/asset-registry.md` solve different problems: style contract versus concrete inventory.
 - If docs drift across languages, fix the language policy in the concept and technical-preferences docs first, then sync downstream docs.
 
 ## If You Are Not Sure Where To Start

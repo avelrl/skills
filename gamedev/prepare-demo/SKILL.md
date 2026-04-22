@@ -25,6 +25,7 @@ Inputs / Required Context:
 Outputs / Owned Artifacts:
 - owns `reports/demo-readiness.md`
 - may update `design/gdd/systems-index.md` when demo-critical presentation or meta systems need to be added, clarified, or reprioritized
+- may create or update `design/gdd/asset-registry.md` when placeholder policy, asset naming, provenance, or replacement tracking needs a concrete project artifact
 - may update `docs/technical-preferences.md` when specialist guidance sources for UI, assets, or QA are still missing
 - uses `gamedev/templates/demo-readiness.md`
 
@@ -41,8 +42,9 @@ Execution Rules:
 6. Prefer turning broad demo wishes into a small set of named systems such as `player-guidance`, `combat-readability`, `hud`, `main-menu`, `pause-and-restart`, `interaction-feedback`, or `tutorial-prompts` instead of leaving them as vague polish notes.
 7. Record which runtime-specific specialist guidance should shape the next implementation pass for UI, asset pipeline, or QA. Do not duplicate that doctrine inside this skill.
 8. Keep placeholder policy explicit. Name which placeholders are acceptable for the demo and which ones must be replaced before the demo is considered credible.
-9. Write `reports/demo-readiness.md` from the canonical template and include a recommended execution order for the next workflow steps.
-10. End with the next recommended skill:
+9. If asset naming, source provenance, runtime-key drift, or replacement tracking is becoming a real demo risk, create or refresh `design/gdd/asset-registry.md` from the canonical template instead of leaving those details scattered across notes.
+10. Write `reports/demo-readiness.md` from the canonical template and include a recommended execution order for the next workflow steps.
+11. End with the next recommended skill:
    - `design-system` if one or more demo-critical systems still need canonical GDDs
    - `implement-system` if the required systems are already designed and the work is ready for code
    - `assemble-mvp` if the current implementation changed enough that the playable slice needs fresh integration proof
@@ -60,6 +62,7 @@ Return Format:
 - demo target name or default label
 - current baseline used
 - demo-critical systems added or refreshed
+- whether `design/gdd/asset-registry.md` was created or refreshed
 - specialist overlays or guidance sources needed next
 - placeholder policy or major blockers
 - report path

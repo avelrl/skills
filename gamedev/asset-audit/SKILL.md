@@ -19,6 +19,7 @@ Do not use for:
 Inputs / Required Context:
 - required: one category or `all`
 - read project rules first from `docs/technical-preferences.md` when available
+- read `design/gdd/asset-registry.md` when present
 - fall back to `gamedev/standards/data-files.md` and any relevant art or audio bible already present
 
 Outputs / Owned Artifacts:
@@ -31,9 +32,10 @@ Modes or Arguments:
 
 Execution Rules:
 1. Resolve the requested asset scope and load project conventions or fallback assumptions.
-2. Check naming, format, size or dimension budgets, broken references, orphaned assets, and missing expected assets.
-3. Group findings as violations, missing references, orphans, and missing expected assets.
-4. If nothing is wrong, return an explicit zero-findings summary instead of a silent success.
+2. When `design/gdd/asset-registry.md` exists, compare the current tree against it and call out registry drift, missing registered assets, and untracked high-impact assets.
+3. Check naming, format, size or dimension budgets, broken references, orphaned assets, and missing expected assets.
+4. Group findings as violations, registry drift, missing references, orphans, and missing expected assets.
+5. If nothing is wrong, return an explicit zero-findings summary instead of a silent success.
 
 Failure / Stop Conditions:
 - stop if the requested category cannot be mapped to a real project area

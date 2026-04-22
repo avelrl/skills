@@ -8,6 +8,7 @@ Related docs:
 - canonical workflow: `docs/gamedev-workflow.md`
 - specialist boundaries: `docs/gamedev-specialist-handoffs.md`
 - quickstart prompts: `docs/gamedev-quickstart.md`
+- OpenGame adaptation notes: `docs/opengame-adoption.md`
 
 ## Core Rule
 
@@ -58,6 +59,50 @@ That is where the project should explicitly record:
 - which specialist guidance should shape the next asset or animation pass
 
 If visual consistency or source drift becomes a real blocker, create or refresh `design/gdd/art-bible.md`.
+
+When concrete asset naming, source tracking, placeholder control, or import sanity becomes messy, also create or refresh `design/gdd/asset-registry.md`.
+
+## What The Asset Registry Is
+
+`design/gdd/asset-registry.md` is the concrete inventory and integration contract for assets that matter to the current milestone.
+Use `gamedev/templates/asset-registry.md` as the canonical template.
+
+It is the right place to capture:
+
+- runtime keys or paths that code and data should use
+- which assets are final, placeholder, planned, or must be replaced before demo
+- which scenes or systems depend on each asset group
+- source provenance when the team mixes AI outputs, packs, hand-made art, or contractor work
+- replacement queues when demo readiness depends on a small set of higher-quality assets
+
+It is not:
+
+- the project's visual identity document
+- a replacement for `design/gdd/art-bible.md`
+- a giant warehouse dump of every file under `assets/`
+- a reason to freeze MVP work until every placeholder is cleaned up
+
+## When To Create The Asset Registry
+
+Create or refresh it when one of these becomes true:
+
+- the same asset is now referenced from multiple scenes or systems
+- placeholder drift is causing import, naming, or ownership confusion
+- multiple asset sources are being mixed and provenance now matters
+- the team needs a credible demo and must separate acceptable placeholders from must-replace assets
+- `asset-audit` is finding the same naming or reference problems repeatedly
+
+For a tiny project, keep it short.
+The goal is operational clarity, not inventory bureaucracy.
+
+## How To Use The Asset Registry
+
+1. Start from `gamedev/templates/asset-registry.md`.
+2. Save the project copy as `design/gdd/asset-registry.md` unless the project already has a stronger asset-tracking structure.
+3. Track only the assets that affect the current milestone, integration sanity, or demo credibility.
+4. Keep runtime keys or paths explicit so code, data, and content refer to the same thing.
+5. Mark placeholders honestly instead of hiding them behind vague notes.
+6. Update it alongside `reports/demo-readiness.md` and `design/gdd/art-bible.md` when the demo contract changes.
 
 ## What The Art Bible Is
 
@@ -129,6 +174,7 @@ Codex is useful for:
 - sprite strip workflow glue
 - normalization and import checks
 - placeholder policy documentation
+- asset registry maintenance when runtime keys or source provenance start drifting
 
 Specialist or MCP depth helps when:
 
@@ -164,6 +210,7 @@ Codex is useful for:
 - turning vague art direction into a concise asset contract
 - keeping prompts consistent with the art bible
 - wiring assets into the repo and checking drift
+- tracking must-replace versus acceptable placeholders in the asset registry
 
 Specialist or MCP depth helps when:
 
@@ -200,6 +247,7 @@ Codex is useful for:
 - asset indexing
 - validation scripts
 - project-side import and budget checks
+- keeping the registry aligned with what the runtime actually imports
 
 Specialist or MCP depth helps when:
 
@@ -223,4 +271,13 @@ Create or update `design/gdd/art-bible.md` from `gamedev/templates/art-bible.md`
 Keep it concise and practical for a small team.
 Capture palette, silhouette rules, UI density, VFX direction, animation expectations, asset naming, and which placeholders are acceptable for the next milestone.
 Do not turn this into lore or a giant asset backlog.
+```
+
+Use a prompt like this when you want Codex to lock concrete asset usage for the current milestone:
+
+```text
+Create or update `design/gdd/asset-registry.md` from `gamedev/templates/asset-registry.md`.
+Track only the assets that matter for the current milestone.
+List runtime keys or paths, placeholder status, source provenance, scene or system coverage, and which assets must be replaced before demo.
+Keep it short and operational.
 ```

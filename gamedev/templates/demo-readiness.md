@@ -40,6 +40,7 @@
 
 ## Asset / Content Readiness
 
+- **Asset registry**: [`design/gdd/asset-registry.md` | `None yet`]
 - **Must replace before demo**: [Critical placeholder art, audio, copy, or content]
 - **Acceptable placeholders**: [Temporary assets that do not break the demo promise]
 - **Pipeline decision**: [Sprite workflow, UI animation workflow, prefab/import path, etc.]
