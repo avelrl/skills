@@ -7,6 +7,7 @@
 - **Focus Area**: [General MVP sanity | combat-readability | controls | pacing]
 - **Build or Run Target**: [Command, scene, or target]
 - **Verification Commands Run**: [Exact commands run or `Blocked by environment: ...`]
+- **Browser / Visual QA Surface**: [Browser Use / repo-owned smoke / engine-native run / Not used]
 - **Outcome**: [Improved | Mixed | Stable | No Improvement | Blocked]
 
 ## Baseline Observations

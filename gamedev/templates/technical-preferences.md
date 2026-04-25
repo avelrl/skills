@@ -52,7 +52,7 @@ Fill this once the project has a confirmed runtime or engine direction. Update i
 - **Runtime / Engine Guidance**: [Official docs / Game Studio / project-local specialist / None configured]
 - **UI / Presentation Guidance**: [TO BE CONFIGURED]
 - **Asset Pipeline Guidance**: [TO BE CONFIGURED]
-- **QA / Playtest Guidance**: [TO BE CONFIGURED]
+- **QA / Playtest Guidance**: [Browser Use / Game Studio game-playtest / repo-owned smoke or E2E / official docs / project-local specialist / None configured]
 
 ## Forbidden Patterns
 

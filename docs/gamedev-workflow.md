@@ -25,7 +25,7 @@ It owns workflow routing, prerequisite checks, canonical artifacts, evidence clo
 
 It does not try to be the deepest runtime specialist for every stack.
 When runtime-, UI-, asset-, or QA-specific depth is needed, overlay the appropriate specialist guidance for that platform.
-For browser projects, that usually means `Game Studio` when available.
+For browser projects, that usually means `Game Studio` for game-specific runtime, UI, and asset guidance, plus `Browser Use` when Codex needs to inspect or interact with a local browser target in the in-app browser.
 
 ## One-Screen Cheat Sheet
 
@@ -184,9 +184,11 @@ Use this only when the milestone changes from proving the loop to showing a cred
 This is not a third lane.
 It is an overlay on top of the same flow.
 
-- Browser projects may use `Game Studio` or another browser specialist for runtime architecture, scaffold defaults, UI direction, asset pipeline depth, and browser QA.
+- Browser projects may use `Game Studio` for runtime architecture, scaffold defaults, UI direction, asset pipeline depth, and game-specific browser QA.
+- Browser projects may use `Browser Use` for in-app inspection of local targets, visible interaction checks, screenshots, console review, and quick browser evidence.
 - Non-browser projects should use engine-native docs or project-local specialists for Godot, Unity, Unreal, custom engines, or proprietary runtimes.
 - `gamedev/` still owns `docs/technical-preferences.md`, `design/gdd/`, `prototypes/`, `reports/`, and the status model.
+- Browser Use, Game Studio, smoke scripts, and repo E2E suites are evidence sources; they do not replace the canonical `gamedev/` reports or status updates.
 - When visual consistency or asset-source drift becomes a real blocker, create or refresh `design/gdd/art-bible.md` from `gamedev/templates/art-bible.md` as the shared visual contract. This supports `prepare-demo`; it does not replace it.
 
 Use `docs/gamedev-specialist-handoffs.md` for the detailed ownership split.
@@ -289,7 +291,7 @@ Use these rules to keep full-run mode from stalling or drifting.
 
 - For any platform, prefer ending full-run with at least install, build, run, and one repeatable sanity command or checklist when the stack supports it.
 - Prefer repo-native verification owned by the project over ambient external tooling that is not part of the chosen runtime or repository contract.
-- For browser projects, browser-open, screenshot, and specialist QA probes are supporting evidence unless the repo explicitly owns that automation path.
+- For browser projects, Browser Use inspection, browser-open, screenshots, and specialist QA probes are supporting evidence unless the repo explicitly owns that automation path.
 - Do not claim a first playable is closed if the build does not run, the loop is not actually reachable, or the reports were written without a real run.
 
 ## Step-by-Step Routing

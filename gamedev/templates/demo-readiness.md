@@ -49,12 +49,13 @@
 
 | Concern | Specialist Source | Why Needed | Owner Step |
 |---------|-------------------|------------|------------|
-| [UI / HUD] | [Game Studio / official docs / local specialist] | [Reason] | [`prepare-demo`, `implement-system`, or `playtest-and-tune`] |
+| [UI / HUD] | [Game Studio / Browser Use / official docs / local specialist] | [Reason] | [`prepare-demo`, `implement-system`, or `playtest-and-tune`] |
 
 ## Verification Plan
 
 - **Build / run target**: [Command, scene, or target]
 - **Smoke or sanity pass**: [Command or checklist]
+- **Browser / visual inspection surface**: [Browser Use / repo-owned smoke / manual engine run / Not needed]
 - **Evidence to keep**: [Stable report, screenshots, capture notes, reproducible commands]
 
 ## Known Blockers
